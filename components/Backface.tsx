@@ -15,7 +15,7 @@ import {
   useBreakpointValue,
 } from '@chakra-ui/react'
 import Image from 'next/image'
-import signature from 'public/cyf negro.png'
+import signature from 'public/jyo negro.png'
 import bgi from 'public/paper.webp'
 import { useEffect, useState } from 'react'
 import { FaBus } from 'react-icons/fa'
@@ -63,8 +63,8 @@ export const Backface = ({
   return (
     <Card bg={bgi} rotation={isFlipped ? 0 : 180}>
       <VStack p={['2rem', '4rem']} w="100%" h="100%">
-        <Center w="100%" borderBottom={line} flex={1.2} maxH={'20%'}>
-          <Image src={signature} />
+        <Center w="100%" borderBottom={line} flex={1.2} maxH={'20%'} position={'relative'}>
+          <Image src={signature} layout='fixed' width={120} height={120} />
         </Center>
         <Center
           w="100%"
@@ -75,7 +75,7 @@ export const Backface = ({
           gap={'1rem'}
         >
           <Heading variant="sans">
-            Cris Tena + <br /> Fran Bosquet
+            Jana Perez + <br /> Odette Gutierrez
           </Heading>
           <Text>
             Queremos que nos {isSingle ? 'acompañes' : 'acompañeis'} el día de
@@ -84,12 +84,12 @@ export const Backface = ({
         </Center>
         <HStack w="100%" p={4} borderBottom={line}>
           <VStack px={6} spacing={0}>
-            <Text fontWeight={400}>Sábado</Text>
+            <Text fontWeight={400}>Dia</Text>
             <Text size="xxl" fontWeight={600}>
-              10
+              Dia
             </Text>
-            <Text fontWeight={400}>Junio</Text>
-            <Text fontWeight={200}>2023</Text>
+            <Text fontWeight={400}>Mes</Text>
+            <Text fontWeight={200}>2024</Text>
           </VStack>
           <VStack
             flex={1}
@@ -100,9 +100,9 @@ export const Backface = ({
           >
             <Text size="sm">En</Text>
             <Text fontWeight={600} as="a" href="https://masdoblons.com/">
-              Mas dels Doblons
+              Finca
             </Text>
-            <Text size="sm">Camí vora rambla s/n, Almassora, Castellón</Text>
+            <Text size="sm">dirección de la finca</Text>
             <Text size="xl" fontWeight={600}>
               13:30
             </Text>
@@ -225,7 +225,7 @@ export const Backface = ({
                   </VStack>
                 </TabPanel>
 
-                {/* Contacto */}
+                {/* Contacto Actualizar con los datos de Jana y Odette*/}
                 <TabPanel>
                   <VStack w="100%" alignItems="start" spacing={2} h="100%">
                     <Text

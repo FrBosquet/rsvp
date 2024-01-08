@@ -1,6 +1,6 @@
 {
-  "name": "Boda Cris y Fran",
-  "short_name": "BCyF",
+  "name": "Boda Jan y Odette",
+  "short_name": "BJyO",
   "start_url": "./admin",
   "scope": "/admin/",
   "display": "standalone",

@@ -9,7 +9,7 @@ enum States {
 
 const Home: NextPage = () => {
   return (
-    <Center h="100vh" bg="green.100">
+    <Center h="100vh" bg="yellow.100">
       <VStack>
         <Heading fontSize={112}>¡Oopsie!</Heading>
         <Text color="green.600" p={4}>

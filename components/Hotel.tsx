@@ -30,7 +30,7 @@ export const Hotel = () => {
         <ModalOverlay />
         <ModalContent w="calc(100vw - 2rem)" pb={4} bg="white">
           <ModalHeader color="black">Alojamiento</ModalHeader>
-          <ModalCloseButton color="black"/>
+          <ModalCloseButton color="black" />
           <ModalBody gridGap={4} display="flex" flexDir={'column'}>
             <Text variant="soft" textAlign="left">
               El hotel Castellón Center es un hotel de cuatro estrellas afiliado
@@ -121,7 +121,7 @@ export const Hotel = () => {
               <EmailIcon mr={2} /> EMail
             </Text>
             <Text variant="soft" textAlign="left">
-              Indicando el código <strong>Boda Cris y Fran</strong>. Las
+              Indicando el código <strong>Boda Jana y Odette</strong>. Las
               reservas no tienen penalización por cancelación hasta el 1 de mayo
               de 2023. Tras esa fecha, se convertiran en no reembolsables. Los
               precios ofertados y su disponibilidad (Hasta 40 habitaciones) se

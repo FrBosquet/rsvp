@@ -64,12 +64,11 @@ const Home: NextPage<Props> = ({ guest }) => {
     loading.off()
   }
 
-  const pageTitle = `${name.join(', ')}, ${
-    isSingle ? 'te invitamos' : 'os invitamos'
-  } a nuestra boda`
+  const pageTitle = `${name.join(', ')}, ${isSingle ? 'te invitamos' : 'os invitamos'
+    } a nuestra boda`
 
   return (
-    <Box bg="green.100">
+    <Box bg="yellow.100">
       <Head>
         <meta name="description" content={pageTitle} />
         <meta property="og:locale" content="es_ES" />
