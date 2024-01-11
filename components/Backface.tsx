@@ -1,3 +1,5 @@
+import signature from '@/public/jyo negro.png'
+import bgi from '@/public/paper.webp'
 import { ChatIcon, CopyIcon } from '@chakra-ui/icons'
 import {
   Button,
@@ -15,8 +17,6 @@ import {
   useBreakpointValue,
 } from '@chakra-ui/react'
 import Image from 'next/image'
-import signature from 'public/jyo negro.png'
-import bgi from 'public/paper.webp'
 import { useEffect, useState } from 'react'
 import { FaBus } from 'react-icons/fa'
 import { IoIosGift } from 'react-icons/io'

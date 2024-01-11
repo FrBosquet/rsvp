@@ -16,10 +16,10 @@ import {
 import type { NextPage, NextPageContext } from 'next'
 import Head from 'next/head'
 import { useState } from 'react'
-import { Backface } from '../components/Backface'
-import { Frontface } from '../components/Frontface'
-import { getFromSlug, updateGuest } from '../lib/supabase'
-import { Guest, States } from '../types'
+import { Backface } from '../../components/Backface'
+import { Frontface } from '../../components/Frontface'
+import { getFromSlug, updateGuest } from '../../lib/supabase'
+import { Guest, States } from '../../types'
 
 type Props = {
   guest: Guest

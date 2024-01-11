@@ -100,7 +100,6 @@ export const GuestRow: React.FC<Props> = ({ guest, onEditSuccess }) => {
               fontSize="xs"
               target="_blank"
               variant="monospace"
-              as="a"
               color="yellow.200"
             >
               /{slug}

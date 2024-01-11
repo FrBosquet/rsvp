@@ -1,7 +1,9 @@
+'use client'
+
+import click from '@/public/click.png'
+import bg from '@/public/paper.webp'
 import { Box, Heading, keyframes, VStack } from '@chakra-ui/react'
 import Image from 'next/image'
-import click from 'public/click.png'
-import bg from 'public/paper.webp'
 import { Card } from '../components/Card'
 import { getGuestTypes } from '../lib/guesttype'
 import { Guest } from '../types'
@@ -79,7 +81,7 @@ export const Frontface = ({ guest, isFlipped, onClick }: Props) => {
         animation={`${clickAnim} 0.3s alternate infinite`}
       >
         <Box animation={`${fadeAnim} 5s linear 1`}>
-          <Image src={click} width={'70%'} height={'70%'} />
+          <Image src={click} className='w-10' alt="Haz click en la carta para voltearla" />
         </Box>
       </Box>
     </Card>
