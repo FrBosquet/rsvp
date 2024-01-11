@@ -1,4 +1,4 @@
-import { Amatic_SC, Jost } from 'next/font/google'
+import { Forum, Jost, WindSong } from 'next/font/google'
 
 import '@/styles/globals.css'
 
@@ -13,8 +13,15 @@ const jost = Jost({
   display: 'swap',
 })
 
-const amatic = Amatic_SC({
-  weight: ['400', '700'],
+const serif = Forum({
+  weight: ['400'],
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-serif'
+})
+
+const script = WindSong({
+  weight: ['400'],
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-script'
@@ -27,7 +34,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={jost.className}>
-      <body className={`dark min-h-screen bg-orange-200 ${jost.className} ${amatic.variable}`}>{children}</body>
+      <body className={`dark min-h-screen bg-zinc-600 ${jost.className} ${script.variable} ${serif.variable}`}>{children}</body>
     </html>
   )
 }

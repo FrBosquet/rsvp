@@ -8,8 +8,8 @@ type Props = {
 
 export const Card = ({ children, onClick, className }: Props) => {
   return (
-    <div aria-role='button' onClick={onClick} className={twMerge(
-      'bg-cover bg-[url(/paper.webp)] bg-center absolute card flex flex-col items-center justify-center gap-c8 backface-hidden shadow-2xl',
+    <div role='button' onClick={onClick} className={twMerge(
+      'bg-cover bg-[url(/paper/white.webp)] bg-center absolute card flex flex-col items-center justify-center backface-hidden shadow-2xl',
       onClick ? 'cursor-pointer' : 'cursor-auto',
       className
     )}>

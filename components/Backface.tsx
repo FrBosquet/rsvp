@@ -108,6 +108,7 @@ export const Backface = ({
             </Text>
           </VStack>
         </HStack>
+
         {state === States.pending && (
           <VStack flex={2} w="100%" p={4} spacing={4} justifyContent="center">
             <Heading size="sm" variant="sans">
@@ -123,6 +124,7 @@ export const Backface = ({
             </HStack>
           </VStack>
         )}
+
         {state === States.accepted && (
           <VStack
             flex={3}
