@@ -23,7 +23,7 @@ export const Backface = ({ guest, isFlipped }: Props) => {
       <p className='text-sm uppercase leading-6 text-zinc-500'>
         A las 13:00 de la tarde<br />
         <span className='text-xs'>en</span> La Huerta de peñalen<br />
-        Camí de l’Assagador, Vilarreal<br />
+        <span className='text-xs'>Camí de l’Assagador, Vilarreal</span><br />
       </p>
       <p className='font-script pt-c10 text-lg text-red-950'>¿Contamos con vosotros?</p>
       <menu className='w-full flex justify-center gap-c100 p-c50'>

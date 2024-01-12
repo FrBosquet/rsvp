@@ -1,13 +1,14 @@
 import { Forum, Jost, WindSong } from 'next/font/google'
 
 import '@/styles/globals.css'
+import { ClerkProvider } from '@clerk/nextjs'
 
 export const metadata = {
   title: 'Jana Y Odette',
   description: 'Invitación a la boda de Jana y Odette',
 }
 
-const jost = Jost({
+const sans = Jost({
   weight: ['200', '400', '600'],
   subsets: ['latin'],
   display: 'swap',
@@ -33,8 +34,10 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={jost.className}>
-      <body className={`dark min-h-screen bg-zinc-600 ${jost.className} ${script.variable} ${serif.variable}`}>{children}</body>
-    </html>
+    <ClerkProvider>
+      <html lang="en" className={sans.className}>
+        <body className={`dark min-h-screen bg-zinc-600 ${sans.className} ${script.variable} ${serif.variable}`}>{children}</body>
+      </html>
+    </ClerkProvider>
   )
 }

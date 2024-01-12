@@ -72,6 +72,9 @@ module.exports = {
         '.bg-color-rose': {
           '--bg-color': 'rgba(248, 113, 113, 0.10)'
         },
+        '.text-inset': {
+          'text-shadow': '0px 0px 2px rgba(0, 0, 0, 0.3)'
+        }
       })
 
       addComponents({
