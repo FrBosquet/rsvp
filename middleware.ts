@@ -4,6 +4,9 @@ export default authMiddleware({
   publicRoutes: [
     "/",
     "/event/(.*)",
+  ],
+  ignoredRoutes: [
+    "/api/(.*)",
   ]
 });
 

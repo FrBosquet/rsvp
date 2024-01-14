@@ -1,6 +1,7 @@
 import { Forum, Jost, WindSong } from 'next/font/google'
 
 import '@/styles/globals.css'
+import { esES } from '@clerk/localizations'
 import { ClerkProvider } from '@clerk/nextjs'
 
 export const metadata = {
@@ -34,7 +35,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <ClerkProvider>
+    <ClerkProvider localization={esES}>
       <html lang="en" className={sans.className}>
         <body className={`dark min-h-screen bg-zinc-600 ${sans.className} ${script.variable} ${serif.variable}`}>{children}</body>
       </html>
