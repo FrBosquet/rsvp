@@ -9,9 +9,28 @@ datasource db {
 }
 
 model User {
-  id        String   @id @unique @default(cuid())
+  id        String        @id @unique @default(cuid())
   name      String
-  email     String   @unique
+  email     String        @unique
   image     String
+  createdAt DateTime      @default(now())
+  role      String        @default("user")
+  events    UserOnEvent[]
+}
+
+model Event {
+  id        String        @id @unique @default(cuid())
+  name      String
+  slug      String        @unique
+  createdAt DateTime      @default(now())
+  users     UserOnEvent[]
+}
+
+model UserOnEvent {
+  id        String   @id @unique @default(cuid())
+  user      User?    @relation(fields: [email], references: [email])
+  email     String
+  event     Event    @relation(fields: [eventId], references: [id])
+  eventId   String
   createdAt DateTime @default(now())
 }
