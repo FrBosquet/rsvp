@@ -13,7 +13,6 @@ export const CardFlipper = ({ guest }: Props) => {
   const [isFlipped, setIsFlipped] = useState(false)
 
   const handleClick = () => {
-    console.log('click');
     setIsFlipped(f => !f)
   }
 

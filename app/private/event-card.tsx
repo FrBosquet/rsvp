@@ -53,8 +53,6 @@ export const EventCard = ({ event, isAdmin }: Props) => {
 
   const isAccepted = users.some((userOnEvent) => userOnEvent.user?.id === userId)
 
-  console.log({ users, isAccepted, userId })
-
   return <div key={event.id} className="w-full flex flex-col rounded-2xl bg-slate-900 p-2 gap-2 text-zinc-200 shadow-md p-4">
     <h2 className="font-semibold">{event.name} <span className="text-zinc-400 font-thin">/{event.slug}</span></h2>
     <div className="text-zinc-400 flex flex-wrap">
