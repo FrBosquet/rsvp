@@ -94,11 +94,10 @@ export const GuestRow: React.FC<Props> = ({ guest, onEditSuccess }) => {
           </Tooltip>
         </EditGuest>
         <HStack>
-          <Link href={`/${slug}`} passHref>
+          <Link href={`/${slug}`} passHref target='_blank'>
             <Text
               flex={1}
               fontSize="xs"
-              target="_blank"
               variant="monospace"
               color="yellow.200"
             >

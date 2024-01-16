@@ -64,7 +64,7 @@ export const Backface = ({
     <Card bg={bgi} rotation={isFlipped ? 0 : 180}>
       <VStack p={['2rem', '4rem']} w="100%" h="100%">
         <Center w="100%" borderBottom={line} flex={1.2} maxH={'20%'} position={'relative'}>
-          <Image src={signature} layout='fixed' width={120} height={120} />
+          <Image src={signature} layout='fixed' width={120} height={120} alt="firma" />
         </Center>
         <Center
           w="100%"
