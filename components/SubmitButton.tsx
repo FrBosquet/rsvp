@@ -14,7 +14,7 @@ export const SubmitButton = ({ children, className }: Props) => {
   return <button
     aria-disabled={pending}
     disabled={pending}
-    className={twMerge('uppercase text-xs bg-orange-900 text-zinc-200 p-2 rounded-2xl shadow-lg disabled:opacity-25 disabled:cursor-wait', className)}
+    className={twMerge('uppercase text-sm font-bold bg-orange-400 hover:bg-rose-400 text-zinc-800 p-2 rounded-2xl shadow-lg disabled:opacity-25 disabled:cursor-wait', className)}
     type="submit">
     {children}
   </button>
