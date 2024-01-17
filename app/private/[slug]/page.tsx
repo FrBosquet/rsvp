@@ -1,13 +1,13 @@
-import { prisma } from "@/lib/prisma";
-import { UserButton, auth } from "@clerk/nextjs";
-import { redirect } from "next/navigation";
+import { prisma } from '@/lib/prisma'
+import { UserButton, auth } from '@clerk/nextjs'
+import { redirect } from 'next/navigation'
+import { Manager } from './manager'
 
-type Route = {
+interface Route {
   params: {
     slug: string
   }
 }
-
 
 export default async function EventDashboardPage({ params }: Route) {
   const { userId } = auth()
@@ -40,10 +40,12 @@ export default async function EventDashboardPage({ params }: Route) {
     redirect('/private')
   }
 
-  return <section className="p-4 flex flex-col gap-2 [--letter-size:1rem] m-auto max-w-[1500px]">
-    <menu className="w-full flex rounded-2xl bg-zinc-900 p-2 gap-2 text-zinc-200 items-center shadow-lg">
+  return <section className="container m-auto flex flex-col gap-3 p-4 text-reset">
+    <header className="flex w-full items-center gap-2 rounded-2xl bg-slate-800 p-2 text-zinc-200 shadow-lg">
       <UserButton />
-      <h1 className="uppercase text-lg">{event.name}</h1>
-    </menu>
+      <h1 className="text-lg uppercase">{event.name}</h1>
+    </header>
+
+    <Manager />
   </section>
 }

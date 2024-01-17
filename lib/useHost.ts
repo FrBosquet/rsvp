@@ -30,15 +30,16 @@ export const useHostId = () => {
     cache[email] = res.data.id
 
     loading.off()
-    setHostId(res.data.id)
+    setHostId(res.data.id as number)
   }, [])
 
   useEffect(() => {
-    if (session) fetchHostId(session.user.email as string)
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    if (session) void fetchHostId(session.user.email!)
   }, [session])
 
   return {
     isLoadingHostId: !session || isLoading,
-    hostId,
+    hostId
   }
 }

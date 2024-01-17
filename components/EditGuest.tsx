@@ -7,14 +7,6 @@ import {
   HStack,
   IconButton,
   Input,
-  Spacer,
-  useBoolean,
-  useDisclosure,
-  useToast,
-} from '@chakra-ui/react'
-import { BsAlarm, BsDash, BsPlus } from 'react-icons/bs'
-
-import {
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -22,25 +14,32 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Spacer,
+  useBoolean,
+  useDisclosure,
+  useToast
 } from '@chakra-ui/react'
+import { BsAlarm, BsDash, BsPlus } from 'react-icons/bs'
+
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import { useFormik } from 'formik'
-import { ChangeEvent, useEffect } from 'react'
+import { useEffect, type ChangeEvent } from 'react'
 import { toAmount, toNames } from '../lib/string'
 import { updateGuest } from '../lib/supabase'
-import { Guest, States } from '../types'
+import { States, type Guest } from '../types'
 import { DeleteGuest } from './DeleteGuest'
 
-type Props = {
+interface Props {
   guest: Guest
   children: React.ReactNode
   onSuccess: () => void
 }
 
-export const EditGuest: React.FC<Props> = ({ children, guest, onSuccess }) => {
+export const EditGuest = ({ children, guest, onSuccess }: Props) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isLoading, loading] = useBoolean(false)
   const toast = useToast({
-    position: 'bottom-right',
+    position: 'bottom-right'
   })
   const client = useSupabaseClient()
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -49,7 +48,7 @@ export const EditGuest: React.FC<Props> = ({ children, guest, onSuccess }) => {
     initialValues: {
       rawNames: guest.name.join(', '),
       isFamily: guest.isFamily,
-      maxAmount: guest.maxAmount,
+      maxAmount: guest.maxAmount
     },
     onSubmit: async (values) => {
       try {
@@ -58,12 +57,12 @@ export const EditGuest: React.FC<Props> = ({ children, guest, onSuccess }) => {
           .update({
             isFamily: values.isFamily,
             name: toNames(values.rawNames),
-            maxAmount: values.maxAmount,
+            maxAmount: values.maxAmount
           })
           .match({ slug: guest.slug, event: guest.event })
 
         if (error) {
-          if ((error.code = '23505')) {
+          if ((error.code === '23505')) {
             // TODO: This error is not unique for duplicated slug
             formik.setFieldError('slug', 'Este enlace ya existe')
             throw new Error('El enlace ya existe, utiliza uno distinto: ')
@@ -74,7 +73,7 @@ export const EditGuest: React.FC<Props> = ({ children, guest, onSuccess }) => {
 
         toast({
           title: 'Invitado actualizado!',
-          status: 'success',
+          status: 'success'
         })
 
         onClose()
@@ -83,23 +82,23 @@ export const EditGuest: React.FC<Props> = ({ children, guest, onSuccess }) => {
       } catch (e: any) {
         toast({
           title: e.message,
-          status: 'error',
+          status: 'error'
         })
       }
-    },
+    }
   })
 
   useEffect(() => {
-    formik.setValues({
+    void formik.setValues({
       rawNames: guest.name.join(', '),
       isFamily: guest.isFamily,
-      maxAmount: guest.maxAmount,
+      maxAmount: guest.maxAmount
     })
   }, [guest])
 
   const handleWriteName = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
-    formik.setFieldValue('rawNames', value)
+    void formik.setFieldValue('rawNames', value)
   }
 
   const handleDelete = () => {
@@ -112,10 +111,10 @@ export const EditGuest: React.FC<Props> = ({ children, guest, onSuccess }) => {
 
     await updateGuest(guest, {
       state: States.pending,
-      amount: undefined,
+      amount: undefined
     })
 
-    await onSuccess()
+    onSuccess()
     loading.off()
     onClose()
   }
@@ -164,7 +163,7 @@ export const EditGuest: React.FC<Props> = ({ children, guest, onSuccess }) => {
                 <IconButton
                   disabled={!isFamily || maxAmount <= toAmount(rawNames)}
                   onClick={() => {
-                    formik.setFieldValue('maxAmount', +maxAmount - 1)
+                    void formik.setFieldValue('maxAmount', +maxAmount - 1)
                   }}
                   colorScheme="blue"
                   size="xs"
@@ -183,7 +182,7 @@ export const EditGuest: React.FC<Props> = ({ children, guest, onSuccess }) => {
                 <IconButton
                   disabled={!isFamily}
                   onClick={() => {
-                    formik.setFieldValue('maxAmount', +maxAmount + 1)
+                    void formik.setFieldValue('maxAmount', +maxAmount + 1)
                   }}
                   colorScheme="blue"
                   size="xs"
@@ -200,7 +199,7 @@ export const EditGuest: React.FC<Props> = ({ children, guest, onSuccess }) => {
           <ModalFooter gap={2}>
             <IconButton
               disabled={guest.state === States.pending}
-              onClick={handleSetToPending}
+              onClick={() => { void handleSetToPending }}
               colorScheme="orange"
               aria-label="a pending"
               icon={<BsAlarm />}
@@ -213,7 +212,7 @@ export const EditGuest: React.FC<Props> = ({ children, guest, onSuccess }) => {
             <Spacer />
             <Button
               variant="ghost"
-              onClick={() => formik.resetForm()}
+              onClick={() => { formik.resetForm() }}
               isLoading={formik.isSubmitting}
             >
               Limpiar
@@ -221,7 +220,7 @@ export const EditGuest: React.FC<Props> = ({ children, guest, onSuccess }) => {
             <Spacer />
             <Button
               colorScheme="blue"
-              onClick={() => formik.handleSubmit()}
+              onClick={() => { formik.handleSubmit() }}
               isLoading={formik.isSubmitting}
             >
               Actualizar

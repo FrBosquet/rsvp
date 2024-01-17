@@ -1,12 +1,12 @@
 'use client'
 
-import { useFormState, useFormStatus } from "react-dom"
-import { twMerge } from "tailwind-merge"
+import { useFormState, useFormStatus } from 'react-dom'
+import { twMerge } from 'tailwind-merge'
 
-type Props = {
+interface Props {
   children: React.ReactNode
   className?: string
-  action: any
+  action: unknown
 }
 
 export const Button = ({ children, className }: Pick<Props, 'children' | 'className'>) => {
@@ -28,9 +28,9 @@ export const Fieldset = ({ children, className }: Pick<Props, 'children' | 'clas
 }
 
 export const Form = ({ action, className, children }: Props) => {
-  const [state, formAction] = useFormState(action, { error: '' })
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+  const [state, formAction] = useFormState(action as any, { error: '' })
   const { pending } = useFormStatus()
-
 
   return <form className={twMerge('flex gap-2', className)} action={formAction}>
 

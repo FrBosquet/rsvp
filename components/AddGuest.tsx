@@ -8,14 +8,6 @@ import {
   HStack,
   IconButton,
   Input,
-  Spacer,
-  Tooltip,
-  useDisclosure,
-  useToast,
-} from '@chakra-ui/react'
-import { BsDash, BsFillPersonPlusFill, BsPlus } from 'react-icons/bs'
-
-import {
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -23,23 +15,29 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Spacer,
+  Tooltip,
+  useDisclosure,
+  useToast
 } from '@chakra-ui/react'
+import { BsDash, BsFillPersonPlusFill, BsPlus } from 'react-icons/bs'
+
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import { useFormik } from 'formik'
-import { ChangeEvent } from 'react'
+import { type ChangeEvent } from 'react'
 import removeAccents from 'remove-accents'
 import { toAmount, toNames, toSlug } from '../lib/string'
 import { useHostId } from '../lib/useHost'
 
-type Props = {
+interface Props {
   onSuccess: () => void
 }
 
-export const AddGuest: React.FC<Props> = ({ onSuccess }) => {
+export const AddGuest = ({ onSuccess }: Props) => {
   const { isLoadingHostId, hostId } = useHostId()
 
   const toast = useToast({
-    position: 'bottom-right',
+    position: 'bottom-right'
   })
   const client = useSupabaseClient()
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -49,7 +47,7 @@ export const AddGuest: React.FC<Props> = ({ onSuccess }) => {
       rawNames: '',
       isFamily: false,
       maxAmount: 1,
-      slug: '',
+      slug: ''
     },
     onSubmit: async (values) => {
       try {
@@ -59,7 +57,7 @@ export const AddGuest: React.FC<Props> = ({ onSuccess }) => {
           name: toNames(values.rawNames),
           maxAmount: values.maxAmount,
           host: hostId,
-          event: process.env.NEXT_PUBLIC_EVENT_ID,
+          event: process.env.NEXT_PUBLIC_EVENT_ID
         })
 
         if (error) {
@@ -73,7 +71,7 @@ export const AddGuest: React.FC<Props> = ({ onSuccess }) => {
 
         toast({
           title: 'Invitado registrado!',
-          status: 'success',
+          status: 'success'
         })
 
         onClose()
@@ -82,10 +80,10 @@ export const AddGuest: React.FC<Props> = ({ onSuccess }) => {
       } catch (e: any) {
         toast({
           title: e.message,
-          status: 'error',
+          status: 'error'
         })
       }
-    },
+    }
   })
 
   const handleChangeName = (e: ChangeEvent<HTMLInputElement>) => {
@@ -93,15 +91,15 @@ export const AddGuest: React.FC<Props> = ({ onSuccess }) => {
 
     const amount = toAmount(value)
 
-    formik.setFieldValue('maxAmount', amount)
-    formik.setFieldValue('slug', toSlug(value))
-    formik.setFieldValue('rawNames', value)
+    void formik.setFieldValue('maxAmount', amount)
+    void formik.setFieldValue('slug', toSlug(value))
+    void formik.setFieldValue('rawNames', value)
   }
 
   const handleChangeSlug = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
 
-    formik.setFieldValue('slug', removeAccents(value))
+    void formik.setFieldValue('slug', removeAccents(value))
   }
 
   const { maxAmount, isFamily, rawNames } = formik.values
@@ -167,7 +165,7 @@ export const AddGuest: React.FC<Props> = ({ onSuccess }) => {
                 <IconButton
                   disabled={!isFamily || maxAmount <= toAmount(rawNames)}
                   onClick={() => {
-                    formik.setFieldValue('maxAmount', +maxAmount - 1)
+                    void formik.setFieldValue('maxAmount', +maxAmount - 1)
                   }}
                   colorScheme="blue"
                   size="xs"
@@ -186,7 +184,7 @@ export const AddGuest: React.FC<Props> = ({ onSuccess }) => {
                 <IconButton
                   disabled={!isFamily}
                   onClick={() => {
-                    formik.setFieldValue('maxAmount', +maxAmount + 1)
+                    void formik.setFieldValue('maxAmount', +maxAmount + 1)
                   }}
                   colorScheme="blue"
                   size="xs"
@@ -203,7 +201,7 @@ export const AddGuest: React.FC<Props> = ({ onSuccess }) => {
           <ModalFooter>
             <Button
               variant="ghost"
-              onClick={() => formik.resetForm()}
+              onClick={() => { formik.resetForm() }}
               isLoading={formik.isSubmitting || isLoadingHostId}
             >
               Limpiar
@@ -211,7 +209,7 @@ export const AddGuest: React.FC<Props> = ({ onSuccess }) => {
             <Spacer />
             <Button
               colorScheme="blue"
-              onClick={() => formik.handleSubmit()}
+              onClick={() => { formik.handleSubmit() }}
               isLoading={formik.isSubmitting || isLoadingHostId}
             >
               Añadir

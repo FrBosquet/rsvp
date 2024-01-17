@@ -6,10 +6,10 @@ import { Box, Heading, keyframes, VStack } from '@chakra-ui/react'
 import Image from 'next/image'
 import { Card } from '../components/Card'
 import { getGuestTypes } from '../lib/guesttype'
-import { Guest } from '../types'
+import { type Guest } from '../types'
 
-type CoverProps = { guest: Guest }
-type Props = CoverProps & { isFlipped: boolean; onClick: () => void }
+interface CoverProps { guest: Guest }
+type Props = CoverProps & { isFlipped: boolean, onClick: () => void }
 
 const SingleCover = ({ guest: { name } }: CoverProps) => {
   return (

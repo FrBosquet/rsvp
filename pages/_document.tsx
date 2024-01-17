@@ -4,7 +4,6 @@ export default function Document() {
   return (
     <Html>
       <Head>
-        <title>Boda de Jana y Odette</title>
         <link rel="manifest" href="/manifest.json" />
         <link rel="apple-touch-icon" href="/logo192.png" />
         <link rel="icon" href="/favicon-white.png" media="(prefers-color-scheme:dark)" />

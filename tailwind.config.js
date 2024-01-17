@@ -8,6 +8,13 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}"
   ],
   theme: {
+    container: {
+      center: true,
+      padding: "2rem",
+      screens: {
+        "2xl": "1400px",
+      },
+    },
     extend: {
       fontFamily: {
         script: ['var(--font-script)'],
@@ -25,7 +32,8 @@ module.exports = {
         '5xl': 'calc(var(--letter-size) * 5)',
         '6xl': 'calc(var(--letter-size) * 6)',
         '6xl': 'calc(var(--letter-size) * 6)',
-        '7xl': 'calc(var(--letter-size) * 7)'
+        '7xl': 'calc(var(--letter-size) * 7)',
+        reset: '1rem',
       },
       spacing: {
         'c100': 'calc(20 * var(--letter-size) / 100)',
@@ -38,13 +46,82 @@ module.exports = {
         'c5': 'calc(20 * var(--letter-size) / 5)',
         'c1': 'calc(20 * var(--letter-size))',
       },
+      lineHeight: {
+        '08': '0.8',
+      },
+      letterSpacing: {
+        'xl': '0.5rem',
+        '2xl': '1rem',
+      },
+      colors: {
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
+      },
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
+      },
+      keyframes: {
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+        "fade-in": {
+          from: { opacity: "0" },
+          "80%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
+        click: {
+          from: { transform: "scale(1)" },
+          to: { transform: "scale(1.2)" },
+        },
+      },
       animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
         'click': 'click 0.6s alternate infinite',
         'fade-in': 'fade-in 4s linear 1'
-      }
+      },
     },
   },
   plugins: [
+    require("tailwindcss-animate"),
     plugin(function ({ addUtilities, addComponents, theme }) {
 
       addUtilities({
@@ -74,7 +151,7 @@ module.exports = {
         },
         '.text-inset': {
           'text-shadow': '0px 0px 2px rgba(0, 0, 0, 0.3)'
-        }
+        },
       })
 
       addComponents({

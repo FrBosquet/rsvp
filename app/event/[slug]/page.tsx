@@ -1,7 +1,7 @@
-import { CardFlipper } from "@/components/Cards/Flipper"
-import { getFromSlug } from "@/lib/supabase"
+import { CardFlipper } from '@/components/Cards/Flipper'
+import { getFromSlug } from '@/lib/supabase'
 
-type Route = {
+interface Route {
   params: {
     slug: string
   }

@@ -19,13 +19,13 @@ const Home: NextPage = () => {
   const { replace } = useRouter()
   const { supabaseClient, isLoading, session } = useSessionContext()
   const toast = useToast({
-    position: 'bottom-right',
+    position: 'bottom-right'
   })
 
   const formik = useFormik({
     initialValues: {
       email: '',
-      password: '',
+      password: ''
     },
     onSubmit: async (values) => {
       try {
@@ -36,12 +36,11 @@ const Home: NextPage = () => {
           .limit(1)
           .single()
 
-        if (!data)
-          throw new Error('Anfitrion no encontrado. Contacta al administrador')
+        if (!data) { throw new Error('Anfitrion no encontrado. Contacta al administrador') }
 
         const { id } = data
 
-        sessionStorage.setItem('host_id', id)
+        sessionStorage.setItem('host_id', id as string)
 
         const { error } = await supabaseClient.auth.signInWithPassword(
           formik.values
@@ -51,15 +50,15 @@ const Home: NextPage = () => {
       } catch (e: any) {
         toast({
           title: e.message,
-          status: 'error',
+          status: 'error'
         })
       }
-    },
+    }
   })
 
   useEffect(() => {
     if (!isLoading && session) {
-      replace('/admin/panel')
+      void replace('/admin/panel')
     }
   }, [isLoading, session])
 
@@ -76,7 +75,7 @@ const Home: NextPage = () => {
     if (response.error) {
       toast({
         title: 'Error conectando a la base de datos',
-        status: 'error',
+        status: 'error'
       })
       return
     }
@@ -86,7 +85,7 @@ const Home: NextPage = () => {
     if (data.redeemed) {
       toast({
         title: 'Este usuario ya ha sido registrado',
-        status: 'error',
+        status: 'error'
       })
       return
     }
@@ -99,12 +98,12 @@ const Home: NextPage = () => {
         .match({ email: values.email })
       toast({
         title: 'Usuario registrado!',
-        status: 'success',
+        status: 'success'
       })
     } catch (e) {
       toast({
         title: 'Error realizando el registro',
-        status: 'error',
+        status: 'error'
       })
     }
   }, [formik.values])
@@ -144,7 +143,7 @@ const Home: NextPage = () => {
           <HStack>
             <Button
               isLoading={isLoading || formik.isSubmitting}
-              onClick={signup}
+              onClick={() => { void signup }}
               colorScheme='dark'
             >
               Registrar

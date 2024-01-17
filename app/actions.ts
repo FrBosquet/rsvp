@@ -1,8 +1,8 @@
 'use server'
 
-import { prisma } from "@/lib/prisma"
-import { currentUser } from "@clerk/nextjs"
-import { redirect } from "next/navigation"
+import { prisma } from '@/lib/prisma'
+import { currentUser } from '@clerk/nextjs'
+import { redirect } from 'next/navigation'
 
 // events
 
@@ -10,13 +10,12 @@ export async function createEvent(prevState: { error: string }, formData: FormDa
   const name = formData.get('name')
   const slug = formData.get('slug')
 
-
   try {
     await prisma.event.create({
       data: {
         name: name as string,
-        slug: slug as string,
-      },
+        slug: slug as string
+      }
     })
   } catch (e: any) {
     return {
@@ -35,7 +34,6 @@ export async function deleteEvent(formData: FormData) {
       id
     }
   })
-
 
   redirect('/private')
 }
@@ -94,7 +92,7 @@ export async function acceptEventOwnership(formData: FormData) {
 
   await prisma.userOnEvent.update({
     where: {
-      id: eventOnUser.id,
+      id: eventOnUser.id
     },
     data: {
       user: {

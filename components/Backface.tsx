@@ -14,7 +14,7 @@ import {
   Tabs,
   Text,
   VStack,
-  useBreakpointValue,
+  useBreakpointValue
 } from '@chakra-ui/react'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
@@ -23,11 +23,11 @@ import { IoIosGift } from 'react-icons/io'
 import { MdCancel, MdHotel, MdMessage } from 'react-icons/md'
 import { Card } from '../components/Card'
 import { getGuestTypes } from '../lib/guesttype'
-import { Guest, States } from '../types'
+import { States, type Guest } from '../types'
 import { Hotel } from './Hotel'
 import { Transportation } from './Transportation'
 
-type Props = {
+interface Props {
   isLoading: boolean
   guest: Guest
   isFlipped: boolean
@@ -42,21 +42,21 @@ export const Backface = ({
   guest,
   isFlipped,
   onClickYes,
-  onClickNo,
+  onClickNo
 }: Props) => {
   const [scrollable, setScrollable] = useState('hidden')
 
   const isMobile =
     useBreakpointValue({
       base: true,
-      sm: false,
-    }) || false
+      sm: false
+    }) ?? false
   const { isSingle } = getGuestTypes(guest)
   const { state } = guest
 
   useEffect(() => {
     if (isFlipped) {
-      setTimeout(() => setScrollable('scroll'), 1000)
+      setTimeout(() => { setScrollable('scroll') }, 1000)
     }
   }, [isFlipped])
 
@@ -138,7 +138,7 @@ export const Backface = ({
               variant="sans"
               display={{
                 base: 'none',
-                sm: 'block',
+                sm: 'block'
               }}
             >
               ¡Contamos {isSingle ? 'contigo' : 'con vosotros'}!
@@ -214,10 +214,11 @@ export const Backface = ({
                       w="100%"
                       textAlign="center"
                       cursor="pointer"
-                      onClick={() =>
-                        navigator.clipboard.writeText(
+                      onClick={async () => {
+                        await navigator.clipboard.writeText(
                           'ES43 1465 0100 94 2055346756'
                         )
+                      }
                       }
                       size="md"
                       variant="soft"
@@ -227,7 +228,7 @@ export const Backface = ({
                   </VStack>
                 </TabPanel>
 
-                {/* Contacto Actualizar con los datos de Jana y Odette*/}
+                {/* Contacto Actualizar con los datos de Jana y Odette */}
                 <TabPanel>
                   <VStack w="100%" alignItems="start" spacing={2} h="100%">
                     <Text

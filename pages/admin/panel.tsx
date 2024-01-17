@@ -13,7 +13,6 @@ import {
 } from '@chakra-ui/react'
 import { withPageAuth } from '@supabase/auth-helpers-nextjs'
 import { useSessionContext } from '@supabase/auth-helpers-react'
-import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import {
   useCallback,
@@ -25,11 +24,11 @@ import {
 import { BsSearch } from 'react-icons/bs'
 import { AddGuest } from '../../components/AddGuest'
 import { GuestRow } from '../../components/GuestRow'
-import { FilterActions, initialState, reducer, EMPTY_HOST } from '../../lib/filterReducer'
+import { EMPTY_HOST, FilterActions, initialState, reducer } from '../../lib/filterReducer'
 import { getGuests } from '../../lib/supabase'
-import { Guest, States } from '../../types'
+import { States, type Guest } from '../../types'
 
-type Props = {
+interface Props {
   guests: Guest[]
 }
 
@@ -38,14 +37,14 @@ const count = (prop: keyof Guest) => (acc: number, guest: Guest) =>
 
 const onlyDesktop = {
   base: 'none',
-  md: 'flex',
+  md: 'flex'
 }
 const onlyPhone = {
   base: 'flex',
-  md: 'none',
+  md: 'none'
 }
 
-const Home: NextPage<Props> = ({ guests: serverGuests }) => {
+const Home = ({ guests: serverGuests }: Props) => {
   const [filterState, dispatch] = useReducer(reducer, initialState)
   const [guests, setGuests] = useState(serverGuests)
 
@@ -55,7 +54,7 @@ const Home: NextPage<Props> = ({ guests: serverGuests }) => {
   const logout = useCallback(async () => {
     await supabaseClient.auth.signOut()
     sessionStorage.removeItem('host_id')
-    replace('/admin')
+    void replace('/admin')
   }, [])
 
   const filteredList = useMemo(() => {
@@ -64,8 +63,7 @@ const Home: NextPage<Props> = ({ guests: serverGuests }) => {
       .filter(({ state, slug, host }) => {
         if (filterState.state && state !== filterState.state) return false
         if (filterState.host !== EMPTY_HOST && host.name !== filterState.host) return false
-        if (filterState.name && !slug.includes(filterState.name.toLowerCase()))
-          return false
+        if (filterState.name && !slug.includes(filterState.name.toLowerCase())) { return false }
 
         return true
       })
@@ -124,7 +122,7 @@ const Home: NextPage<Props> = ({ guests: serverGuests }) => {
             size="sm"
             aria-label="salir"
             colorScheme="red"
-            onClick={logout}
+            onClick={() => { void logout() }}
             icon={<LockIcon />}
           />
         </Tooltip>
@@ -134,7 +132,7 @@ const Home: NextPage<Props> = ({ guests: serverGuests }) => {
 
         <Spacer />
 
-        <AddGuest onSuccess={refresh} />
+        <AddGuest onSuccess={() => { void refresh() }} />
       </HStack>
 
       <HStack p={2} bg="gray.800" shadow="base" w="100%" borderRadius="md">
@@ -146,7 +144,7 @@ const Home: NextPage<Props> = ({ guests: serverGuests }) => {
             onChange={(e) => {
               dispatch({
                 type: FilterActions.setFilter,
-                payload: { field: 'name', value: e.currentTarget.value },
+                payload: { field: 'name', value: e.currentTarget.value }
               })
             }}
           />
@@ -158,7 +156,7 @@ const Home: NextPage<Props> = ({ guests: serverGuests }) => {
             onChange={(e) => {
               dispatch({
                 type: FilterActions.setFilter,
-                payload: { field: 'host', value: e.currentTarget.value },
+                payload: { field: 'host', value: e.currentTarget.value }
               })
             }}
           >
@@ -183,11 +181,12 @@ const Home: NextPage<Props> = ({ guests: serverGuests }) => {
         <Tooltip label="pendientes">
           <Button
             variant={filterState.state === States.pending ? 'outline' : 'solid'}
-            onClick={() =>
+            onClick={() => {
               dispatch({
                 type: FilterActions.toggleFilter,
-                payload: { field: 'state', value: States.pending },
+                payload: { field: 'state', value: States.pending }
               })
+            }
             }
             size="xs"
             colorScheme="yellow"
@@ -201,11 +200,12 @@ const Home: NextPage<Props> = ({ guests: serverGuests }) => {
             variant={
               filterState.state === States.accepted ? 'outline' : 'solid'
             }
-            onClick={() =>
+            onClick={() => {
               dispatch({
                 type: FilterActions.toggleFilter,
-                payload: { field: 'state', value: States.accepted },
+                payload: { field: 'state', value: States.accepted }
               })
+            }
             }
             size="xs"
             colorScheme="green"
@@ -219,11 +219,12 @@ const Home: NextPage<Props> = ({ guests: serverGuests }) => {
             variant={
               filterState.state === States.declined ? 'outline' : 'solid'
             }
-            onClick={() =>
+            onClick={() => {
               dispatch({
                 type: FilterActions.toggleFilter,
-                payload: { field: 'state', value: States.declined },
+                payload: { field: 'state', value: States.declined }
               })
+            }
             }
             size="xs"
             colorScheme="red"
@@ -243,7 +244,7 @@ const Home: NextPage<Props> = ({ guests: serverGuests }) => {
       >
         {filteredList.map((guest) => {
           return (
-            <GuestRow onEditSuccess={refresh} key={guest.slug} guest={guest} />
+            <GuestRow onEditSuccess={() => { void refresh() }} key={guest.slug} guest={guest} />
           )
         })}
       </VStack>
@@ -256,7 +257,7 @@ const Home: NextPage<Props> = ({ guests: serverGuests }) => {
           onChange={(e) => {
             dispatch({
               type: FilterActions.setFilter,
-              payload: { field: 'name', value: e.currentTarget.value },
+              payload: { field: 'name', value: e.currentTarget.value }
             })
           }}
         />
@@ -268,7 +269,7 @@ const Home: NextPage<Props> = ({ guests: serverGuests }) => {
           onChange={(e) => {
             dispatch({
               type: FilterActions.setFilter,
-              payload: { field: 'host', value: e.currentTarget.value },
+              payload: { field: 'host', value: e.currentTarget.value }
             })
           }}
         >
@@ -290,10 +291,10 @@ export const getServerSideProps = withPageAuth({
 
     return {
       props: {
-        guests,
-      },
+        guests
+      }
     }
-  },
+  }
 })
 
 export default Home

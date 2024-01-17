@@ -1,9 +1,9 @@
 'use client'
 
-import { useFormStatus } from "react-dom"
-import { twMerge } from "tailwind-merge"
+import { useFormStatus } from 'react-dom'
+import { twMerge } from 'tailwind-merge'
 
-type Props = {
+interface Props {
   children: React.ReactNode
   className?: string
 }

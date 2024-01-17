@@ -1,15 +1,15 @@
-export type FilterState = {
+export interface FilterState {
   host: string
   name: string
   state: string
 }
 
-export const EMPTY_HOST = "EMPTY_HOST"
+export const EMPTY_HOST = 'EMPTY_HOST'
 
 export const initialState = {
   host: EMPTY_HOST,
   name: '',
-  state: '',
+  state: ''
 }
 
 export enum FilterActions {
@@ -19,7 +19,7 @@ export enum FilterActions {
   setFilters,
 }
 
-type Action = {
+interface Action {
   type: FilterActions
   payload: any
 }
@@ -33,14 +33,14 @@ export const reducer = (state: FilterState, action: Action): FilterState => {
     case FilterActions.setFilter:
       derivedState = {
         ...state,
-        [payload.field]: payload.value,
+        [payload.field]: payload.value
       }
 
       break
     case FilterActions.resetFilter:
       derivedState = {
         ...state,
-        [payload.field]: '',
+        [payload.field]: ''
       }
       break
     case FilterActions.toggleFilter:
@@ -49,14 +49,14 @@ export const reducer = (state: FilterState, action: Action): FilterState => {
         [payload.field]:
           state[payload.field as keyof FilterState] === payload.value
             ? ''
-            : payload.value,
+            : payload.value
       }
       break
     case FilterActions.setFilters:
       derivedState = payload as FilterState
       break
     default:
-      throw new Error(`Unknown action ${type}`)
+      throw new Error(`Unknown action ${type as string}`)
   }
 
   try {

@@ -8,24 +8,24 @@ import {
   Button,
   IconButton,
   useBoolean,
-  useDisclosure,
+  useDisclosure
 } from '@chakra-ui/react'
 import { useRef } from 'react'
 import { BsFillTrashFill } from 'react-icons/bs'
 import { deleteGuest } from '../lib/supabase'
-import { Guest } from '../types'
+import { type Guest } from '../types'
 
-type Props = {
+interface Props {
   guest: Guest
   isLoading: boolean
   onDelete: () => void
 }
 
-export const DeleteGuest: React.FC<Props> = ({
+export const DeleteGuest = ({
   guest,
   isLoading,
-  onDelete,
-}) => {
+  onDelete
+}: Props) => {
   const cancelRef = useRef(null)
   const [isDeleting, deleting] = useBoolean(false)
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -69,7 +69,9 @@ export const DeleteGuest: React.FC<Props> = ({
               <Button
                 isLoading={isDeleting}
                 colorScheme="red"
-                onClick={handleDelete}
+                onClick={() => {
+                  void handleDelete
+                }}
                 ml={3}
               >
                 Borrar

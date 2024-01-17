@@ -1,9 +1,9 @@
 import { twMerge } from 'tailwind-merge'
 
-type Props = {
+interface Props {
   children: React.ReactNode
-  onClick?: () => void,
-  className?: string,
+  onClick?: () => void
+  className?: string
 }
 
 export const Card = ({ children, onClick, className }: Props) => {

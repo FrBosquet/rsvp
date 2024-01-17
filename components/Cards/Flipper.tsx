@@ -1,11 +1,11 @@
 'use client'
 
-import { Guest } from "@/types"
-import { useState } from "react"
-import { Backface } from "./Backface"
-import { Frontface } from "./Frontface"
+import { type Guest } from '@/types'
+import { useState } from 'react'
+import { Backface } from './Backface'
+import { Frontface } from './Frontface'
 
-type Props = {
+interface Props {
   guest: Guest
 }
 
@@ -17,7 +17,7 @@ export const CardFlipper = ({ guest }: Props) => {
   }
 
   return (
-    <main className="w-screen h-screen flex justify-center items-center perspective">
+    <main className="flex items-center justify-center perspective">
       <Frontface guest={guest} isFlipped={isFlipped} onClick={handleClick} />
       <Backface guest={guest} isFlipped={isFlipped} onClick={handleClick} />
     </main>

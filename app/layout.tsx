@@ -6,13 +6,13 @@ import { ClerkProvider } from '@clerk/nextjs'
 
 export const metadata = {
   title: 'Jana Y Odette',
-  description: 'Invitación a la boda de Jana y Odette',
+  description: 'Invitación a la boda de Jana y Odette'
 }
 
 const sans = Jost({
   weight: ['200', '400', '600'],
   subsets: ['latin'],
-  display: 'swap',
+  display: 'swap'
 })
 
 const serif = Forum({
@@ -30,14 +30,14 @@ const script = WindSong({
 })
 
 export default function RootLayout({
-  children,
+  children
 }: {
   children: React.ReactNode
 }) {
   return (
     <ClerkProvider localization={esES}>
       <html lang="en" className={sans.className}>
-        <body className={`dark min-h-screen bg-zinc-600 ${sans.className} ${script.variable} ${serif.variable}`}>{children}</body>
+        <body className={`dark min-h-screen antialiased ${sans.className} ${script.variable} ${serif.variable}`}>{children}</body>
       </html>
     </ClerkProvider>
   )
