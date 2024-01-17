@@ -87,6 +87,21 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        olive: {
+          DEFAULT: '#758e54',
+          '50': '#f4f6ef',
+          '100': '#e5ebdc',
+          '200': '#cedabc',
+          '300': '#afc294',
+          '400': '#92aa71',
+          '500': '#758e54',
+          '600': '#5a7040',
+          '700': '#475734',
+          '800': '#3b472d',
+          '900': '#333d29',
+          '950': '#192013',
+        },
+
       },
       borderRadius: {
         lg: "var(--radius)",
