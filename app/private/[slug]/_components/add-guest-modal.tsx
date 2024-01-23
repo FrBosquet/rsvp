@@ -11,6 +11,7 @@ import { useUser } from '@clerk/nextjs'
 import { MinusCircleIcon, PlusCircleIcon } from 'lucide-react'
 import { useParams } from 'next/navigation'
 import { useRef, useState, type FormEvent, type MouseEvent } from 'react'
+import { toast } from 'sonner'
 
 const AddButton = () => {
   return <Tooltip>
@@ -45,9 +46,20 @@ export const AddGuestModal = ({ onNewGuest }: Props) => {
       const newGuest = await addGuestToEvent(formData)
 
       onNewGuest(newGuest)
+      toast.success('Invitación creada correctamente')
       setOpen(false)
     } catch (err) {
-      console.error(err)
+      let message = 'Unknown Error'
+      if (err instanceof Error) message = err.message
+
+      switch (true) {
+        case message.includes('Unique constraint'):
+          toast.error('El enlace único especificado ya existe para este evento. Por favor, utiliza un enlace diferente!')
+          break
+        default:
+          toast.error('Error desconocido! Por favor, contacta con el administrador si el error persiste')
+          break
+      }
     } finally {
       setLoading(false)
     }
@@ -100,7 +112,7 @@ export const AddGuestModal = ({ onNewGuest }: Props) => {
           <article className='flex flex-col gap-2'>
             <label className='font-semibold' htmlFor="slug">Enlace</label>
             <Input ref={slugInput} required placeholder="Slug de la invitación" name='slug' id="slug" />
-            <p className='text-sm text-slate-400'>Enlace personalizado y único</p>
+            <p className='text-sm text-slate-400'>Enlace personalizado y único para cada invitación. Este sirve para distinguir el enlace que enviaras a cada invitado.</p>
           </article>
 
           <article className='flex flex-col gap-2'>
