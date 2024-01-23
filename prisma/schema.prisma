@@ -16,6 +16,7 @@ model User {
   createdAt DateTime      @default(now())
   role      String        @default("user")
   events    UserOnEvent[]
+  guests    Guest[]
 }
 
 model Event {
@@ -24,6 +25,7 @@ model Event {
   slug      String        @unique
   createdAt DateTime      @default(now())
   users     UserOnEvent[]
+  guests    Guest[]
 }
 
 model UserOnEvent {
@@ -34,4 +36,22 @@ model UserOnEvent {
   event     Event    @relation(fields: [eventId], references: [id])
   eventId   String
   createdAt DateTime @default(now())
+}
+
+model Guest {
+  slug      String
+  eventId   String
+  event     Event    @relation(fields: [eventId], references: [id])
+  name      String
+  amount    Int?
+  maxAmount Int
+  state     String   @default("pending")
+  hostId    String
+  host      User     @relation(fields: [hostId], references: [id])
+  isFamily  Boolean
+  contacted Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@id([eventId, slug])
 }

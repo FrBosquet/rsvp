@@ -32,6 +32,11 @@ export default async function EventDashboardPage({ params }: Route) {
         include: {
           user: true
         }
+      },
+      guests: {
+        include: {
+          host: true
+        }
       }
     }
   })
@@ -46,6 +51,6 @@ export default async function EventDashboardPage({ params }: Route) {
       <h1 className="text-lg uppercase">{event.name}</h1>
     </header>
 
-    <Manager />
+    <Manager serverGuests={event.guests} />
   </section>
 }

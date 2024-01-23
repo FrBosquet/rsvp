@@ -1,11 +1,11 @@
 'use server'
 
 import { prisma } from '@/lib/prisma'
+import { type GuestWithHost } from '@/types'
 import { currentUser } from '@clerk/nextjs'
 import { redirect } from 'next/navigation'
 
 // events
-
 export async function createEvent(prevState: { error: string }, formData: FormData) {
   const name = formData.get('name')
   const slug = formData.get('slug')
@@ -104,4 +104,51 @@ export async function acceptEventOwnership(formData: FormData) {
   })
 
   redirect('/private')
+}
+
+// guests
+export async function addGuestToEvent(formData: FormData): Promise<GuestWithHost> {
+  const eventSlug = formData.get('eventSlug') as string
+
+  const event = await prisma.event.findFirst({
+    where: {
+      slug: eventSlug
+    }
+  })
+
+  if (!event) {
+    throw new Error('Event not found')
+  }
+
+  const eventId = event?.id
+
+  const name = (formData.get('names') as string).split(',').map((name) => name.trim()).join(', ')
+  const slug = formData.get('slug')
+  const isFamily = formData.get('family') === 'on'
+  const maxAmount = formData.get('guests')
+  const hostId = formData.get('hostId') as string
+
+  const newGuest = await prisma.guest.create({
+    include: {
+      host: true
+    },
+    data: {
+      event: {
+        connect: {
+          id: eventId
+        }
+      },
+      host: {
+        connect: {
+          id: hostId
+        }
+      },
+      slug: slug as string,
+      name,
+      isFamily,
+      maxAmount: parseInt(maxAmount as string)
+    }
+  })
+
+  return newGuest as GuestWithHost
 }

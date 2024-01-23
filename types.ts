@@ -1,10 +1,12 @@
+import { type Guest as PrismaGuest, type User } from '@prisma/client'
+
 export enum States {
   pending = 'pending',
   accepted = 'accepted',
   declined = 'declined',
 }
 
-export type Guest = {
+export interface Guest {
   event: number
   name: string[]
   slug: string
@@ -22,4 +24,8 @@ export enum GuestType {
   single,
   couple,
   family,
+}
+
+export type GuestWithHost = PrismaGuest & {
+  host: User
 }
