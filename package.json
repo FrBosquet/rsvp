@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "migrate": "dotenv -e .env.local -- prisma migrate dev",
+    "generate": "dotenv -e .env.local -- prisma generate",
     "env": "pnpx vercel env pull"
   },
   "dependencies": {

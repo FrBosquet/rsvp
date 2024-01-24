@@ -1,8 +1,9 @@
 'use client'
 
-import { getGuestTypes } from '@/lib/guesttype'
+import { getTypes } from '@/lib/guesttype'
 import click from '@/public/click.png'
-import { type Guest } from '@/types'
+
+import { type Guest } from '@prisma/client'
 import Image from 'next/image'
 import { twMerge } from 'tailwind-merge'
 import { Card } from './Card'
@@ -13,36 +14,40 @@ type Props = CoverProps & { isFlipped: boolean, onClick: () => void }
 const SingleCover = ({ guest: { name } }: CoverProps) => {
   return (
     <section className='flex w-full flex-col items-center font-serif text-3xl leading-none '>
-      <p>{name[0]}</p>
+      <p>{name}</p>
     </section>
   )
 }
 const CoupleCover = ({ guest: { name } }: CoverProps) => {
+  const names = name.split(',').map((n) => n.trim())
+
   return (
     <section className='flex w-full flex-col items-center text-center font-serif text-3xl font-extralight leading-08'>
-      <p className='uppercase'>{name[0]}</p>
+      <p className='uppercase'>{names[0]}</p>
       <p className='text-xl text-zinc-500'>
         &
       </p>
-      <p className='uppercase'>{name[1]}</p>
+      <p className='uppercase'>{names[1]}</p>
     </section>
   )
 }
 const FamilyCover = ({ guest: { name } }: CoverProps) => {
+  const names = name.split(',').map((n) => n.trim())
+
   return (
     <section className='flex w-full flex-col items-center text-center font-serif text-3xl font-extralight leading-08'>
       <p className='text-sm text-zinc-500'>Familia de</p>
-      <p className='uppercase'>{name[0]}</p>
+      <p className='uppercase'>{names[0]}</p>
       <p className='text-xl text-zinc-500'>
         &
       </p>
-      <p className='uppercase'>{name[1]}</p>
+      <p className='uppercase'>{names[1]}</p>
     </section>
   )
 }
 
 export const Frontface = ({ guest, isFlipped, onClick }: Props) => {
-  const { isSingle, isFamily, isCouple } = getGuestTypes(guest)
+  const { isSingle, isFamily, isCouple } = getTypes(guest)
 
   return (
     <Card

@@ -20,9 +20,8 @@ model User {
 }
 
 model Event {
-  id        String        @id @unique @default(cuid())
+  slug      String        @id @unique
   name      String
-  slug      String        @unique
   createdAt DateTime      @default(now())
   users     UserOnEvent[]
   guests    Guest[]
@@ -33,15 +32,15 @@ model UserOnEvent {
   user      User?    @relation(fields: [userId], references: [id])
   userId    String?
   email     String
-  event     Event    @relation(fields: [eventId], references: [id])
-  eventId   String
+  event     Event    @relation(fields: [eventSlug], references: [slug])
+  eventSlug String
   createdAt DateTime @default(now())
 }
 
 model Guest {
   slug      String
-  eventId   String
-  event     Event    @relation(fields: [eventId], references: [id])
+  eventSlug String
+  event     Event    @relation(fields: [eventSlug], references: [slug])
   name      String
   amount    Int?
   maxAmount Int
@@ -53,5 +52,5 @@ model Guest {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@id([eventId, slug])
+  @@id([eventSlug, slug])
 }

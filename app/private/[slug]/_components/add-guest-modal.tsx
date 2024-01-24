@@ -131,7 +131,7 @@ export const AddGuestModal = ({ onNewGuest }: Props) => {
             <label className='font-semibold' htmlFor="guests">Invitados</label>
             <div className="flex items-center justify-center gap-4">
               <button type='button' onClick={handleGuestIncrease} data-op="minus"><MinusCircleIcon /></button>
-              <input ref={guestsInput} name="guests" id="guests" className='w-8 border-none bg-transparent text-center text-lg' defaultValue={2} />
+              <input ref={guestsInput} type='number' min={1} name="guests" id="guests" className='w-8 border-none bg-transparent text-center text-lg' defaultValue={2} />
               <button type='button' onClick={handleGuestIncrease} data-op="plus"><PlusCircleIcon /></button>
             </div>
             <p className='text-sm text-slate-400'>Cuantas personas, como máximo, incluye esta invitación</p>

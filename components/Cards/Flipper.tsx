@@ -1,6 +1,6 @@
 'use client'
 
-import { type Guest } from '@/types'
+import { type Guest } from '@prisma/client'
 import { useState } from 'react'
 import { Backface } from './Backface'
 import { Frontface } from './Frontface'
@@ -17,9 +17,9 @@ export const CardFlipper = ({ guest }: Props) => {
   }
 
   return (
-    <main className="flex items-center justify-center perspective">
+    <aside className="flex items-center justify-center perspective">
       <Frontface guest={guest} isFlipped={isFlipped} onClick={handleClick} />
       <Backface guest={guest} isFlipped={isFlipped} onClick={handleClick} />
-    </main>
+    </aside>
   )
 }

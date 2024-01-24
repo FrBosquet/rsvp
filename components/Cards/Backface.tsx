@@ -1,6 +1,6 @@
 'use client'
 
-import { type Guest } from '@/types'
+import { type Guest } from '@prisma/client'
 import { twMerge } from 'tailwind-merge'
 import { Card } from './Card'
 

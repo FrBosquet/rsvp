@@ -27,11 +27,11 @@ export async function createEvent(prevState: { error: string }, formData: FormDa
 }
 
 export async function deleteEvent(formData: FormData) {
-  const id = formData.get('id') as string
+  const slug = formData.get('slug') as string
 
   await prisma.event.delete({
     where: {
-      id
+      slug
     }
   })
 
@@ -39,14 +39,14 @@ export async function deleteEvent(formData: FormData) {
 }
 
 export async function addOwnerToEvent(formData: FormData) {
-  const eventId = formData.get('id') as string
+  const slug = formData.get('slug') as string
   const email = formData.get('email') as string
 
   await prisma.userOnEvent.create({
     data: {
       event: {
         connect: {
-          id: eventId
+          slug
         }
       },
       email
@@ -57,13 +57,13 @@ export async function addOwnerToEvent(formData: FormData) {
 }
 
 export async function removeOwnerFromEvent(formData: FormData) {
-  const eventId = formData.get('id') as string
+  const eventSlug = formData.get('eventSlug') as string
   const email = formData.get('email') as string
 
   await prisma.userOnEvent.deleteMany({
     where: {
       email,
-      eventId
+      eventSlug
     }
   })
 
@@ -77,11 +77,11 @@ export async function acceptEventOwnership(formData: FormData) {
     throw new Error('User not found')
   }
 
-  const eventId = formData.get('eventId') as string
+  const eventSlug = formData.get('eventSlug') as string
 
   const eventOnUser = await prisma.userOnEvent.findFirst({
     where: {
-      eventId,
+      eventSlug,
       email: user.emailAddresses[0].emailAddress
     }
   })
@@ -110,18 +110,6 @@ export async function acceptEventOwnership(formData: FormData) {
 export async function addGuestToEvent(formData: FormData): Promise<GuestWithHost> {
   const eventSlug = formData.get('eventSlug') as string
 
-  const event = await prisma.event.findFirst({
-    where: {
-      slug: eventSlug
-    }
-  })
-
-  if (!event) {
-    throw new Error('Event not found')
-  }
-
-  const eventId = event?.id
-
   const name = (formData.get('names') as string).split(',').map((name) => name.trim()).join(', ')
   const slug = formData.get('slug')
   const isFamily = formData.get('family') === 'on'
@@ -135,7 +123,7 @@ export async function addGuestToEvent(formData: FormData): Promise<GuestWithHost
     data: {
       event: {
         connect: {
-          id: eventId
+          slug: eventSlug
         }
       },
       host: {

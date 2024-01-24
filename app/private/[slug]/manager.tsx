@@ -1,10 +1,12 @@
 'use client'
 
 import { Select, SelectContent, SelectItem, SelectTrigger } from '@/components/ui/select'
-import { type Guest, type User } from '@prisma/client'
-import { Copy, Search } from 'lucide-react'
+import { type GuestWithHost } from '@/types'
+import { type User } from '@prisma/client'
+import { Search } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { AddGuestModal } from './_components/add-guest-modal'
+import { GuestRow } from './_components/guest-row'
 
 const UserSelector = ({ users }: { users: User[] }) => {
   return <Select>
@@ -19,28 +21,6 @@ const UserSelector = ({ users }: { users: User[] }) => {
   </Select>
 }
 
-type GuestWithHost = Guest & { host: User }
-
-const GuestRow = ({ guest }: { guest: GuestWithHost }) => {
-  const { host } = guest
-
-  return <div className='flex w-full items-center gap-4'>
-    <div className="flex aspect-square w-8 items-center justify-center gap-2 rounded-full bg-pink-400">
-      {host.name.split(' ').map((name) => name[0])}
-    </div>
-    <div className="flex flex-1 flex-col">
-      <p className="text-base font-semibold">{guest.name}</p>
-      <p className="font-mono text-sm text-yellow-600">/{guest.slug}</p>
-    </div>
-    <div className="flex items-center gap-4 text-sm">
-      <p className="">{guest.state === 'pending' ? '...' : guest.amount}/{guest.maxAmount}</p>
-      <Copy size={16} />
-      <input type='checkbox' checked={guest.contacted} />
-    </div>
-
-  </div>
-}
-
 export const Manager = ({ serverGuests }: { serverGuests: GuestWithHost[] }) => {
   const [guests, setGuests] = useState<GuestWithHost[]>(serverGuests)
 
@@ -51,11 +31,11 @@ export const Manager = ({ serverGuests }: { serverGuests: GuestWithHost[] }) => 
   const { guestInvited, guestAccepted, guestPending, guestRejected } = useMemo(() => guests.reduce((acc, guest) => {
     acc.guestInvited += guest.maxAmount
     if (guest.state === 'accepted') {
-      acc.guestAccepted += guest.amount as number
-      acc.guestRejected += (guest.maxAmount as number) - (guest.amount as number)
+      acc.guestAccepted += guest.amount!
+      acc.guestRejected += (guest.maxAmount) - (guest.amount!)
     }
-    if (guest.state === 'pending') acc.guestPending += guest.maxAmount as number
-    if (guest.state === 'rejected') acc.guestRejected += guest.maxAmount as number
+    if (guest.state === 'pending') acc.guestPending += guest.maxAmount
+    if (guest.state === 'rejected') acc.guestRejected += guest.maxAmount
     return acc
   }, { guestInvited: 0, guestAccepted: 0, guestPending: 0, guestRejected: 0 }), [guests])
 
