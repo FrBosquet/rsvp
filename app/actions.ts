@@ -140,3 +140,47 @@ export async function addGuestToEvent(formData: FormData): Promise<GuestWithHost
 
   return newGuest as GuestWithHost
 }
+
+export async function editGuest(formData: FormData): Promise<GuestWithHost> {
+  const eventSlug = formData.get('eventSlug') as string
+  const slug = formData.get('slug') as string
+
+  const name = (formData.get('names') as string).split(',').map((name) => name.trim()).join(', ')
+  const isFamily = formData.get('family') === 'on'
+  const maxAmount = formData.get('guests')
+
+  const updatedGuest = await prisma.guest.update({
+    include: {
+      host: true
+    },
+    where: {
+      eventSlug_slug: {
+        eventSlug,
+        slug
+      }
+    },
+    data: {
+      name,
+      isFamily,
+      maxAmount: parseInt(maxAmount as string)
+    }
+  })
+
+  return updatedGuest as GuestWithHost
+}
+
+export async function deleteGuest(formData: FormData) {
+  const event = formData.get('eventSlug') as string
+  const guest = formData.get('slug') as string
+
+  await prisma.guest.delete({
+    where: {
+      eventSlug_slug: {
+        eventSlug: event,
+        slug: guest
+      }
+    }
+  })
+
+  return true
+}

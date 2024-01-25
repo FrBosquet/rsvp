@@ -3,8 +3,14 @@
 import { type GuestWithHost } from '@/types'
 import { Copy } from 'lucide-react'
 import { useParams } from 'next/navigation'
+import { EditGuestModal } from './edit-guest-modal'
 
-export const GuestRow = ({ guest }: { guest: GuestWithHost }) => {
+interface Props {
+  guest: GuestWithHost
+  onUpdateGuest: (guest: GuestWithHost) => void
+}
+
+export const GuestRow = ({ guest, onUpdateGuest }: Props) => {
   const { host } = guest
   const params = useParams<{ slug: string }>()
 
@@ -13,7 +19,9 @@ export const GuestRow = ({ guest }: { guest: GuestWithHost }) => {
       {host.name.split(' ').map((name) => name[0])}
     </div>
     <div className="flex flex-1 flex-col">
-      <p className="text-base font-semibold">{guest.name}</p>
+      <EditGuestModal guest={guest} onEditGuest={onUpdateGuest}>
+        <p className="text-left text-base font-semibold transition hover:text-pink-400">{guest.name}</p>
+      </EditGuestModal>
       <a href={`/${params?.slug}/${guest.slug}`} target='_blank' className="font-mono text-sm text-yellow-600" rel="noreferrer">/{guest.slug}</a>
     </div>
     <div className="flex items-center gap-4 text-sm">

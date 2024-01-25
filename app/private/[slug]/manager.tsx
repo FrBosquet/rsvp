@@ -28,6 +28,10 @@ export const Manager = ({ serverGuests }: { serverGuests: GuestWithHost[] }) => 
     setGuests((prev) => [...prev, guest].sort((a, b) => a.slug.localeCompare(b.slug)))
   }
 
+  const handleUpdateGuest = (guest: GuestWithHost) => {
+    setGuests((prev) => prev.map((g) => g.slug === guest.slug ? guest : g))
+  }
+
   const { guestInvited, guestAccepted, guestPending, guestRejected } = useMemo(() => guests.reduce((acc, guest) => {
     acc.guestInvited += guest.maxAmount
     if (guest.state === 'accepted') {
@@ -56,7 +60,7 @@ export const Manager = ({ serverGuests }: { serverGuests: GuestWithHost[] }) => 
       </article>
       <article className="flex w-full flex-1 flex-col gap-4 rounded-2xl bg-gradient-to-b from-olive-900 to-olive-950/10 p-4 text-slate-200">
         {guests.map((guest) => {
-          return <GuestRow key={guest.slug} guest={guest} />
+          return <GuestRow onUpdateGuest={handleUpdateGuest} key={guest.slug} guest={guest} />
         })}
       </article>
     </>
