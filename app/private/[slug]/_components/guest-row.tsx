@@ -1,6 +1,7 @@
 'use client'
 
 import { type GuestWithHost } from '@/types'
+import { type Guest } from '@prisma/client'
 import { Copy } from 'lucide-react'
 import { useParams } from 'next/navigation'
 import { EditGuestModal } from './edit-guest-modal'
@@ -8,9 +9,10 @@ import { EditGuestModal } from './edit-guest-modal'
 interface Props {
   guest: GuestWithHost
   onUpdateGuest: (guest: GuestWithHost) => void
+  onDeleteGuest: (guest: Guest) => void
 }
 
-export const GuestRow = ({ guest, onUpdateGuest }: Props) => {
+export const GuestRow = ({ guest, onUpdateGuest, onDeleteGuest }: Props) => {
   const { host } = guest
   const params = useParams<{ slug: string }>()
 
@@ -19,7 +21,7 @@ export const GuestRow = ({ guest, onUpdateGuest }: Props) => {
       {host.name.split(' ').map((name) => name[0])}
     </div>
     <div className="flex flex-1 flex-col">
-      <EditGuestModal guest={guest} onEditGuest={onUpdateGuest}>
+      <EditGuestModal onDeleteGuest={onDeleteGuest} guest={guest} onEditGuest={onUpdateGuest}>
         <p className="text-left text-base font-semibold transition hover:text-pink-400">{guest.name}</p>
       </EditGuestModal>
       <a href={`/${params?.slug}/${guest.slug}`} target='_blank' className="font-mono text-sm text-yellow-600" rel="noreferrer">/{guest.slug}</a>

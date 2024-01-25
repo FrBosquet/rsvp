@@ -11,14 +11,16 @@ import { MinusCircleIcon, PlusCircleIcon } from 'lucide-react'
 import { useParams } from 'next/navigation'
 import { useRef, useState, type FormEvent, type MouseEvent } from 'react'
 import { toast } from 'sonner'
+import { DeleteGuestModal } from './delete-guest-overlay'
 
 interface Props {
   onEditGuest: (guest: GuestWithHost) => void
+  onDeleteGuest: (guest: Guest) => void
   guest: Guest
   children: React.ReactNode
 }
 
-export const EditGuestModal = ({ onEditGuest, guest, children }: Props) => {
+export const EditGuestModal = ({ onEditGuest, onDeleteGuest, guest, children }: Props) => {
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
   const params = useParams()
@@ -53,6 +55,11 @@ export const EditGuestModal = ({ onEditGuest, guest, children }: Props) => {
     }
   }
 
+  const handleDelete = async (guest: Guest) => {
+    onDeleteGuest(guest)
+    setOpen(false)
+  }
+
   const handleGuestIncrease = (e: MouseEvent<HTMLButtonElement>) => {
     const target = e.currentTarget
     const op = target.dataset.op as 'minus' | 'plus'
@@ -72,7 +79,7 @@ export const EditGuestModal = ({ onEditGuest, guest, children }: Props) => {
     <DialogContent>
       <DialogHeader>
         <DialogTitle>Editar invitación de {guest.name}</DialogTitle>
-        <DialogDescription>Crea una nueva invitación</DialogDescription>
+        <DialogDescription>Edita una invitación</DialogDescription>
       </DialogHeader>
 
       <form id='edit-guest-modal' onSubmit={handleSubmit}>
@@ -116,7 +123,13 @@ export const EditGuestModal = ({ onEditGuest, guest, children }: Props) => {
       </form>
 
       <DialogFooter>
-        <button type='submit' form='edit-guest-modal'>{loading ? <Spinner /> : 'Guardar'}</button>
+        <menu className=' flex w-full justify-between'>
+          <DeleteGuestModal guest={guest} onDeleteGuest={handleDelete}>
+            <button type='button' className='rounded-sm bg-red-700 p-1'>Eliminar</button>
+          </DeleteGuestModal>
+
+          <button type='submit' form='edit-guest-modal'>{loading ? <Spinner /> : 'Guardar'}</button>
+        </menu>
       </DialogFooter>
     </DialogContent>
   </Dialog>

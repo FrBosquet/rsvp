@@ -2,9 +2,10 @@
 
 import { Select, SelectContent, SelectItem, SelectTrigger } from '@/components/ui/select'
 import { type GuestWithHost } from '@/types'
-import { type User } from '@prisma/client'
+import { type Guest, type User } from '@prisma/client'
 import { Search } from 'lucide-react'
 import { useMemo, useState } from 'react'
+import { toast } from 'sonner'
 import { AddGuestModal } from './_components/add-guest-modal'
 import { GuestRow } from './_components/guest-row'
 
@@ -32,6 +33,10 @@ export const Manager = ({ serverGuests }: { serverGuests: GuestWithHost[] }) => 
     setGuests((prev) => prev.map((g) => g.slug === guest.slug ? guest : g))
   }
 
+  const handleDeleteGuest = (guest: Guest) => {
+    setGuests((prev) => prev.filter((g) => g.slug !== guest.slug))
+  }
+
   const { guestInvited, guestAccepted, guestPending, guestRejected } = useMemo(() => guests.reduce((acc, guest) => {
     acc.guestInvited += guest.maxAmount
     if (guest.state === 'accepted') {
@@ -53,14 +58,16 @@ export const Manager = ({ serverGuests }: { serverGuests: GuestWithHost[] }) => 
         <div className='flex gap-1'>
           <AddGuestModal onNewGuest={handleNewGuest} />
           <div className='mx-3 h-6 border-l-2' />
-          <button className="aspect-square w-6 rounded-md bg-yellow-500 text-sm font-semibold text-slate-900 hover:bg-yellow-300">{guestPending}</button>
+          <button onClick={() => {
+            toast.success('Test de exito')
+          }} className="aspect-square w-6 rounded-md bg-yellow-500 text-sm font-semibold text-slate-900 hover:bg-yellow-300">{guestPending}</button>
           <button className="aspect-square w-6 rounded-md bg-green-500 text-sm font-semibold text-slate-900 hover:bg-green-300">{guestAccepted}</button>
           <button className="aspect-square w-6 rounded-md bg-red-500 text-sm font-semibold text-slate-900 hover:bg-red-300">{guestRejected}</button>
         </div>
       </article>
       <article className="flex w-full flex-1 flex-col gap-4 rounded-2xl bg-gradient-to-b from-olive-900 to-olive-950/10 p-4 text-slate-200">
         {guests.map((guest) => {
-          return <GuestRow onUpdateGuest={handleUpdateGuest} key={guest.slug} guest={guest} />
+          return <GuestRow onDeleteGuest={handleDeleteGuest} onUpdateGuest={handleUpdateGuest} key={guest.slug} guest={guest} />
         })}
       </article>
     </>

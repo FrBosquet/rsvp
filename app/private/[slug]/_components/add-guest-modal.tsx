@@ -11,6 +11,7 @@ import { useUser } from '@clerk/nextjs'
 import { MinusCircleIcon, PlusCircleIcon } from 'lucide-react'
 import { useParams } from 'next/navigation'
 import { useRef, useState, type FormEvent, type MouseEvent } from 'react'
+import removeAccents from 'remove-accents'
 import { toast } from 'sonner'
 
 const AddButton = () => {
@@ -69,7 +70,7 @@ export const AddGuestModal = ({ onNewGuest }: Props) => {
     const target = e.currentTarget
     const value = target.value
 
-    const sanitizedValue = value.replace(/,/g, 'y').replace(/[^a-z0-9]/gi, '').toLowerCase()
+    const sanitizedValue = removeAccents(value).replace(/,/g, 'y').replace(/[^a-z0-9]/gi, '').toLowerCase()
 
     if (slugInput?.current) {
       slugInput.current.value = sanitizedValue
