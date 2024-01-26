@@ -29,3 +29,10 @@ export enum GuestType {
 export type GuestWithHost = PrismaGuest & {
   host: User
 }
+
+export enum STATE {
+  pending = 'pending',
+  accepted = 'accepted',
+  rejected = 'rejected',
+  accepting = 'accepting'
+}

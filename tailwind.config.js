@@ -46,6 +46,9 @@ module.exports = {
         'c5': 'calc(20 * var(--letter-size) / 5)',
         'c1': 'calc(20 * var(--letter-size))',
       },
+      boxShadow: {
+        heavy: '0 0 var(--letter-size) rgba(0, 0, 0, 0.5)',
+      },
       lineHeight: {
         '08': '0.8',
       },
@@ -167,6 +170,19 @@ module.exports = {
         '.text-inset': {
           'text-shadow': '0px 0px 2px rgba(0, 0, 0, 0.3)'
         },
+        '.amount-card': {
+          transform: 'translateZ(0)) rotateX(-10deg)',
+          top: '100%',
+          transition: 'all 1s ease-in-out',
+        },
+        '.amount-card-visible': {
+          transform: 'translateZ(calc(var(--letter-size) * 8)) rotateX(10deg)',
+          top: '70%',
+        },
+        '.size-screen': {
+          width: '100vw',
+          height: '100vh',
+        }
       })
 
       addComponents({
@@ -180,7 +196,7 @@ module.exports = {
           'transform-style': 'preserve-3d',
           'width': 'var(--card-width)',
           'aspect-ratio': '1 / var(--ratio)',
-          'transition': 'transform 2s ease-in-out',
+          'transition': 'all 2s ease-in-out',
         },
         '.button-fill-base': {
           'background-size': '0%',
