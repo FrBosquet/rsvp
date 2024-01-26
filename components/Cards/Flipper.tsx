@@ -11,16 +11,25 @@ interface Props {
   guest: Guest
 }
 
-export const CardFlipper = ({ guest }: Props) => {
+export const CardFlipper = ({ guest: userGuest }: Props) => {
+  const [guest, setGuest] = useState<Guest>(userGuest)
   const [isFlipped, setIsFlipped] = useState(false)
-  const [state, setState] = useState<STATE>(guest.state as STATE)
+
+  const handleUpdateGuest = (guest: Guest) => {
+    setGuest(guest)
+  }
 
   const handleClick = () => {
     setIsFlipped(f => !f)
   }
 
   const handleStateChange = (state: STATE) => {
-    setState(state)
+    setGuest(g => {
+      return {
+        ...g,
+        state
+      }
+    })
   }
 
   return (
@@ -28,7 +37,7 @@ export const CardFlipper = ({ guest }: Props) => {
       <Frontface guest={guest} isFlipped={isFlipped} onClick={handleClick} />
       <Backface guest={guest} isFlipped={isFlipped} onClick={handleStateChange} />
 
-      <AcceptanceCard guest={guest} state={state} onCancel={() => { setState(STATE.pending) }} />
+      <AcceptanceCard guest={guest} state={guest.state as STATE} onAccepted={handleUpdateGuest} onCancel={() => { handleStateChange(STATE.pending) }} />
 
     </aside>
   )

@@ -1,7 +1,7 @@
 'use server'
 
 import { prisma } from '@/lib/prisma'
-import { type GuestWithHost } from '@/types'
+import { type GuestWithHost, type STATE } from '@/types'
 import { currentUser } from '@clerk/nextjs'
 import { type Guest } from '@prisma/client'
 import { redirect } from 'next/navigation'
@@ -185,8 +185,6 @@ export async function deleteGuest(formData: FormData): Promise<Guest> {
     }
   })
 
-  console.log({ event, guest, data })
-
   if (!data) {
     throw new Error('Guest not found')
   }
@@ -201,4 +199,39 @@ export async function deleteGuest(formData: FormData): Promise<Guest> {
   })
 
   return data
+}
+
+export async function replyToInvitation(formData: FormData): Promise<Guest> {
+  const eventSlug = formData.get('eventSlug') as string
+  const slug = formData.get('slug') as string
+  const amount = formData.get('amount') as string
+  const state = formData.get('state') as STATE
+
+  const data = await prisma.guest.findUnique({
+    where: {
+      eventSlug_slug: {
+        eventSlug,
+        slug
+      }
+    }
+  })
+
+  if (!data) {
+    throw new Error('Guest not found')
+  }
+
+  const updatedGuest = await prisma.guest.update({
+    where: {
+      eventSlug_slug: {
+        eventSlug,
+        slug
+      }
+    },
+    data: {
+      amount: parseInt(amount),
+      state
+    }
+  })
+
+  return updatedGuest
 }

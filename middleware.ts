@@ -1,16 +1,15 @@
-import { authMiddleware } from "@clerk/nextjs";
+import { authMiddleware } from '@clerk/nextjs'
 
 export default authMiddleware({
   publicRoutes: [
-    "/",
-    "/event/(.*)",
+    '/',
+    '/janayodette/(.*)' // How can I make this dynamic??
   ],
   ignoredRoutes: [
-    "/api/(.*)",
+    '/api/(.*)'
   ]
-});
-
+})
 
 export const config = {
-  matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
+  matcher: ['/((?!.+\\.[\\w]+$|_next).*)', '/', '/(api|trpc)(.*)']
 }
