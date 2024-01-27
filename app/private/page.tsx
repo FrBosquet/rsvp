@@ -65,7 +65,7 @@ export default async function PrivatePage() {
     }
 
     <article className="grid gap-2 pt-6 md:grid-cols-2 xl:grid-cols-3">
-      {events.map(event => <EventCard key={event.id} event={event} isAdmin={isAdmin} />)}
+      {events.map(event => <EventCard key={event.slug} event={event} isAdmin={isAdmin} />)}
     </article>
   </section>
 }
