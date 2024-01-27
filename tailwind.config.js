@@ -170,15 +170,7 @@ module.exports = {
         '.text-inset': {
           'text-shadow': '0px 0px 2px rgba(0, 0, 0, 0.3)'
         },
-        '.amount-card': {
-          transform: 'translateZ(0)) rotateX(-10deg)',
-          top: '100%',
-          transition: 'all 1s ease-in-out',
-        },
-        '.amount-card-visible': {
-          transform: 'translateZ(calc(var(--letter-size) * 8)) rotateX(10deg)',
-          top: '70%',
-        },
+
         '.size-screen': {
           width: '100vw',
           height: '100vh',
@@ -196,7 +188,7 @@ module.exports = {
           'transform-style': 'preserve-3d',
           'width': 'var(--card-width)',
           'aspect-ratio': '1 / var(--ratio)',
-          'transition': 'transform 2s ease-in-out',
+          'transition': 'transform 2s ease-in-out, top 1s ease-in-out',
         },
         '.button-fill-base': {
           'background-size': '0%',
@@ -205,6 +197,27 @@ module.exports = {
         },
         '.button-fill-hover': {
           'background-size': '100%'
+        },
+        '.amount-card': {
+          transform: 'translateZ(0)) rotateX(-10deg)',
+          top: '100%',
+          transition: 'all 1s ease-in-out',
+        },
+        '.amount-card-visible': {
+          transform: 'translateZ(calc(var(--letter-size) * 8)) rotateX(10deg)',
+          top: '70%',
+        },
+        '.accepted-card': {
+
+          transform: 'translateZ(calc(var(--letter-size) * 8)) rotateX(10deg) translateY(75%)',
+        },
+        '.accepted-card-hidden': {
+          transform: 'translateZ(calc(var(--letter-size) * 12)) rotateX(15deg) translateY(100%)',
+          opacity: '0',
+          'pointer-events': 'none',
+        },
+        '.accepted-card-visible': {
+          transform: 'translateZ(0) rotateX(0deg) translateY(5%)',
         },
       })
     })

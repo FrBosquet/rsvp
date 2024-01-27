@@ -82,50 +82,8 @@ export const Backface = ({
             nuestra boda
           </Text>
         </Center>
-        <HStack w="100%" p={4} borderBottom={line}>
-          <VStack px={6} spacing={0}>
-            <Text fontWeight={400}>Dia</Text>
-            <Text size="xxl" fontWeight={600}>
-              Dia
-            </Text>
-            <Text fontWeight={400}>Mes</Text>
-            <Text fontWeight={200}>2024</Text>
-          </VStack>
-          <VStack
-            flex={1}
-            borderLeft={line}
-            px={4}
-            h="100%"
-            justifyContent="space-around"
-          >
-            <Text size="sm">En</Text>
-            <Text fontWeight={600} as="a" href="https://masdoblons.com/">
-              Finca
-            </Text>
-            <Text size="sm">dirección de la finca</Text>
-            <Text size="xl" fontWeight={600}>
-              13:30
-            </Text>
-          </VStack>
-        </HStack>
-
-        {state === States.pending && (
-          <VStack flex={2} w="100%" p={4} spacing={4} justifyContent="center">
-            <Heading size="sm" variant="sans">
-              {isSingle ? '¿Te vienes?' : '¿Os venis?'}
-            </Heading>
-            <HStack w="100%">
-              <Button variant="base" isLoading={isLoading} onClick={onClickYes}>
-                Si
-              </Button>
-              <Button variant="base" isLoading={isLoading} onClick={onClickNo}>
-                No
-              </Button>
-            </HStack>
-          </VStack>
-        )}
-
-        {state === States.accepted && (
+        \
+        {true && (
           <VStack
             flex={3}
             w="100%"
