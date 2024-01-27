@@ -228,7 +228,7 @@ export async function replyToInvitation(formData: FormData): Promise<Guest> {
       }
     },
     data: {
-      amount: parseInt(amount),
+      amount: amount ? parseInt(amount) : 0,
       state
     }
   })

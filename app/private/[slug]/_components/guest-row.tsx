@@ -1,8 +1,9 @@
 'use client'
 
-import { type GuestWithHost } from '@/types'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
+import { STATE, type GuestWithHost } from '@/types'
 import { type Guest } from '@prisma/client'
-import { Copy } from 'lucide-react'
+import { Copy, HelpCircle, type LucideIcon, ThumbsDown, ThumbsUp } from 'lucide-react'
 import { useParams } from 'next/navigation'
 import { EditGuestModal } from './edit-guest-modal'
 
@@ -12,6 +13,30 @@ interface Props {
   onDeleteGuest: (guest: Guest) => void
 }
 
+const StateWidget = ({ state }: { state: string }) => {
+  const isAccepted = state === STATE.accepted
+  const isRejected = state === STATE.rejected
+  const isPending = state === STATE.pending
+
+  let Icon: LucideIcon = HelpCircle
+
+  if (isAccepted) Icon = ThumbsUp
+  if (isRejected) Icon = ThumbsDown
+
+  return <Tooltip>
+    <TooltipTrigger asChild>
+      <Icon size={16} />
+    </TooltipTrigger>
+    <TooltipContent>
+      <p className="text-sm">
+        {isAccepted ? 'El invitado ha aceptado la invitación' : null}
+        {isRejected ? 'El invitado ha rechazado la invitación' : null}
+        {isPending ? 'El invitado aun no ha contestado la invitación' : null}
+      </p>
+    </TooltipContent>
+  </Tooltip>
+}
+
 export const GuestRow = ({ guest, onUpdateGuest, onDeleteGuest }: Props) => {
   const { host } = guest
   const params = useParams<{ slug: string }>()
@@ -19,6 +44,9 @@ export const GuestRow = ({ guest, onUpdateGuest, onDeleteGuest }: Props) => {
   return <div className='flex w-full items-center gap-4'>
     <div className="flex aspect-square w-8 items-center justify-center gap-2 rounded-full bg-pink-400">
       {host.name.split(' ').map((name) => name[0])}
+    </div>
+    <div className="flex">
+      <StateWidget state={guest.state} />
     </div>
     <div className="flex flex-1 flex-col">
       <EditGuestModal onDeleteGuest={onDeleteGuest} guest={guest} onEditGuest={onUpdateGuest}>

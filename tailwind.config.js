@@ -196,7 +196,7 @@ module.exports = {
           'transform-style': 'preserve-3d',
           'width': 'var(--card-width)',
           'aspect-ratio': '1 / var(--ratio)',
-          'transition': 'all 2s ease-in-out',
+          'transition': 'transform 2s ease-in-out',
         },
         '.button-fill-base': {
           'background-size': '0%',
