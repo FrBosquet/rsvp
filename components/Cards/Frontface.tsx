@@ -6,10 +6,10 @@ import click from '@/public/click.png'
 import { type Guest } from '@prisma/client'
 import Image from 'next/image'
 import { twMerge } from 'tailwind-merge'
+import { useGuest } from '../hooks/use-guest'
 import { Card } from './Card'
 
 interface CoverProps { guest: Guest }
-type Props = CoverProps & { isFlipped: boolean, onClick: () => void }
 
 const SingleCover = ({ guest: { name } }: CoverProps) => {
   return (
@@ -46,7 +46,10 @@ const FamilyCover = ({ guest: { name } }: CoverProps) => {
   )
 }
 
-export const Frontface = ({ guest, isFlipped, onClick }: Props) => {
+export const Frontface = () => {
+  const { guest, isFlipped, flip } = useGuest()
+
+  if (!guest) return null
   const { isSingle, isFamily, isCouple } = getTypes(guest)
 
   return (
@@ -54,7 +57,7 @@ export const Frontface = ({ guest, isFlipped, onClick }: Props) => {
       className={twMerge(
         'text-zinc-700',
         isFlipped ? 'flipped-front' : 'flipped-non-front')}
-      onClick={onClick}
+      onClick={flip}
     >
       {isSingle && <SingleCover guest={guest} />}
       {isFamily && <FamilyCover guest={guest} />}
@@ -64,7 +67,9 @@ export const Frontface = ({ guest, isFlipped, onClick }: Props) => {
         className='mt-c20 animate-click backface-hidden'
       >
         <div className='animate-fade-in'>
-          <Image src={click} className='w-c10 opacity-40' alt="Haz click en la carta para voltearla" />
+          <Image src={click}
+            className='w-c10 opacity-40'
+            alt="Haz click en la carta para voltearla" />
         </div>
       </div>
     </Card>

@@ -31,6 +31,12 @@
         "eslint@typescript-eslint/indent": "off",
         "indent": "off",
         "react/react-in-jsx-scope": "off",
+        "react/jsx-max-props-per-line": [
+            1,
+            {
+                "maximum": 1
+            }
+        ],
         "space-before-function-paren": "off",
         "tailwindcss/no-arbitrary-value": [
             "error",

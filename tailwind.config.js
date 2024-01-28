@@ -24,6 +24,7 @@ module.exports = {
         'xs': 'calc(var(--letter-size) * 0.5)',
         'sm': 'calc(var(--letter-size) * 0.75)',
         'base': 'calc(var(--letter-size))',
+        'md': 'calc(var(--letter-size))',
         'lg': 'calc(var(--letter-size) * 1.3)',
         'xl': 'calc(var(--letter-size) * 1.6)',
         '2xl': 'calc(var(--letter-size) * 2)',
@@ -182,13 +183,13 @@ module.exports = {
           '--ratio': '1.8',
           '--card-width': 'min(calc(min(90vw, calc((100vh / var(--ratio)) - 2rem))), calc(1020px / var(--ratio)))',
           '--card-height': 'calc(var(--card-width) * var(--ratio))',
-          '--letter-size': 'calc(var(--card-width) / 20)',
+          '--letter-size': 'calc(var(--card-height) / 40)',
           'display': 'flex',
           'padding': 'var(--letter-size)',
           'transform-style': 'preserve-3d',
           'width': 'var(--card-width)',
           'aspect-ratio': '1 / var(--ratio)',
-          'transition': 'transform 2s ease-in-out, top 1s ease-in-out',
+          'transition': 'transform 2s ease-in-out, top 1s ease-in-out, opacity 150ms ease-in-out',
         },
         '.button-fill-base': {
           'background-size': '0%',
@@ -199,25 +200,21 @@ module.exports = {
           'background-size': '100%'
         },
         '.amount-card': {
-          transform: 'translateZ(0)) rotateX(-10deg)',
-          top: '100%',
-          transition: 'all 1s ease-in-out',
+          transform: 'translateZ(0) rotateX(-10deg) translateY(calc(var(--card-height) * 1.3))',
+          transition: 'transform 650ms ease-in-out',
         },
         '.amount-card-visible': {
-          transform: 'translateZ(calc(var(--letter-size) * 8)) rotateX(10deg)',
-          top: '70%',
+          transform: 'translateZ(calc(var(--letter-size) * 8)) rotateX(10deg) translateY(calc(var(--card-height) * 0.70))',
         },
         '.accepted-card': {
-
-          transform: 'translateZ(calc(var(--letter-size) * 8)) rotateX(10deg) translateY(75%)',
+          transform: 'translateZ(calc(var(--letter-size) * 8)) rotateX(10deg) translateY(calc(var(--card-height) * 0.75))',
         },
         '.accepted-card-hidden': {
-          transform: 'translateZ(calc(var(--letter-size) * 12)) rotateX(15deg) translateY(100%)',
-          opacity: '0',
+          transform: 'translateZ(calc(var(--letter-size) * 12)) rotateX(15deg) translateY(calc(var(--card-height) * 1.5))',
           'pointer-events': 'none',
         },
         '.accepted-card-visible': {
-          transform: 'translateZ(0) rotateX(0deg) translateY(5%)',
+          transform: 'translateZ(10px) rotateX(0deg) translateY(calc(var(--card-height) * 0.05))',
         },
       })
     })

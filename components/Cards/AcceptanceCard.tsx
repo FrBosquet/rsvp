@@ -2,25 +2,26 @@
 
 import { replyToInvitation } from '@/app/actions'
 import { STATE } from '@/types'
-import { type Guest } from '@prisma/client'
 import { MinusCircleIcon, PlusCircleIcon } from 'lucide-react'
 import { useParams } from 'next/navigation'
-import { useState, type FormEvent, type MouseEvent } from 'react'
+import { useEffect, useState, type FormEvent, type MouseEvent } from 'react'
 import { twMerge } from 'tailwind-merge'
+import { useGuest } from '../hooks/use-guest'
 import { Spinner } from '../spinner'
 import { Card } from './Card'
 
-interface Props {
-  guest: Guest
-  state: STATE
-  onCancel: () => void
-  onAccepted: (guest: Guest) => void
-}
-
-export const AcceptanceCard = ({ guest, state, onCancel, onAccepted }: Props) => {
-  const [amount, setAmount] = useState(guest.maxAmount)
+export const AcceptanceCard = () => {
+  const { guest, isAcceptingCardVisible, hideAcceptance, updateGuest } = useGuest()
+  const [amount, setAmount] = useState(0)
   const [loading, setLoading] = useState<boolean>(false)
   const params = useParams<{ event: string, slug: string }>()
+
+  useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+    if (guest) setAmount(guest.amount || guest.maxAmount)
+  }, [guest])
+
+  if (!guest) return null
 
   const { event, slug } = params!
 
@@ -32,11 +33,12 @@ export const AcceptanceCard = ({ guest, state, onCancel, onAccepted }: Props) =>
 
     try {
       const updatedGuest = await replyToInvitation(formData)
-      onAccepted(updatedGuest)
+      updateGuest(updatedGuest)
     } catch (e) {
       alert('Error al enviar la respuesta. Inténtelo de nuevo y si persiste póngase en contacto con su anfitrión.')
     } finally {
       setLoading(false)
+      hideAcceptance()
     }
   }
 
@@ -55,26 +57,40 @@ export const AcceptanceCard = ({ guest, state, onCancel, onAccepted }: Props) =>
   }
 
   return <>
-    <div
+    <button
       className={twMerge(
-        'absolute inset-0 bg-black opacity-0 transition-opacity duration-1000 pointer-events-none',
-        state === STATE.accepting && 'pointer-events-auto opacity-30'
+        'fixed size-screen left-0 top-0 bg-black opacity-0 transition-opacity duration-1000 pointer-events-none',
+        isAcceptingCardVisible && 'pointer-events-auto opacity-30'
       )}
-      onClick={onCancel}
+      onClick={hideAcceptance}
     />
     <Card
       className={twMerge(
-        'shadow-heavy transition-all amount-card',
-        state === STATE.accepting && 'amount-card-visible'
+        'shadow-heavy amount-card',
+        isAcceptingCardVisible && 'amount-card-visible'
       )}
     >
-      <form onSubmit={handleSubmit} className='flex h-full flex-col items-center justify-start gap-4'>
-        <input type="text" hidden name="eventSlug" defaultValue={event} />
-        <input type="text" hidden name="slug" defaultValue={slug} />
-        <input type="text" hidden name="state" defaultValue={STATE.accepted} />
+      <form onSubmit={handleSubmit}
+        className='flex h-full flex-col items-center justify-start gap-4'>
+        <input type="text"
+          hidden
+          name="eventSlug"
+          defaultValue={event} />
+        <input type="text"
+          hidden
+          name="slug"
+          defaultValue={slug} />
+        <input type="text"
+          hidden
+          name="state"
+          defaultValue={STATE.accepted} />
         <h2 className='uppercase'>Cuantos sois</h2>
         <div className='flex items-center justify-center gap-c10'>
-          <button type='button' disabled={amount <= 1} className='text-red-400 disabled:text-red-200' onClick={handleGuestIncrease} data-op="minus"><MinusCircleIcon /></button>
+          <button type='button'
+            disabled={amount <= 1}
+            className='text-red-400 disabled:text-red-200'
+            onClick={handleGuestIncrease}
+            data-op="minus"><MinusCircleIcon /></button>
           <input
             value={amount}
             type='number'
@@ -90,10 +106,22 @@ export const AcceptanceCard = ({ guest, state, onCancel, onAccepted }: Props) =>
               setAmount(v)
             }}
           />
-          <button disabled={amount >= guest.maxAmount} type='button' className='text-olive-400 disabled:text-olive-200' onClick={handleGuestIncrease} data-op="plus"><PlusCircleIcon /></button>
+          <button disabled={amount >= guest.maxAmount}
+            type='button'
+            className='text-olive-400 disabled:text-olive-200'
+            onClick={handleGuestIncrease}
+            data-op="plus"><PlusCircleIcon /></button>
         </div>
 
-        <button disabled={loading} className='button-fill-base rounded-md bg-right p-2 font-serif text-sm font-light uppercase text-zinc-400 transition-all bg-color-emerald hover:button-fill-hover hover:text-zinc-700' onClick={() => { console.log('submit') }}>{loading ? <Spinner /> : 'Confirmar'}</button>
+        <p className='text-xs font-thin text-zinc-400'>{
+          guest.maxAmount === 1
+            ? 'Esta invitación incluye una plaza para ti.'
+            : `Esta invitación incluye ${guest.maxAmount} plazas.`
+        }</p>
+
+        <button disabled={loading}
+          className='button-fill-base rounded-md bg-right p-2 font-serif text-sm font-light uppercase text-zinc-400 transition-all bg-color-emerald hover:button-fill-hover hover:text-zinc-700'
+          onClick={() => { console.log('submit') }}>{loading ? <Spinner /> : 'Confirmar'}</button>
       </form>
 
     </Card>

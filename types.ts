@@ -36,3 +36,8 @@ export enum STATE {
   rejected = 'rejected',
   accepting = 'accepting'
 }
+
+export enum TABS {
+  assistance = 'assistance',
+  contact = 'contact'
+}
