@@ -39,5 +39,8 @@ export enum STATE {
 
 export enum TABS {
   assistance = 'assistance',
-  contact = 'contact'
+  contact = 'contact',
+  housing = 'housing',
+  commuting = 'commuting',
+  gift = 'gift'
 }

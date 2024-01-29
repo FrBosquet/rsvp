@@ -1,5 +1,6 @@
 import { Forum, Jost, WindSong } from 'next/font/google'
 
+import { Toaster } from '@/components/ui/sonner'
 import '@/styles/globals.css'
 import { esES } from '@clerk/localizations'
 import { ClerkProvider } from '@clerk/nextjs'
@@ -41,6 +42,8 @@ export default function RootLayout({
         className={sans.className}>
         <body className={`dark min-h-screen antialiased ${sans.className} ${script.variable} ${serif.variable}`}>
           <NextTopLoader />
+          <Toaster richColors />
+
           {children}
         </body>
       </html>

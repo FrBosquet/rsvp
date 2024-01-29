@@ -14,7 +14,7 @@ export const AnimatedButton = ({ isMarked, onClick, loading, children, className
   return <button
     disabled={loading}
     onClick={onClick}
-    className={twMerge('button-fill-base relative rounded-md font-serif text-sm font-light uppercase text-zinc-700 transition-all hover:button-fill-hover hover:text-zinc-950 disabled:pointer-events-none', className)}>
+    className={twMerge('button-fill-base rounded-md font-serif text-sm font-light uppercase text-zinc-700 transition-all hover:button-fill-hover hover:text-zinc-950 disabled:pointer-events-none', className)}>
     {
       loading
         ? <Spinner className='mx-auto' />

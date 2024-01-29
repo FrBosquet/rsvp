@@ -206,8 +206,9 @@ module.exports = {
         '.amount-card-visible': {
           transform: 'translateZ(calc(var(--letter-size) * 8)) rotateX(10deg) translateY(calc(var(--card-height) * 0.70))',
         },
+
         '.accepted-card': {
-          transform: 'translateZ(calc(var(--letter-size) * 8)) rotateX(10deg) translateY(calc(var(--card-height) * 0.75))',
+          transform: 'translateZ(calc(var(--letter-size) * 8)) rotateX(10deg) translateY(calc(var(--card-height) * 0.85))',
         },
         '.accepted-card-hidden': {
           transform: 'translateZ(calc(var(--letter-size) * 12)) rotateX(15deg) translateY(calc(var(--card-height) * 1.5))',

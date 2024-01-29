@@ -2,17 +2,20 @@
 
 import { useGuest } from '@/components/hooks/use-guest'
 import { useRejectAssistance } from '@/components/hooks/use-reject-assitance'
-import { TABS } from '@/types'
 import { AnimatedButton } from '../animated-button'
 import { Wrapper } from './wrapper'
 
-export const Assistance = () => {
-  const { guest, showAcceptance, currentTab } = useGuest()
+interface Props {
+  visible: boolean
+}
+
+export const Assistance = ({ visible }: Props) => {
+  const { guest, showAcceptance } = useGuest()
   const { loading, handleReject } = useRejectAssistance()
 
   if (!guest) return null
 
-  return (<Wrapper visible={currentTab === TABS.assistance}>
+  return (<Wrapper visible={visible}>
     <h1 className='w-full border-b-2 border-zinc-400 pb-3 text-center font-serif text-xl uppercase'>Asistencia</h1>
     <p className='mb-auto w-full text-left text-base '>{
       guest.amount! === 1
