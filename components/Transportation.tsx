@@ -9,9 +9,7 @@ import {
   Text,
   VStack,
   useDisclosure
-} from '@chakra-ui/react'
-
-import {
+,
   Table,
   TableContainer,
   Tbody,

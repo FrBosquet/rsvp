@@ -1,16 +1,20 @@
 import { Forum, Jost, WindSong } from 'next/font/google'
 
+import { Toaster } from '@/components/ui/sonner'
 import '@/styles/globals.css'
+import { esES } from '@clerk/localizations'
+import { ClerkProvider } from '@clerk/nextjs'
+import NextTopLoader from 'nextjs-toploader'
 
 export const metadata = {
   title: 'Jana Y Odette',
-  description: 'Invitación a la boda de Jana y Odette',
+  description: 'Invitación a la boda de Jana y Odette'
 }
 
-const jost = Jost({
+const sans = Jost({
   weight: ['200', '400', '600'],
   subsets: ['latin'],
-  display: 'swap',
+  display: 'swap'
 })
 
 const serif = Forum({
@@ -28,13 +32,21 @@ const script = WindSong({
 })
 
 export default function RootLayout({
-  children,
+  children
 }: {
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={jost.className}>
-      <body className={`dark min-h-screen bg-zinc-600 ${jost.className} ${script.variable} ${serif.variable}`}>{children}</body>
-    </html>
+    <ClerkProvider localization={esES}>
+      <html lang="en"
+        className={sans.className}>
+        <body className={`dark min-h-screen antialiased ${sans.className} ${script.variable} ${serif.variable}`}>
+          <NextTopLoader />
+          <Toaster richColors />
+
+          {children}
+        </body>
+      </html>
+    </ClerkProvider>
   )
 }

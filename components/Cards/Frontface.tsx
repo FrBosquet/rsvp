@@ -1,65 +1,75 @@
 'use client'
 
-import { getGuestTypes } from '@/lib/guesttype'
+import { getTypes } from '@/lib/guesttype'
 import click from '@/public/click.png'
-import { Guest } from '@/types'
+
+import { type Guest } from '@prisma/client'
 import Image from 'next/image'
 import { twMerge } from 'tailwind-merge'
+import { useGuest } from '../hooks/use-guest'
 import { Card } from './Card'
 
-type CoverProps = { guest: Guest }
-type Props = CoverProps & { isFlipped: boolean; onClick: () => void }
+interface CoverProps { guest: Guest }
 
 const SingleCover = ({ guest: { name } }: CoverProps) => {
   return (
-    <section className='flex flex-col items-center w-full text-3xl leading-none text-huge font-serif '>
-      <p>{name[0]}</p>
+    <section className='flex w-full flex-col items-center font-serif text-3xl leading-none '>
+      <p>{name}</p>
     </section>
   )
 }
 const CoupleCover = ({ guest: { name } }: CoverProps) => {
+  const names = name.split(',').map((n) => n.trim())
+
   return (
-    <section className='flex flex-col items-center w-full text-3xl text-huge font-serif text-center font-extralight leading-[0.8]'>
-      <p className='uppercase'>{name[0]}</p>
-      <p className='text-zinc-500 text-xl'>
+    <section className='flex w-full flex-col items-center text-center font-serif text-3xl font-extralight leading-08'>
+      <p className='uppercase'>{names[0]}</p>
+      <p className='text-xl text-zinc-500'>
         &
       </p>
-      <p className='uppercase'>{name[1]}</p>
+      <p className='uppercase'>{names[1]}</p>
     </section>
   )
 }
 const FamilyCover = ({ guest: { name } }: CoverProps) => {
+  const names = name.split(',').map((n) => n.trim())
+
   return (
-    <section className='flex flex-col items-center w-full leading-[0.8] text-3xl font-serif text-center font-extralight'>
+    <section className='flex w-full flex-col items-center text-center font-serif text-3xl font-extralight leading-08'>
       <p className='text-sm text-zinc-500'>Familia de</p>
-      <p className='uppercase'>{name[0]}</p>
-      <p className='text-zinc-500 text-xl'>
+      <p className='uppercase'>{names[0]}</p>
+      <p className='text-xl text-zinc-500'>
         &
       </p>
-      <p className='uppercase'>{name[1]}</p>
+      <p className='uppercase'>{names[1]}</p>
     </section>
   )
 }
 
-export const Frontface = ({ guest, isFlipped, onClick }: Props) => {
-  const { isSingle, isFamily, isCouple } = getGuestTypes(guest)
+export const Frontface = () => {
+  const { guest, isFlipped, flip } = useGuest()
+
+  if (!guest) return null
+  const { isSingle, isFamily, isCouple } = getTypes(guest)
 
   return (
     <Card
       className={twMerge(
         'text-zinc-700',
         isFlipped ? 'flipped-front' : 'flipped-non-front')}
-      onClick={onClick}
+      onClick={flip}
     >
       {isSingle && <SingleCover guest={guest} />}
       {isFamily && <FamilyCover guest={guest} />}
       {isCouple && <CoupleCover guest={guest} />}
 
       <div
-        className='animate-click backface-hidden mt-c20'
+        className='mt-c20 animate-click backface-hidden'
       >
         <div className='animate-fade-in'>
-          <Image src={click} className='w-c10 opacity-40' alt="Haz click en la carta para voltearla" />
+          <Image src={click}
+            className='w-c10 opacity-40'
+            alt="Haz click en la carta para voltearla" />
         </div>
       </div>
     </Card>

@@ -7,7 +7,7 @@ import {
   Text,
   Tooltip,
   useBoolean,
-  VStack,
+  VStack
 } from '@chakra-ui/react'
 import Link from 'next/link'
 import {
@@ -15,15 +15,14 @@ import {
   BsCheckCircleFill,
   BsFillXCircleFill,
   BsQuestionCircle,
-  BsQuestionCircleFill,
+  BsQuestionCircleFill
 } from 'react-icons/bs'
 import { TiTick } from 'react-icons/ti'
-import { getGuestType } from '../lib/guesttype'
 import { updateGuest } from '../lib/supabase'
-import { Guest, States } from '../types'
+import { States, type Guest } from '../types'
 import { EditGuest } from './EditGuest'
 
-type Props = {
+interface Props {
   guest: Guest
   onEditSuccess: () => void
 }
@@ -31,37 +30,36 @@ type Props = {
 const stateIcons = {
   [States.pending]: BsQuestionCircle,
   [States.accepted]: BsCheckCircleFill,
-  [States.declined]: BsFillXCircleFill,
+  [States.declined]: BsFillXCircleFill
 }
 
 const stateLabels = {
   [States.pending]: 'Pendiente',
   [States.accepted]: 'Aceptado',
-  [States.declined]: 'Rehusado',
+  [States.declined]: 'Rehusado'
 }
 const stateColors = {
   [States.pending]: 'yellow.300',
   [States.accepted]: 'green.300',
-  [States.declined]: 'red.300',
+  [States.declined]: 'red.300'
 }
 
-export const GuestRow: React.FC<Props> = ({ guest, onEditSuccess }) => {
+export const GuestRow = ({ guest, onEditSuccess }: Props) => {
   const [isLoading, loading] = useBoolean(false)
   const { state, amount, slug, contacted } = guest
-  const type = getGuestType(guest)
 
   const copy = () => {
-    navigator.clipboard.writeText(`https://${window.location.host}/${slug}`)
+    void navigator.clipboard.writeText(`https://${window.location.host}/${slug}`)
   }
 
   const toggleContacted = async () => {
     loading.on()
 
     await updateGuest(guest, {
-      contacted: !contacted,
+      contacted: !contacted
     })
 
-    await onEditSuccess()
+    onEditSuccess()
     loading.off()
   }
 
@@ -94,11 +92,10 @@ export const GuestRow: React.FC<Props> = ({ guest, onEditSuccess }) => {
           </Tooltip>
         </EditGuest>
         <HStack>
-          <Link href={`/${slug}`} passHref>
+          <Link href={`/${slug}`} passHref target='_blank'>
             <Text
               flex={1}
               fontSize="xs"
-              target="_blank"
               variant="monospace"
               color="yellow.200"
             >
@@ -123,7 +120,9 @@ export const GuestRow: React.FC<Props> = ({ guest, onEditSuccess }) => {
       <Tooltip hasArrow label={'Marcar contactado'}>
         <IconButton
           isDisabled={isLoading}
-          onClick={toggleContacted}
+          onClick={() => {
+            void toggleContacted()
+          }}
           colorScheme={contacted ? 'green' : 'gray'}
           aria-label="copiar"
           size="xs"

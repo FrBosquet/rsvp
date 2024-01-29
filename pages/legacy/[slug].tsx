@@ -11,21 +11,21 @@ import {
   ModalFooter,
   ModalOverlay,
   Text,
-  useBoolean,
+  useBoolean
 } from '@chakra-ui/react'
-import type { NextPage, NextPageContext } from 'next'
+import type { NextPageContext } from 'next'
 import Head from 'next/head'
 import { useState } from 'react'
 import { Backface } from '../../components/Backface'
 import { Frontface } from '../../components/Frontface'
 import { getFromSlug, updateGuest } from '../../lib/supabase'
-import { Guest, States } from '../../types'
+import { States, type Guest } from '../../types'
 
-type Props = {
+interface Props {
   guest: Guest
 }
 
-const Home: NextPage<Props> = ({ guest }) => {
+const Home = ({ guest }: Props) => {
   const { name, isFamily, slug } = guest
 
   const [isLoading, loading] = useBoolean(false)
@@ -42,7 +42,7 @@ const Home: NextPage<Props> = ({ guest }) => {
     if (isSingle || isModalOpen) {
       const updatedGuest = await updateGuest(guest, {
         state: States.accepted,
-        amount: counter,
+        amount: counter
       })
       setLocalGuest(updatedGuest)
 
@@ -58,7 +58,7 @@ const Home: NextPage<Props> = ({ guest }) => {
     loading.on()
     const updatedGuest = await updateGuest(guest, {
       state: States.declined,
-      amount: counter,
+      amount: counter
     })
     setLocalGuest(updatedGuest)
     loading.off()
@@ -70,6 +70,7 @@ const Home: NextPage<Props> = ({ guest }) => {
   return (
     <Box bg="yellow.100">
       <Head>
+        <title>Boda de Jana y Odette</title>
         <meta name="description" content={pageTitle} />
         <meta property="og:locale" content="es_ES" />
         <meta property="og:type" content="profile" />
@@ -94,8 +95,8 @@ const Home: NextPage<Props> = ({ guest }) => {
           isLoading={isLoading}
           guest={localGuest}
           isFlipped={isFlipped}
-          onClickNo={handleClickNo}
-          onClickYes={handleClickYes}
+          onClickNo={() => { void handleClickNo }}
+          onClickYes={() => { void handleClickYes }}
         />
       </Center>
 
@@ -116,7 +117,7 @@ const Home: NextPage<Props> = ({ guest }) => {
                 aria-label="menos"
                 icon={<MinusIcon />}
                 disabled={counter === 1}
-                onClick={() => setCounter((v) => v - 1)}
+                onClick={() => { setCounter((v) => v - 1) }}
               />
               <Text fontSize={50} px={8} color="black" fontFamily="heading">
                 {counter}
@@ -130,7 +131,7 @@ const Home: NextPage<Props> = ({ guest }) => {
                 aria-label="menos"
                 icon={<AddIcon />}
                 disabled={counter === guest.maxAmount}
-                onClick={() => setCounter((v) => v + 1)}
+                onClick={() => { setCounter((v) => v + 1) }}
               />
             </Center>
           </ModalBody>
@@ -140,7 +141,7 @@ const Home: NextPage<Props> = ({ guest }) => {
               variant="base"
               colorScheme="green"
               isLoading={isLoading}
-              onClick={handleClickYes}
+              onClick={() => { void handleClickYes }}
             >
               Confirmar
             </Button>
@@ -152,23 +153,23 @@ const Home: NextPage<Props> = ({ guest }) => {
 }
 
 export async function getServerSideProps(context: NextPageContext) {
-  // @ts-ignore
-  const slug = context.params.slug
+  // @ts-expect-error for some reason params is not a thing is NextPageContext
+  const slug = context.params.slug as string
   const guest = await getFromSlug(slug)
 
   if (!guest) {
     return {
       redirect: {
         destination: '/',
-        permanent: false,
-      },
+        permanent: false
+      }
     }
   }
 
   return {
     props: {
-      guest,
-    },
+      guest
+    }
   }
 }
 

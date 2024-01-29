@@ -7,32 +7,35 @@ import {
   ModalContent,
   ModalHeader,
   ModalOverlay,
-  Text,
-  VStack,
-  useDisclosure
-} from '@chakra-ui/react'
-
-import {
   Table,
   TableContainer,
   Tbody,
   Td,
+  Text,
   Th,
   Thead,
-  Tr
+  Tr,
+  VStack,
+  useDisclosure
 } from '@chakra-ui/react'
 
 export const Hotel = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   return (
     <>
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen}
+        onClose={onClose}>
         <ModalOverlay />
-        <ModalContent w="calc(100vw - 2rem)" pb={4} bg="white">
+        <ModalContent w="calc(100vw - 2rem)"
+          pb={4}
+          bg="white">
           <ModalHeader color="black">Alojamiento</ModalHeader>
           <ModalCloseButton color="black" />
-          <ModalBody gridGap={4} display="flex" flexDir={'column'}>
-            <Text variant="soft" textAlign="left">
+          <ModalBody gridGap={4}
+            display="flex"
+            flexDir={'column'}>
+            <Text variant="soft"
+              textAlign="left">
               El hotel Castellón Center es un hotel de cuatro estrellas afiliado
               al grupo Melia situado en el centro de la ciudad. Ofrece unas
               instalaciones cómodas para pasar el fin de semana asi como una
@@ -47,7 +50,8 @@ export const Hotel = () => {
             >
               Hotel Castellón Center
             </Text>
-            <Text variant="soft" textAlign="left">
+            <Text variant="soft"
+              textAlign="left">
               Hemos negociado unas condiciones ventajosas con la gerencia del
               establecimiento para que os alojeis en el. Las tarifas acordadas <strong>por noche</strong> son:
             </Text>
@@ -94,13 +98,16 @@ export const Hotel = () => {
                 </Tbody>
               </Table>
             </TableContainer>
-            <Text variant="soft" size="sm" textAlign="left">
+            <Text variant="soft"
+              size="sm"
+              textAlign="left">
               *SA = Solo Alojamiento;<br />
               *AD = Alojamiento y Desayuno;<br />
               **Familiar = 2 adultos y 2 niños<br />
               Niños menores de 2 años sin cargo
             </Text>
-            <Text variant="soft" textAlign="left">
+            <Text variant="soft"
+              textAlign="left">
               Para beneficiarte de estas tarifas, debes ponerte en contacto con
               el hotel por medio de:
             </Text>
@@ -120,7 +127,8 @@ export const Hotel = () => {
             >
               <EmailIcon mr={2} /> EMail
             </Text>
-            <Text variant="soft" textAlign="left">
+            <Text variant="soft"
+              textAlign="left">
               Indicando el código <strong>Boda Jana y Odette</strong>. Las
               reservas no tienen penalización por cancelación hasta el 1 de mayo
               de 2023. Tras esa fecha, se convertiran en no reembolsables. Los
@@ -128,7 +136,8 @@ export const Hotel = () => {
               garantizan hasta el 1 de Mayo o cobertura de plazas, tras ello
               quedaran sujetos a disponibilidad.
             </Text>
-            <Text variant="soft" textAlign="left">
+            <Text variant="soft"
+              textAlign="left">
               Si prefieres alojarte en otro establecimiento, encontraras
               multitud de opciones en Castellón. Consultanos si tienes dudas.
             </Text>
@@ -136,12 +145,18 @@ export const Hotel = () => {
         </ModalContent>
       </Modal>
 
-      <VStack w="100%" alignItems="start" spacing={[2]}>
-        <Text variant="soft" size="sm">
+      <VStack w="100%"
+        alignItems="start"
+        spacing={[2]}>
+        <Text variant="soft"
+          size="sm">
           Hemos negociado con el
           Hotel Castellon Center precios para nuestros invitados. Haz click en más información para consultar las tarifas y contratar.
         </Text>
-        <Button p={4} w="100%" variant="base" onClick={onOpen}>
+        <Button p={4}
+          w="100%"
+          variant="base"
+          onClick={onOpen}>
           Más información
         </Button>
       </VStack>

@@ -8,6 +8,13 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}"
   ],
   theme: {
+    container: {
+      center: true,
+      padding: "2rem",
+      screens: {
+        "2xl": "1400px",
+      },
+    },
     extend: {
       fontFamily: {
         script: ['var(--font-script)'],
@@ -17,6 +24,7 @@ module.exports = {
         'xs': 'calc(var(--letter-size) * 0.5)',
         'sm': 'calc(var(--letter-size) * 0.75)',
         'base': 'calc(var(--letter-size))',
+        'md': 'calc(var(--letter-size))',
         'lg': 'calc(var(--letter-size) * 1.3)',
         'xl': 'calc(var(--letter-size) * 1.6)',
         '2xl': 'calc(var(--letter-size) * 2)',
@@ -25,7 +33,8 @@ module.exports = {
         '5xl': 'calc(var(--letter-size) * 5)',
         '6xl': 'calc(var(--letter-size) * 6)',
         '6xl': 'calc(var(--letter-size) * 6)',
-        '7xl': 'calc(var(--letter-size) * 7)'
+        '7xl': 'calc(var(--letter-size) * 7)',
+        reset: '1rem',
       },
       spacing: {
         'c100': 'calc(20 * var(--letter-size) / 100)',
@@ -38,13 +47,100 @@ module.exports = {
         'c5': 'calc(20 * var(--letter-size) / 5)',
         'c1': 'calc(20 * var(--letter-size))',
       },
+      boxShadow: {
+        heavy: '0 0 var(--letter-size) rgba(0, 0, 0, 0.5)',
+      },
+      lineHeight: {
+        '08': '0.8',
+      },
+      letterSpacing: {
+        'xl': '0.5rem',
+        '2xl': '1rem',
+      },
+      colors: {
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
+        olive: {
+          DEFAULT: '#758e54',
+          '50': '#f4f6ef',
+          '100': '#e5ebdc',
+          '200': '#cedabc',
+          '300': '#afc294',
+          '400': '#92aa71',
+          '500': '#758e54',
+          '600': '#5a7040',
+          '700': '#475734',
+          '800': '#3b472d',
+          '900': '#333d29',
+          '950': '#192013',
+        },
+
+      },
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
+      },
+      keyframes: {
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+        "fade-in": {
+          from: { opacity: "0" },
+          "80%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
+        click: {
+          from: { transform: "scale(1)" },
+          to: { transform: "scale(1.2)" },
+        },
+      },
       animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
         'click': 'click 0.6s alternate infinite',
         'fade-in': 'fade-in 4s linear 1'
-      }
+      },
     },
   },
   plugins: [
+    require("tailwindcss-animate"),
     plugin(function ({ addUtilities, addComponents, theme }) {
 
       addUtilities({
@@ -72,6 +168,14 @@ module.exports = {
         '.bg-color-rose': {
           '--bg-color': 'rgba(248, 113, 113, 0.10)'
         },
+        '.text-inset': {
+          'text-shadow': '0px 0px 2px rgba(0, 0, 0, 0.3)'
+        },
+
+        '.size-screen': {
+          width: '100vw',
+          height: '100vh',
+        }
       })
 
       addComponents({
@@ -79,13 +183,13 @@ module.exports = {
           '--ratio': '1.8',
           '--card-width': 'min(calc(min(90vw, calc((100vh / var(--ratio)) - 2rem))), calc(1020px / var(--ratio)))',
           '--card-height': 'calc(var(--card-width) * var(--ratio))',
-          '--letter-size': 'calc(var(--card-width) / 20)',
+          '--letter-size': 'calc(var(--card-height) / 40)',
           'display': 'flex',
           'padding': 'var(--letter-size)',
           'transform-style': 'preserve-3d',
           'width': 'var(--card-width)',
           'aspect-ratio': '1 / var(--ratio)',
-          'transition': 'transform 2s ease-in-out',
+          'transition': 'transform 2s ease-in-out, top 1s ease-in-out, opacity 150ms ease-in-out',
         },
         '.button-fill-base': {
           'background-size': '0%',
@@ -94,6 +198,24 @@ module.exports = {
         },
         '.button-fill-hover': {
           'background-size': '100%'
+        },
+        '.amount-card': {
+          transform: 'translateZ(0) rotateX(-10deg) translateY(calc(var(--card-height) * 1.3))',
+          transition: 'transform 650ms ease-in-out',
+        },
+        '.amount-card-visible': {
+          transform: 'translateZ(calc(var(--letter-size) * 8)) rotateX(10deg) translateY(calc(var(--card-height) * 0.70))',
+        },
+
+        '.accepted-card': {
+          transform: 'translateZ(calc(var(--letter-size) * 8)) rotateX(10deg) translateY(calc(var(--card-height) * 0.85))',
+        },
+        '.accepted-card-hidden': {
+          transform: 'translateZ(calc(var(--letter-size) * 12)) rotateX(15deg) translateY(calc(var(--card-height) * 1.5))',
+          'pointer-events': 'none',
+        },
+        '.accepted-card-visible': {
+          transform: 'translateZ(10px) rotateX(0deg) translateY(calc(var(--card-height) * 0.05))',
         },
       })
     })

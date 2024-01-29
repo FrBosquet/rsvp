@@ -1,8 +1,8 @@
 import { Center } from '@chakra-ui/react'
 
-import { StaticImageData } from 'next/image'
+import { type StaticImageData } from 'next/image'
 
-type Props = {
+interface Props {
   bg: StaticImageData
   children: React.ReactNode
   rotation: number
@@ -24,7 +24,7 @@ export const Card = ({ rotation, onClick, bg, children }: Props) => {
         aspectRatio: `${bg.width} / ${bg.height}`,
         transformStyle: 'preserve-3d',
         transform: `rotateY(${rotation}deg)`,
-        backfaceVisibility: 'hidden',
+        backfaceVisibility: 'hidden'
       }}
       bgImage={bg.src}
       bgSize="cover"

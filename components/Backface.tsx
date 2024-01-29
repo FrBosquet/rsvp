@@ -14,7 +14,7 @@ import {
   Tabs,
   Text,
   VStack,
-  useBreakpointValue,
+  useBreakpointValue
 } from '@chakra-ui/react'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
@@ -23,11 +23,11 @@ import { IoIosGift } from 'react-icons/io'
 import { MdCancel, MdHotel, MdMessage } from 'react-icons/md'
 import { Card } from '../components/Card'
 import { getGuestTypes } from '../lib/guesttype'
-import { Guest, States } from '../types'
+import { States, type Guest } from '../types'
 import { Hotel } from './Hotel'
 import { Transportation } from './Transportation'
 
-type Props = {
+interface Props {
   isLoading: boolean
   guest: Guest
   isFlipped: boolean
@@ -42,21 +42,21 @@ export const Backface = ({
   guest,
   isFlipped,
   onClickYes,
-  onClickNo,
+  onClickNo
 }: Props) => {
   const [scrollable, setScrollable] = useState('hidden')
 
   const isMobile =
     useBreakpointValue({
       base: true,
-      sm: false,
-    }) || false
+      sm: false
+    }) ?? false
   const { isSingle } = getGuestTypes(guest)
   const { state } = guest
 
   useEffect(() => {
     if (isFlipped) {
-      setTimeout(() => setScrollable('scroll'), 1000)
+      setTimeout(() => { setScrollable('scroll') }, 1000)
     }
   }, [isFlipped])
 
@@ -64,7 +64,7 @@ export const Backface = ({
     <Card bg={bgi} rotation={isFlipped ? 0 : 180}>
       <VStack p={['2rem', '4rem']} w="100%" h="100%">
         <Center w="100%" borderBottom={line} flex={1.2} maxH={'20%'} position={'relative'}>
-          <Image src={signature} layout='fixed' width={120} height={120} />
+          <Image src={signature} layout='fixed' width={120} height={120} alt="firma" />
         </Center>
         <Center
           w="100%"
@@ -82,50 +82,8 @@ export const Backface = ({
             nuestra boda
           </Text>
         </Center>
-        <HStack w="100%" p={4} borderBottom={line}>
-          <VStack px={6} spacing={0}>
-            <Text fontWeight={400}>Dia</Text>
-            <Text size="xxl" fontWeight={600}>
-              Dia
-            </Text>
-            <Text fontWeight={400}>Mes</Text>
-            <Text fontWeight={200}>2024</Text>
-          </VStack>
-          <VStack
-            flex={1}
-            borderLeft={line}
-            px={4}
-            h="100%"
-            justifyContent="space-around"
-          >
-            <Text size="sm">En</Text>
-            <Text fontWeight={600} as="a" href="https://masdoblons.com/">
-              Finca
-            </Text>
-            <Text size="sm">dirección de la finca</Text>
-            <Text size="xl" fontWeight={600}>
-              13:30
-            </Text>
-          </VStack>
-        </HStack>
-
-        {state === States.pending && (
-          <VStack flex={2} w="100%" p={4} spacing={4} justifyContent="center">
-            <Heading size="sm" variant="sans">
-              {isSingle ? '¿Te vienes?' : '¿Os venis?'}
-            </Heading>
-            <HStack w="100%">
-              <Button variant="base" isLoading={isLoading} onClick={onClickYes}>
-                Si
-              </Button>
-              <Button variant="base" isLoading={isLoading} onClick={onClickNo}>
-                No
-              </Button>
-            </HStack>
-          </VStack>
-        )}
-
-        {state === States.accepted && (
+        \
+        {true && (
           <VStack
             flex={3}
             w="100%"
@@ -138,7 +96,7 @@ export const Backface = ({
               variant="sans"
               display={{
                 base: 'none',
-                sm: 'block',
+                sm: 'block'
               }}
             >
               ¡Contamos {isSingle ? 'contigo' : 'con vosotros'}!
@@ -214,10 +172,11 @@ export const Backface = ({
                       w="100%"
                       textAlign="center"
                       cursor="pointer"
-                      onClick={() =>
-                        navigator.clipboard.writeText(
+                      onClick={async () => {
+                        await navigator.clipboard.writeText(
                           'ES43 1465 0100 94 2055346756'
                         )
+                      }
                       }
                       size="md"
                       variant="soft"
@@ -227,7 +186,7 @@ export const Backface = ({
                   </VStack>
                 </TabPanel>
 
-                {/* Contacto Actualizar con los datos de Jana y Odette*/}
+                {/* Contacto Actualizar con los datos de Jana y Odette */}
                 <TabPanel>
                   <VStack w="100%" alignItems="start" spacing={2} h="100%">
                     <Text

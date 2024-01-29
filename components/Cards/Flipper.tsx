@@ -1,26 +1,29 @@
 'use client'
 
-import { Guest } from "@/types"
-import { useState } from "react"
-import { Backface } from "./Backface"
-import { Frontface } from "./Frontface"
+import { type Guest } from '@prisma/client'
+import { twMerge } from 'tailwind-merge'
+import { useGuest } from '../hooks/use-guest'
+import { AcceptanceCard } from './AcceptanceCard'
+import { Backface } from './Backface'
+import { Frontface } from './Frontface'
+import { AcceptedCard } from './accepted-card/accepted-card'
 
-type Props = {
+interface Props {
   guest: Guest
 }
 
-export const CardFlipper = ({ guest }: Props) => {
-  const [isFlipped, setIsFlipped] = useState(false)
-
-  const handleClick = () => {
-    console.log('click');
-    setIsFlipped(f => !f)
-  }
+export const CardFlipper = ({ guest: serverGuest }: Props) => {
+  const {
+    guest
+  } = useGuest(serverGuest)
 
   return (
-    <main className="w-screen h-screen flex justify-center items-center perspective">
-      <Frontface guest={guest} isFlipped={isFlipped} onClick={handleClick} />
-      <Backface guest={guest} isFlipped={isFlipped} onClick={handleClick} />
-    </main>
+    <aside className={twMerge('flex items-center text-md justify-center overflow-hidden perspective size-screen opacity-0 transition', guest != null && 'opacity-100')}>
+      <Frontface />
+      <Backface />
+      <AcceptedCard />
+
+      <AcceptanceCard />
+    </aside>
   )
 }
