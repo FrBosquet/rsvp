@@ -136,7 +136,8 @@ export const AcceptanceCard = () => {
             className='accent-olive-400'
             id="bus"
             name='bus'
-            defaultValue={usesBus ? 'on' : 'off'}
+            value='bus'
+            defaultChecked={usesBus}
           />
           <label htmlFor="bus"
             className='font-light text-zinc-900'>Marca esta casilla si vais a hacer uso del autobus</label>

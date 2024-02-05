@@ -1,7 +1,7 @@
 'use server'
 
 import { prisma } from '@/lib/prisma'
-import { NOTES, type GuestWithHost, type GuestWithNotes, type STATE } from '@/types'
+import { NOTES, STATE, type GuestWithHost, type GuestWithNotes } from '@/types'
 import { currentUser } from '@clerk/nextjs'
 import { type Guest } from '@prisma/client'
 import { redirect } from 'next/navigation'
@@ -249,10 +249,12 @@ export async function replyToInvitation(formData: FormData): Promise<GuestWithNo
     throw new Error('Guest not found')
   }
 
-  await Promise.all([
-    bus ? writeNote(eventSlug, slug, NOTES.bus, bus ? 'true' : 'false') : null,
-    allergies ? writeNote(eventSlug, slug, NOTES.allergies, allergies) : null
-  ])
+  if (state === STATE.accepted) {
+    await Promise.all([
+      writeNote(eventSlug, slug, NOTES.bus, bus ? 'true' : 'false'),
+      writeNote(eventSlug, slug, NOTES.allergies, allergies)
+    ])
+  }
 
   const updatedGuest = await prisma.guest.update({
     where: {

@@ -45,7 +45,7 @@ export const Accepted = () => {
           className='flex aspect-square flex-1 flex-col items-center justify-center gap-c80 border bg-color-emerald disabled:opacity-50'
         >
           <Icon size={24} />
-          <span className='text-xs'>{label}</span>
+          <span className='text-xs font-semibold'>{label}</span>
         </AnimatedButton>
       ))
     }
