@@ -6,7 +6,7 @@ import { useGuest } from './use-guest'
 
 export const useRejectAssistance = () => {
   const [loading, setLoading] = useState<boolean>(false)
-  const { updateGuest } = useGuest()
+  const { updateGuest, hideAcceptedCard } = useGuest()
   const params = useParams<{ event: string, slug: string }>()
 
   const handleReject = async () => {
@@ -19,6 +19,7 @@ export const useRejectAssistance = () => {
 
       const updatedGuest = await replyToInvitation(formData)
 
+      hideAcceptedCard()
       updateGuest(updatedGuest)
     } catch (e) {
       alert('Error al enviar la respuesta. Inténtelo de nuevo y si persiste póngase en contacto con su anfitrión.')

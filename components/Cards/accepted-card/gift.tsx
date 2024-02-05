@@ -16,11 +16,11 @@ export const Gift = ({ visible }: Props) => {
 
   const IBAN = 'ES43 1465 0100 94 2055346756' // TODO: Move to event config
 
-  return (<Wrapper visible={visible}>
-    <h1 className='w-full border-b-2 border-zinc-400 pb-3 text-center font-serif text-xl uppercase'>Contacto</h1>
+  return (<Wrapper title='Regalo'
+    visible={visible}>
     <p className='text-base'>Si os hemos invitado a nuesta boda es porque sois importantes para nosostros. No esperamos nada a cambio.</p>
     <p className='text-base'>Si aun así os apetece tener un detalle con nosotros, puedes hacerlo en este número de cuenta:</p>
-    <button className='flex items-center justify-center gap-4 text-sm'
+    <button className='flex items-center justify-center gap-4 text-sm font-semibold'
       onClick={async () => {
         await navigator.clipboard.writeText(
           IBAN

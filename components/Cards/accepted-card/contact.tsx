@@ -20,9 +20,9 @@ export const Contact = ({ visible }: Props) => {
 
   if (!guest) return null
 
-  return (<Wrapper visible={visible}>
-    <h1 className='w-full border-b-2 border-zinc-400 pb-3 text-center font-serif text-xl uppercase'>Contacto</h1>
-    <p className='text-base'>Si tenéis alguna duda, podéis mandarnos un Whatsapp:</p>
+  return (<Wrapper title='Contacto'
+    visible={visible}>
+    <p className='pb-c20 text-base'>Si tenéis alguna duda, podéis mandarnos un Whatsapp:</p>
     {
       hosts.map((host, i) => (
         <AnimatedButton

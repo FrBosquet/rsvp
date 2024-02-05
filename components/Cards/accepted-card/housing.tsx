@@ -12,8 +12,8 @@ export const Housing = ({ visible }: Props) => {
 
   if (!guest) return null
 
-  return (<Wrapper visible={visible}>
-    <h1 className='w-full border-b-2 border-zinc-400 pb-3 text-center font-serif text-xl uppercase'>Hotel</h1>
+  return (<Wrapper title='hotel'
+    visible={visible}>
     <p className='text-base'>Hemos negociado con el Hotel X precios para nuestros invitados. Haz click en más información para consultar las tarifas y contratar.</p>
     <a href="a">Link al hotel X</a>
     <table className='text-xs' >

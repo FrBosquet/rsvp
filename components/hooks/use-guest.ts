@@ -8,21 +8,45 @@ interface Store {
   setGuest: (guest: Guest) => void
   isFlipped: boolean
   isAcceptingCardVisible: boolean
+  isAcceptedCardVisible: boolean
   setFlipped: (isFlipped: boolean) => void
   setAcceptingCardVisible: (isAcceptingCardVisible: boolean) => void
+  setAcceptedCardVisible: (isAcceptedCardVisible: boolean) => void
   currentTab: TABS
   setCurrentTab: (tab: TABS) => void
 }
 
 const useStore = create<Store>((set) => ({
-  guest: null,
-  setGuest: (guest: Guest) => { set({ guest }) },
-  isFlipped: false,
-  isAcceptingCardVisible: false,
-  setFlipped: (isFlipped: boolean) => { set({ isFlipped }) },
-  setAcceptingCardVisible: (isAcceptingCardVisible: boolean) => { set({ isAcceptingCardVisible }) },
   currentTab: TABS.contact,
-  setCurrentTab: (currentTab: TABS) => { set({ currentTab }) }
+  guest: null,
+  isAcceptedCardVisible: false,
+  isAcceptingCardVisible: false,
+  isFlipped: false,
+  setAcceptedCardVisible: (isAcceptedCardVisible: boolean) => {
+    set({
+      isAcceptedCardVisible
+    })
+  },
+  setAcceptingCardVisible: (isAcceptingCardVisible: boolean) => {
+    set({
+      isAcceptingCardVisible
+    })
+  },
+  setCurrentTab: (currentTab: TABS) => {
+    set({
+      currentTab
+    })
+  },
+  setFlipped: (isFlipped: boolean) => {
+    set({
+      isFlipped
+    })
+  },
+  setGuest: (guest: Guest) => {
+    set({
+      guest
+    })
+  }
 }))
 
 export const useGuest = (serverGuest?: Guest) => {
@@ -31,6 +55,8 @@ export const useGuest = (serverGuest?: Guest) => {
   const isFlipped = useStore((state) => state.isFlipped)
   const setFlipped = useStore((state) => state.setFlipped)
   const isAcceptingCardVisible = useStore((state) => state.isAcceptingCardVisible)
+  const isAcceptedCardVisible = useStore((state) => state.isAcceptedCardVisible)
+  const setAcceptedCardVisible = useStore((state) => state.setAcceptedCardVisible)
   const setAcceptingCardVisible = useStore((state) => state.setAcceptingCardVisible)
   const currentTab = useStore((state) => state.currentTab)
   const setCurrentTab = useStore((state) => state.setCurrentTab)
@@ -51,15 +77,27 @@ export const useGuest = (serverGuest?: Guest) => {
     setAcceptingCardVisible(false)
   }
 
+  const showAcceptedCard = (tab: TABS) => {
+    setCurrentTab(tab)
+    setAcceptedCardVisible(true)
+  }
+
+  const hideAcceptedCard = () => {
+    setAcceptedCardVisible(false)
+  }
+
   return {
-    guest,
-    updateGuest,
-    isFlipped,
-    flip,
-    isAcceptingCardVisible,
-    showAcceptance,
-    hideAcceptance,
     currentTab,
-    setCurrentTab
+    flip,
+    guest,
+    hideAcceptance,
+    hideAcceptedCard,
+    isAcceptedCardVisible,
+    isAcceptingCardVisible,
+    isFlipped,
+    setCurrentTab,
+    showAcceptance,
+    showAcceptedCard,
+    updateGuest
   }
 }

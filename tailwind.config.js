@@ -37,15 +37,17 @@ module.exports = {
         reset: '1rem',
       },
       spacing: {
-        'c100': 'calc(20 * var(--letter-size) / 100)',
-        'c80': 'calc(20 * var(--letter-size) / 80)',
-        'c75': 'calc(20 * var(--letter-size) / 75)',
-        'c50': 'calc(20 * var(--letter-size) / 50)',
-        'c20': 'calc(20 * var(--letter-size) / 20)',
-        'c10': 'calc(20 * var(--letter-size) / 10)',
-        'c8': 'calc(20 * var(--letter-size) / 8)',
-        'c5': 'calc(20 * var(--letter-size) / 5)',
-        'c1': 'calc(20 * var(--letter-size))',
+        'c100': 'calc(40 * var(--letter-size) / 100)',
+        'c80': 'calc(40 * var(--letter-size) / 80)',
+        'c75': 'calc(40 * var(--letter-size) / 75)',
+        'c50': 'calc(40 * var(--letter-size) / 50)',
+        'c40': 'calc(40 * var(--letter-size) / 40)',
+        'c20': 'calc(40 * var(--letter-size) / 20)',
+        'c30': 'calc(40 * var(--letter-size) / 30)',
+        'c10': 'calc(40 * var(--letter-size) / 10)',
+        'c8': 'calc(40 * var(--letter-size) / 8)',
+        'c5': 'calc(40 * var(--letter-size) / 5)',
+        'c1': 'calc(40 * var(--letter-size))',
       },
       boxShadow: {
         heavy: '0 0 var(--letter-size) rgba(0, 0, 0, 0.5)',
@@ -208,11 +210,7 @@ module.exports = {
         },
 
         '.accepted-card': {
-          transform: 'translateZ(calc(var(--letter-size) * 8)) rotateX(10deg) translateY(calc(var(--card-height) * 0.85))',
-        },
-        '.accepted-card-hidden': {
-          transform: 'translateZ(calc(var(--letter-size) * 12)) rotateX(15deg) translateY(calc(var(--card-height) * 1.5))',
-          'pointer-events': 'none',
+          transform: 'translateZ(calc(var(--letter-size) * 8)) rotateX(10deg) translateY(100svh)',
         },
         '.accepted-card-visible': {
           transform: 'translateZ(10px) rotateX(0deg) translateY(calc(var(--card-height) * 0.05))',

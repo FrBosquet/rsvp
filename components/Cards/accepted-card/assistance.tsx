@@ -1,7 +1,7 @@
 'use client'
 
 import { useGuest } from '@/components/hooks/use-guest'
-import { useRejectAssistance } from '@/components/hooks/use-reject-assitance'
+import { useRejectAssistance } from '@/components/hooks/use-reject-assistance'
 import { AnimatedButton } from '../animated-button'
 import { Wrapper } from './wrapper'
 
@@ -15,8 +15,8 @@ export const Assistance = ({ visible }: Props) => {
 
   if (!guest) return null
 
-  return (<Wrapper visible={visible}>
-    <h1 className='w-full border-b-2 border-zinc-400 pb-3 text-center font-serif text-xl uppercase'>Asistencia</h1>
+  return (<Wrapper title='Asistencia'
+    visible={visible}>
     <p className='mb-auto w-full text-left text-base '>{
       guest.amount! === 1
         ? 'Has indicado que solo asistirás tú al evento.'
@@ -28,7 +28,7 @@ export const Assistance = ({ visible }: Props) => {
     <AnimatedButton
       className='w-full p-3 text-lg bg-color-emerald'
       onClick={showAcceptance}
-    >Cambiar numero de asistentes</AnimatedButton>
+    >Cambiar numero de asistentes, alergias o autobus</AnimatedButton>
     <AnimatedButton
       loading={loading}
       className='w-full p-3 text-lg bg-color-rose'

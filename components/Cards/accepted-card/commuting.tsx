@@ -12,8 +12,8 @@ export const Commuting = ({ visible }: Props) => {
 
   if (!guest) return null
 
-  return (<Wrapper visible={visible}>
-    <h1 className='w-full border-b-2 border-zinc-400 pb-3 text-center font-serif text-xl uppercase'>Contacto</h1>
+  return (<Wrapper title='transporte'
+    visible={visible}>
     <p className='text-base'>La finca se encuentra en Almazora, a apenas 15 minutos de Castellón. Hemos dispuesto autobuses para facilitar el traslado desde la ciudad de Castellón de la Plana hasta la finca Mas dels Doblons.</p>
     <p className='text-base'>Horarios de ida:</p>
     <table className='text-xs'>

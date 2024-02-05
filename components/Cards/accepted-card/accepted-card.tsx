@@ -1,12 +1,10 @@
 'use client'
 
 import { useGuest } from '@/components/hooks/use-guest'
-import { STATE, TABS } from '@/types'
+import { TABS } from '@/types'
 import { Bus, GiftIcon, Hotel, Phone, User } from 'lucide-react'
-import { useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { Card } from '../Card'
-import { AnimatedButton } from '../animated-button'
 import { Assistance } from './assistance'
 import { Commuting } from './commuting'
 import { Contact } from './contact'
@@ -22,26 +20,22 @@ const sections = [
 ]
 
 export const AcceptedCard = () => {
-  const { guest, isFlipped, setCurrentTab, currentTab } = useGuest()
-  const [acceptCardVisible, setAcceptCardVisible] = useState(false)
+  const { guest, isFlipped, currentTab, isAcceptedCardVisible, hideAcceptedCard } = useGuest()
 
   if (!guest) return null
-
-  const isAccepted = guest.state === STATE.accepted
 
   return (
     <>
       <div
         className={twMerge(
           'fixed inset-0 bg-black opacity-0 transition-opacity duration-1000 pointer-events-none',
-          acceptCardVisible && 'pointer-events-auto opacity-30'
+          isAcceptedCardVisible && 'pointer-events-auto opacity-30'
         )}
-        onClick={() => { setAcceptCardVisible(false) }}
+        onClick={() => { hideAcceptedCard() }}
       />
       <Card className={twMerge(
         'accepted-card shadow-heavy',
-        (!isFlipped || !isAccepted) && 'accepted-card-hidden',
-        acceptCardVisible && 'accepted-card-visible'
+        (isFlipped && isAcceptedCardVisible) && 'accepted-card-visible'
       )}>
         <div className='pointer-events-none relative w-full flex-1' >
           {
@@ -51,32 +45,6 @@ export const AcceptedCard = () => {
             ))
           }
         </div>
-        <menu className='flex w-full justify-around'>
-          {
-            sections.map(({ Icon, label, tab }, i) => (
-              <AnimatedButton
-                key={i}
-                disabled={currentTab === tab}
-                onClick={() => { setCurrentTab(tab) }}
-                className={twMerge(
-                  'flex flex-col items-center justify-center bg-color-emerald p-1 disabled:opacity-50',
-                  currentTab === tab && 'text-color-emerald'
-                )}
-              >
-                <Icon size={24} />
-                <span className='text-xs'>{label}</span>
-              </AnimatedButton>
-            ))
-          }
-        </menu>
-        <button
-          disabled={acceptCardVisible}
-          onClick={() => { setAcceptCardVisible(true) }}
-          className={twMerge(
-            'absolute inset-0',
-            acceptCardVisible && 'pointer-events-none'
-          )}
-        />
       </Card>
 
     </>
