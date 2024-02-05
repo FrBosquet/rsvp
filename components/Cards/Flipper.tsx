@@ -1,6 +1,6 @@
 'use client'
 
-import { type Guest } from '@prisma/client'
+import { type GuestWithNotes } from '@/types'
 import { twMerge } from 'tailwind-merge'
 import { useGuest } from '../hooks/use-guest'
 import { AcceptanceCard } from './AcceptanceCard'
@@ -9,7 +9,7 @@ import { AcceptedCard } from './accepted-card/accepted-card'
 import { Backface } from './backface'
 
 interface Props {
-  guest: Guest
+  guest: GuestWithNotes
 }
 
 export const CardFlipper = ({ guest: serverGuest }: Props) => {

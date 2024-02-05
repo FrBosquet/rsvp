@@ -1,11 +1,10 @@
-import { TABS } from '@/types'
-import { type Guest } from '@prisma/client'
+import { type GuestWithNotes, NOTES, TABS } from '@/types'
 import { useEffect } from 'react'
 import { create } from 'zustand'
 
 interface Store {
-  guest: Guest | null
-  setGuest: (guest: Guest) => void
+  guest: GuestWithNotes | null
+  setGuest: (guest: GuestWithNotes) => void
   isFlipped: boolean
   isAcceptingCardVisible: boolean
   isAcceptedCardVisible: boolean
@@ -42,14 +41,14 @@ const useStore = create<Store>((set) => ({
       isFlipped
     })
   },
-  setGuest: (guest: Guest) => {
+  setGuest: (guest: GuestWithNotes) => {
     set({
       guest
     })
   }
 }))
 
-export const useGuest = (serverGuest?: Guest) => {
+export const useGuest = (serverGuest?: GuestWithNotes) => {
   const guest = useStore((state) => state.guest)
   const updateGuest = useStore((state) => state.setGuest)
   const isFlipped = useStore((state) => state.isFlipped)
@@ -60,6 +59,10 @@ export const useGuest = (serverGuest?: Guest) => {
   const setAcceptingCardVisible = useStore((state) => state.setAcceptingCardVisible)
   const currentTab = useStore((state) => state.currentTab)
   const setCurrentTab = useStore((state) => state.setCurrentTab)
+
+  const usesBus = guest?.notes?.some((note) => note.type === NOTES.allergies && note.content === 'true')
+  const allergies = guest?.notes?.find((note) => note.type === 'allergies')?.content
+  const hasAllergies = Boolean(allergies)
 
   useEffect(() => {
     if (!guest && serverGuest) updateGuest(serverGuest)
@@ -98,6 +101,9 @@ export const useGuest = (serverGuest?: Guest) => {
     setCurrentTab,
     showAcceptance,
     showAcceptedCard,
-    updateGuest
+    updateGuest,
+    usesBus,
+    hasAllergies,
+    allergies
   }
 }

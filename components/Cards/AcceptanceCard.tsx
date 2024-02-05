@@ -9,6 +9,7 @@ import { twMerge } from 'tailwind-merge'
 import { useGuest } from '../hooks/use-guest'
 import { Spinner } from '../spinner'
 import { Card } from './Card'
+import { AnimatedButton } from './animated-button'
 
 export const AcceptanceCard = () => {
   const { guest, isAcceptingCardVisible, hideAcceptance, updateGuest } = useGuest()
@@ -66,12 +67,12 @@ export const AcceptanceCard = () => {
     />
     <Card
       className={twMerge(
-        'shadow-heavy amount-card',
-        isAcceptingCardVisible && 'amount-card-visible'
+        'shadow-heavy acceptance-card',
+        isAcceptingCardVisible && 'acceptance-card-visible'
       )}
     >
       <form onSubmit={handleSubmit}
-        className='flex h-full flex-col items-center justify-start gap-4'>
+        className='flex size-full flex-col items-center justify-start gap-4'>
         <input type="text"
           hidden
           name="eventSlug"
@@ -84,6 +85,8 @@ export const AcceptanceCard = () => {
           hidden
           name="state"
           defaultValue={STATE.accepted} />
+
+        {/* plazas */}
         <h2 className='uppercase'>Cuantos sois</h2>
         <div className='flex items-center justify-center gap-c10'>
           <button type='button'
@@ -119,9 +122,25 @@ export const AcceptanceCard = () => {
             : `Esta invitación incluye ${guest.maxAmount} plazas.`
         }</p>
 
-        <button disabled={loading}
-          className='button-fill-base rounded-md bg-right p-2 font-serif text-sm font-light uppercase text-zinc-400 transition-all bg-color-emerald hover:button-fill-hover hover:text-zinc-700'
-          onClick={() => { console.log('submit') }}>{loading ? <Spinner /> : 'Confirmar'}</button>
+        {/* alergias */}
+        <h2 className='pt-c40 uppercase'>Alergias o intolerancias</h2>
+        <textarea className=' w-full resize-none border bg-transparent p-c100 px-c20 text-center text-xs'
+          placeholder='Describe aquí si alguno de los invitados tiene alguna alergia o intolerancia alimentaria.'
+          name="allergies" />
+
+        {/* autobus */}
+        <h2 className='pt-c40 uppercase'>Autobús</h2>
+        <article className='flex w-full justify-center gap-c80'>
+          <input type="checkbox"
+            className='accent-olive-400'
+            id="bus"
+            name='bus' />
+          <label htmlFor="bus"
+            className='font-light text-zinc-900'>Marca esta casilla si vais a hacer uso del autobus</label>
+        </article>
+
+        <AnimatedButton disabled={loading}
+          className='text-lg'>{loading ? <Spinner /> : 'Confirmar'}</AnimatedButton>
       </form>
 
     </Card>

@@ -201,12 +201,13 @@ module.exports = {
         '.button-fill-hover': {
           'background-size': '100%'
         },
-        '.amount-card': {
-          transform: 'translateZ(0) rotateX(-10deg) translateY(calc(var(--card-height) * 1.3))',
+
+        '.acceptance-card': {
+          transform: 'translateZ(0) rotateX(-10deg) translateY(100svh)',
           transition: 'transform 650ms ease-in-out',
         },
-        '.amount-card-visible': {
-          transform: 'translateZ(calc(var(--letter-size) * 8)) rotateX(10deg) translateY(calc(var(--card-height) * 0.70))',
+        '.acceptance-card-visible': {
+          transform: 'translateZ(calc(var(--letter-size) * 8)) rotateX(10deg) translateY(calc(var(--card-height) * 0.30))',
         },
 
         '.accepted-card': {

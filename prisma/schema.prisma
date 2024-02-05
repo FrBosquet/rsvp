@@ -51,6 +51,19 @@ model Guest {
   contacted Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  notes     Note[]
 
   @@id([eventSlug, slug])
+}
+
+model Note {
+  content        String
+  guestSlug      String
+  guestEventSlug String
+  type           String
+  guest          Guest    @relation(fields: [guestSlug, guestEventSlug], references: [slug, eventSlug])
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@id([guestSlug, guestEventSlug, type])
 }

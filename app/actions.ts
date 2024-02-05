@@ -1,7 +1,7 @@
 'use server'
 
 import { prisma } from '@/lib/prisma'
-import { type GuestWithHost, type STATE } from '@/types'
+import { type GuestWithNotes, NOTES, type GuestWithHost, type STATE } from '@/types'
 import { currentUser } from '@clerk/nextjs'
 import { type Guest } from '@prisma/client'
 import { redirect } from 'next/navigation'
@@ -201,11 +201,40 @@ export async function deleteGuest(formData: FormData): Promise<Guest> {
   return data
 }
 
-export async function replyToInvitation(formData: FormData): Promise<Guest> {
+const writeNote = async (eventSlug: string, slug: string, type: NOTES, content: string) => {
+  await prisma.note.upsert({
+    where: {
+      guestSlug_guestEventSlug_type: {
+        guestSlug: slug,
+        guestEventSlug: eventSlug,
+        type
+      }
+    },
+    update: {
+      content
+    },
+    create: {
+      content,
+      guest: {
+        connect: {
+          eventSlug_slug: {
+            eventSlug,
+            slug
+          }
+        }
+      },
+      type
+    }
+  })
+}
+
+export async function replyToInvitation(formData: FormData): Promise<GuestWithNotes> {
   const eventSlug = formData.get('eventSlug') as string
   const slug = formData.get('slug') as string
   const amount = formData.get('amount') as string
   const state = formData.get('state') as STATE
+  const bus = formData.get('bus') === 'on' || false
+  const allergies = formData.get('allergies') as string
 
   const data = await prisma.guest.findUnique({
     where: {
@@ -220,6 +249,11 @@ export async function replyToInvitation(formData: FormData): Promise<Guest> {
     throw new Error('Guest not found')
   }
 
+  await Promise.all([
+    writeNote(eventSlug, slug, NOTES.bus, bus ? 'true' : 'false'),
+    writeNote(eventSlug, slug, NOTES.allergies, allergies)
+  ])
+
   const updatedGuest = await prisma.guest.update({
     where: {
       eventSlug_slug: {
@@ -230,6 +264,9 @@ export async function replyToInvitation(formData: FormData): Promise<Guest> {
     data: {
       amount: amount ? parseInt(amount) : 0,
       state
+    },
+    include: {
+      notes: true
     }
   })
 

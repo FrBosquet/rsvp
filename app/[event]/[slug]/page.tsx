@@ -18,6 +18,9 @@ export default async function GuestPage({ params }: Route) {
         eventSlug: event,
         slug
       }
+    },
+    include: {
+      notes: true
     }
   })
 

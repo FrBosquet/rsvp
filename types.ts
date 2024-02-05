@@ -1,4 +1,4 @@
-import { type Guest as PrismaGuest, type User } from '@prisma/client'
+import { type Note, type Guest as PrismaGuest, type User } from '@prisma/client'
 
 export enum States {
   pending = 'pending',
@@ -44,3 +44,10 @@ export enum TABS {
   commuting = 'commuting',
   gift = 'gift'
 }
+
+export enum NOTES {
+  allergies = 'allergies',
+  bus = 'bus'
+}
+
+export type GuestWithNotes = PrismaGuest & { notes: Note[] }

@@ -3,7 +3,7 @@ import { Spinner } from '../spinner'
 
 interface Props {
   isMarked?: boolean
-  onClick: () => void
+  onClick?: () => void
   loading?: boolean
   children: React.ReactNode
   disabled?: boolean
