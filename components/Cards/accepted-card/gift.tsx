@@ -10,7 +10,7 @@ interface Props {
 }
 
 export const Gift = ({ visible }: Props) => {
-  const { guest } = useGuest()
+  const { guest, isSingle } = useGuest()
 
   if (!guest) return null
 
@@ -18,8 +18,13 @@ export const Gift = ({ visible }: Props) => {
 
   return (<Wrapper title='Regalo'
     visible={visible}>
-    <p className='text-base'>Si os hemos invitado a nuesta boda es porque sois importantes para nosostros. No esperamos nada a cambio.</p>
-    <p className='text-base'>Si aun así os apetece tener un detalle con nosotros, puedes hacerlo en este número de cuenta:</p>
+    {
+      isSingle
+        ? <><p className='text-base'>Si te hemos invitado a nuestra boda es porque eres importante para nosotras. No esperamos nada a cambio.</p>
+          <p className='text-base'>Si aun así te apetece tener un detalle con nosotras, puedes hacerlo en este número de cuenta:</p></>
+        : <><p className='text-base'>Si os hemos invitado a nuestra boda es porque sois importantes para nosotras. No esperamos nada a cambio.</p>
+          <p className='text-base'>Si aun así os apetece tener un detalle con nosotras, podéis hacerlo en este número de cuenta:</p></>
+    }
     <button className='flex items-center justify-center gap-4 text-sm font-semibold'
       onClick={async () => {
         await navigator.clipboard.writeText(

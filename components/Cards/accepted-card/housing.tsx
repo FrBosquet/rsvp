@@ -1,6 +1,8 @@
 'use client'
 
+import { CopyText } from '@/components/copy'
 import { useGuest } from '@/components/hooks/use-guest'
+import { Pin } from 'lucide-react'
 import { Wrapper } from './wrapper'
 
 interface Props {
@@ -14,45 +16,18 @@ export const Housing = ({ visible }: Props) => {
 
   return (<Wrapper title='hotel'
     visible={visible}>
-    <p className='text-base'>Hemos negociado con el Hotel X precios para nuestros invitados. Haz click en más información para consultar las tarifas y contratar.</p>
-    <a href="a">Link al hotel X</a>
-    <table className='text-xs' >
-      <tr className='text-left font-semibold'>
-        <th>Habitación</th>
-        <th>SA*</th>
-        <th>AD*</th>
-      </tr>
-      <tr>
-        <td>Doble, 1 persona</td>
-        <td>58€</td>
-        <td>68€</td>
-      </tr>
-      <tr>
-        <td>Doble</td>
-        <td>58€</td>
-        <td>78€</td>
-      </tr>
-      <tr>
-        <td>triple</td>
-        <td>78€</td>
-        <td>108€</td>
-      </tr>
-      <tr>
-        <td>Familiar**</td>
-        <td>85€</td>
-        <td>115€</td>
-      </tr>
-      <tr>
-        <td>Premium</td>
-        <td>78€</td>
-        <td>98€</td>
-      </tr>
-      <tr>
-        <td>Suplemento niño</td>
-        <td>12€</td>
-        <td>17€</td>
-      </tr>
-    </table>
-    <p className='text-base'>Para beneficiarte de estas tarifas, debes ponerte en contacto con el hotel por medio de Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusantium quae quisquam odio inventore sint! Ex provident itaque rerum deserunt neque exercitationem magni sed. Eveniet, fugiat distinctio dolores libero sunt qui. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Alias impedit quaerat quod blanditiis dolorum voluptates, numquam perspiciatis beatae quo recusandae molestias? Quaerat illo aut iste mollitia fuga, magni nulla harum.</p>
+    <p className='text-base'>Hemos acordado con el hotel <strong>Civis Jaume I</strong> un descuento del 15% para nuestros invitados.</p>
+    <a href="https://www.hoteljaimei.com/?gclid=CjwKCAiAq4KuBhA6EiwArMAw1B0Yx2_IyPh-MuBy0uiGn0l0oCdBkwg-yiDizb46wbd8UaQXF8f5ahoCBHgQAvD_BwE"
+      className='mx-auto'
+    >
+      <div className='flex items-center gap-c75 text-lg text-olive-400'>
+        <Pin /> Hotel Civis Jaume I
+      </div>
+      <p className='text-sm text-zinc-700'>
+        ronda Mijares 67, Castellón de la Plana
+      </p>
+    </a>
+    <p>Puedes utilizar el siguiente código a la hora de hacer la reserva para acceder al descuento:</p>
+    <CopyText value='JANAYODETTE' />
   </Wrapper>)
 }

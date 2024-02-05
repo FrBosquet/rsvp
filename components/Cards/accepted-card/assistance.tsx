@@ -10,18 +10,25 @@ interface Props {
 }
 
 export const Assistance = ({ visible }: Props) => {
-  const { guest, showAcceptance } = useGuest()
+  const { guest, showAcceptance, hasAllergies, allergies } = useGuest()
   const { loading, handleReject } = useRejectAssistance()
+
+  console.log('guest', { allergies, hasAllergies, guest })
 
   if (!guest) return null
 
   return (<Wrapper title='Asistencia'
     visible={visible}>
-    <p className='mb-auto w-full text-left text-base '>{
-      guest.amount! === 1
-        ? 'Has indicado que solo asistirás tú al evento.'
-        : `Habeis indicado que asistireis ${guest.amount} personas al evento.`
-    }
+    <p className='mb-auto w-full text-left text-base '>
+      {
+        guest.amount! === 1
+          ? 'Has indicado que solo asistirás tú al evento'
+          : `Habeis indicado que asistireis ${guest.amount} personas al evento`
+      }. {
+        hasAllergies
+          ? <>Además, habéis indicado que tenéis las siguientes alergias o intolerancias alimentarias: <em className='text-olive-600'>{allergies}</em></>
+          : null
+      }
     </p>
     <p className='text-sm text-zinc-700'>¿Cambio de planes? Podemos actualizar la lista de invitados sin mayor repercusión hasta el 1 de Mayo de 2024:</p>
 

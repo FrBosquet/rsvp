@@ -1,6 +1,5 @@
 'use client'
 
-import { getTypes } from '@/lib/guesttype'
 import click from '@/public/click.png'
 
 import { type Guest } from '@prisma/client'
@@ -47,10 +46,9 @@ const FamilyCover = ({ guest: { name } }: CoverProps) => {
 }
 
 export const Frontface = () => {
-  const { guest, isFlipped, flip } = useGuest()
+  const { guest, isFlipped, flip, isSingle, isFamily, isCouple } = useGuest()
 
   if (!guest) return null
-  const { isSingle, isFamily, isCouple } = getTypes(guest)
 
   return (
     <Card

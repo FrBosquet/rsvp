@@ -1,4 +1,6 @@
-import { type GuestWithNotes, NOTES, TABS } from '@/types'
+import { getTypes } from '@/lib/guesttype'
+import { NOTES, TABS, type GuestWithNotes } from '@/types'
+import { type Guest } from '@prisma/client'
 import { useEffect } from 'react'
 import { create } from 'zustand'
 
@@ -60,8 +62,14 @@ export const useGuest = (serverGuest?: GuestWithNotes) => {
   const currentTab = useStore((state) => state.currentTab)
   const setCurrentTab = useStore((state) => state.setCurrentTab)
 
-  const usesBus = guest?.notes?.some((note) => note.type === NOTES.allergies && note.content === 'true')
-  const allergies = guest?.notes?.find((note) => note.type === 'allergies')?.content
+  const {
+    isSingle,
+    isFamily,
+    isCouple
+  } = guest ? getTypes(guest as Guest) : { isSingle: false, isFamily: false, isCouple: false }
+
+  const usesBus = guest?.notes?.some((note) => note.type === NOTES.bus && note.content === 'true')
+  const allergies = guest?.notes?.find((note) => note.type === NOTES.allergies)?.content
   const hasAllergies = Boolean(allergies)
 
   useEffect(() => {
@@ -104,6 +112,9 @@ export const useGuest = (serverGuest?: GuestWithNotes) => {
     updateGuest,
     usesBus,
     hasAllergies,
-    allergies
+    allergies,
+    isSingle,
+    isFamily,
+    isCouple
   }
 }

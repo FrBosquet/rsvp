@@ -1,50 +1,50 @@
 'use client'
 
 import { useGuest } from '@/components/hooks/use-guest'
+import { AnimatedButton } from '../animated-button'
 import { Wrapper } from './wrapper'
 
 interface Props {
   visible: boolean
 }
 
+const UseBus = ({ isSingle }: { isSingle: boolean }) => {
+  return (
+    <p className='text-base'>{
+      isSingle
+        ? 'Has indicado que utilizarás el autobús para desplazarte'
+        : 'Habeis indicado que utilizareis el autobús para desplazaros'
+    }. Mas adelante anunciaremos los horarios.</p>
+  )
+}
+
+const DontUseBus = ({ isSingle }: { isSingle: boolean }) => {
+  return (
+    <p className='text-base'>{
+      isSingle
+        ? 'Has indicado que no utilizaras el autobús para desplazarte. Si cambias de opinión puedes actualizar tu elección:'
+        : 'Habéis indicado que no utilizareis el autobús para desplazaros. Si cambiáis de opinión, podeis actualizar vuestra elección:'
+    }</p>
+  )
+}
+
 export const Commuting = ({ visible }: Props) => {
-  const { guest } = useGuest()
+  const { guest, usesBus, isSingle, showAcceptance } = useGuest()
 
   if (!guest) return null
 
   return (<Wrapper title='transporte'
     visible={visible}>
-    <p className='text-base'>La finca se encuentra en Almazora, a apenas 15 minutos de Castellón. Hemos dispuesto autobuses para facilitar el traslado desde la ciudad de Castellón de la Plana hasta la finca Mas dels Doblons.</p>
-    <p className='text-base'>Horarios de ida:</p>
-    <table className='text-xs'>
-      <tr>
-        <th>Origen</th>
-        <th>Hora</th>
-      </tr>
-      <tr>
-        <td>Hotel Center</td>
-        <td>12:30</td>
-      </tr>
-      <tr>
-        <td>Plz. María Agustina</td>
-        <td>12:20</td>
-      </tr>
-    </table>
-    <p className='text-base'>Horarios de vuelta:</p>
+    <p className='text-base'>La celebración tendrá lugar en <strong>La huerta de Peñalen</strong>. Se encuentra en Camí de l’Assagador, Vilarreal</p>
+    {
+      usesBus
+        ? <UseBus isSingle={isSingle} />
+        : <DontUseBus isSingle={isSingle} />
+    }
+    <AnimatedButton
+      className='w-full p-3 text-lg bg-color-emerald'
+      onClick={showAcceptance}
+    >Cambiar numero de asistentes, alergias o autobus</AnimatedButton>
 
-    <table className='text-xs'>
-      <tr>
-        <th>Destino</th>
-        <th>Hora</th>
-      </tr>
-      <tr>
-        <td>Hotel Center</td>
-        <td>19:30</td>
-      </tr>
-      <tr>
-        <td>Hotel Center</td>
-        <td>23:00</td>
-      </tr>
-    </table>
   </Wrapper>)
 }
