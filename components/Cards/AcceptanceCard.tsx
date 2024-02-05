@@ -12,7 +12,7 @@ import { Card } from './Card'
 import { AnimatedButton } from './animated-button'
 
 export const AcceptanceCard = () => {
-  const { guest, isAcceptingCardVisible, hideAcceptance, updateGuest } = useGuest()
+  const { guest, isAcceptingCardVisible, hideAcceptance, updateGuest, allergies, usesBus } = useGuest()
   const [amount, setAmount] = useState(0)
   const [loading, setLoading] = useState<boolean>(false)
   const params = useParams<{ event: string, slug: string }>()
@@ -116,7 +116,7 @@ export const AcceptanceCard = () => {
             data-op="plus"><PlusCircleIcon /></button>
         </div>
 
-        <p className='text-xs font-thin text-zinc-400'>{
+        <p className='font-thin text-zinc-400'>{
           guest.maxAmount === 1
             ? 'Esta invitación incluye una plaza para ti.'
             : `Esta invitación incluye ${guest.maxAmount} plazas.`
@@ -124,9 +124,10 @@ export const AcceptanceCard = () => {
 
         {/* alergias */}
         <h2 className='pt-c40 uppercase'>Alergias o intolerancias</h2>
-        <textarea className=' w-full resize-none border bg-transparent p-c100 px-c20 text-center text-xs'
+        <textarea className=' w-full resize-none border bg-transparent p-c100 px-c20 text-center'
           placeholder='Describe aquí si alguno de los invitados tiene alguna alergia o intolerancia alimentaria.'
-          name="allergies" />
+          name="allergies"
+          defaultValue={allergies} />
 
         {/* autobus */}
         <h2 className='pt-c40 uppercase'>Autobús</h2>
@@ -134,7 +135,9 @@ export const AcceptanceCard = () => {
           <input type="checkbox"
             className='accent-olive-400'
             id="bus"
-            name='bus' />
+            name='bus'
+            defaultValue={usesBus ? 'on' : 'off'}
+          />
           <label htmlFor="bus"
             className='font-light text-zinc-900'>Marca esta casilla si vais a hacer uso del autobus</label>
         </article>

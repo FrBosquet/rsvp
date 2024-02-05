@@ -26,7 +26,7 @@ export default async function GuestPage({ params }: Route) {
 
   if (!guest) return redirect('/')
 
-  return <main className='flex h-screen justify-center bg-slate-700'>
+  return <main className='flex h-s-screen justify-center overflow-hidden'>
     <CardFlipper guest={guest} />
   </main>
 }

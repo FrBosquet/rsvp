@@ -14,8 +14,8 @@ export const Wrapper = ({ children, visible, title }: { children: React.ReactNod
     }>
       <h1 className='w-full border-b-2 border-zinc-400 pb-3 text-center font-serif text-xl uppercase'>{title}</h1>
       <div className='flex flex-1 flex-col gap-c30 overflow-y-auto'>{children}</div>
-      <AnimatedButton className='mx-auto flex items-center font-serif uppercase'
-        onClick={hideAcceptedCard}><p>cerrar</p><X size={12} /></AnimatedButton>
+      <AnimatedButton className='flex w-full items-center justify-center p-c50 font-serif text-lg uppercase'
+        onClick={hideAcceptedCard}><p>cerrar</p><X size={16} /></AnimatedButton>
     </div>
   )
 }

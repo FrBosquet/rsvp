@@ -1,7 +1,7 @@
 'use server'
 
 import { prisma } from '@/lib/prisma'
-import { type GuestWithNotes, NOTES, type GuestWithHost, type STATE } from '@/types'
+import { NOTES, type GuestWithHost, type GuestWithNotes, type STATE } from '@/types'
 import { currentUser } from '@clerk/nextjs'
 import { type Guest } from '@prisma/client'
 import { redirect } from 'next/navigation'
@@ -233,7 +233,7 @@ export async function replyToInvitation(formData: FormData): Promise<GuestWithNo
   const slug = formData.get('slug') as string
   const amount = formData.get('amount') as string
   const state = formData.get('state') as STATE
-  const bus = formData.get('bus') === 'on' || false
+  const bus = formData.get('bus') as string
   const allergies = formData.get('allergies') as string
 
   const data = await prisma.guest.findUnique({
@@ -250,8 +250,8 @@ export async function replyToInvitation(formData: FormData): Promise<GuestWithNo
   }
 
   await Promise.all([
-    writeNote(eventSlug, slug, NOTES.bus, bus ? 'true' : 'false'),
-    writeNote(eventSlug, slug, NOTES.allergies, allergies)
+    bus ? writeNote(eventSlug, slug, NOTES.bus, bus ? 'true' : 'false') : null,
+    allergies ? writeNote(eventSlug, slug, NOTES.allergies, allergies) : null
   ])
 
   const updatedGuest = await prisma.guest.update({

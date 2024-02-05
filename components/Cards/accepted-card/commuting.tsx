@@ -1,6 +1,7 @@
 'use client'
 
 import { useGuest } from '@/components/hooks/use-guest'
+import { PlaceLink } from '@/components/place-link'
 import { AnimatedButton } from '../animated-button'
 import { Wrapper } from './wrapper'
 
@@ -36,6 +37,11 @@ export const Commuting = ({ visible }: Props) => {
   return (<Wrapper title='transporte'
     visible={visible}>
     <p className='text-base'>La celebración tendrá lugar en <strong>La huerta de Peñalen</strong>. Se encuentra en Camí de l’Assagador, Vilarreal</p>
+    <PlaceLink
+      href='https://maps.app.goo.gl/MGMR8XKxYNHjkjM46'
+      title='La huerta de Peñalen'
+      address='Camí de l’Assagador, Vilarreal'
+    />
     {
       usesBus
         ? <UseBus isSingle={isSingle} />

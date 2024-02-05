@@ -40,7 +40,7 @@ export default function RootLayout({
     <ClerkProvider localization={esES}>
       <html lang="en"
         className={sans.className}>
-        <body className={`dark min-h-screen antialiased ${sans.className} ${script.variable} ${serif.variable}`}>
+        <body className={`dark min-h-s-screen antialiased ${sans.className} ${script.variable} ${serif.variable} bg-slate-800`}>
           <NextTopLoader />
           <Toaster richColors />
 

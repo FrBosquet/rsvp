@@ -48,6 +48,9 @@ module.exports = {
         'c8': 'calc(40 * var(--letter-size) / 8)',
         'c5': 'calc(40 * var(--letter-size) / 5)',
         'c1': 'calc(40 * var(--letter-size))',
+        's-screen': '100svh',
+        'l-screen': '100lvh',
+        'd-screen': '100dvh',
       },
       boxShadow: {
         heavy: '0 0 var(--letter-size) rgba(0, 0, 0, 0.5)',
@@ -203,7 +206,7 @@ module.exports = {
         },
 
         '.acceptance-card': {
-          transform: 'translateZ(0) rotateX(-10deg) translateY(100svh)',
+          transform: 'translateZ(0) rotateX(-10deg) translateY(100lvh)',
           transition: 'transform 650ms ease-in-out',
         },
         '.acceptance-card-visible': {
@@ -214,7 +217,7 @@ module.exports = {
           transform: 'translateZ(calc(var(--letter-size) * 8)) rotateX(10deg) translateY(100svh)',
         },
         '.accepted-card-visible': {
-          transform: 'translateZ(10px) rotateX(0deg) translateY(calc(var(--card-height) * 0.05))',
+          transform: 'translateZ(10px) rotateX(0deg) translateY(calc(var(--card-height) * 0.01))',
         },
       })
     })
