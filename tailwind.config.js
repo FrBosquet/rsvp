@@ -173,15 +173,15 @@ module.exports = {
         },
 
         '.size-screen': {
-          width: '100vw',
-          height: '100vh',
+          width: '100svw',
+          height: '100svh',
         }
       })
 
       addComponents({
         '.card': {
           '--ratio': '1.8',
-          '--card-width': 'min(calc(min(90vw, calc((100vh / var(--ratio)) - 2rem))), calc(1020px / var(--ratio)))',
+          '--card-width': 'min(calc(min(90vw, calc((100svh / var(--ratio)) - 2rem))), calc(1020px / var(--ratio)))',
           '--card-height': 'calc(var(--card-width) * var(--ratio))',
           '--letter-size': 'calc(var(--card-height) / 40)',
           'display': 'flex',

@@ -17,6 +17,8 @@ export default async function PrivatePage() {
     }
   })
 
+  if (!user) return redirect('/private')
+
   const isAdmin = user?.role === 'admin'
 
   const events = await prisma.event.findMany({
@@ -53,10 +55,17 @@ export default async function PrivatePage() {
     {isAdmin
       ? <article className="flex w-full gap-2 rounded-2xl bg-green-900 p-2 text-zinc-200 shadow-md">
         <h2 className="font-semibold">Crear nuevo evento</h2>
-        <Form action={createEvent} className="flex w-full">
+        <Form action={createEvent}
+          className="flex w-full">
           <Fieldset className="flex w-full flex-1 gap-2">
-            <input required className="flex-1 border-b-2 bg-transparent p-1" name="name" placeholder="Nombre del evento" />
-            <input required className="flex-1 border-b-2 bg-transparent p-1" name="slug" placeholder="URL del evento" />
+            <input required
+              className="flex-1 border-b-2 bg-transparent p-1"
+              name="name"
+              placeholder="Nombre del evento" />
+            <input required
+              className="flex-1 border-b-2 bg-transparent p-1"
+              name="slug"
+              placeholder="URL del evento" />
           </Fieldset>
           <SubmitButton>Crear</SubmitButton>
         </Form>
@@ -65,7 +74,9 @@ export default async function PrivatePage() {
     }
 
     <article className="grid gap-2 pt-6 md:grid-cols-2 xl:grid-cols-3">
-      {events.map(event => <EventCard key={event.slug} event={event} isAdmin={isAdmin} />)}
+      {events.map(event => <EventCard key={event.slug}
+        event={event}
+        isAdmin={isAdmin} />)}
     </article>
   </section>
 }
