@@ -23,9 +23,10 @@ const AddButton = () => {
 
 interface Props {
   onNewGuest: (guest: GuestWithHost) => void
+  className?: string
 }
 
-export const AddGuestModal = ({ onNewGuest }: Props) => {
+export const AddGuestModal = ({ onNewGuest, className }: Props) => {
   const { user } = useUser()
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -91,34 +92,52 @@ export const AddGuestModal = ({ onNewGuest }: Props) => {
     }
   }
 
-  return <Dialog open={open} onOpenChange={setOpen}>
-    <DialogTrigger className="h-0" ><AddButton /></DialogTrigger>
+  return <Dialog open={open}
+    onOpenChange={setOpen}>
+    <DialogTrigger className={className}><AddButton /></DialogTrigger>
     <DialogContent>
       <DialogHeader>
         <DialogTitle>Añadir invitado</DialogTitle>
         <DialogDescription>Crea una nueva invitación</DialogDescription>
       </DialogHeader>
 
-      <form id='add-guest-modal' onSubmit={handleSubmit}>
-        <fieldset className='flex flex-col gap-4' disabled={loading}>
-          <input type="hidden" name="eventSlug" value={eventSlug} />
-          <input type="hidden" name="hostId" value={hostId} />
+      <form id='add-guest-modal'
+        onSubmit={handleSubmit}>
+        <fieldset className='flex flex-col gap-4'
+          disabled={loading}>
+          <input type="hidden"
+            name="eventSlug"
+            value={eventSlug} />
+          <input type="hidden"
+            name="hostId"
+            value={hostId} />
 
           <article className='flex flex-col gap-2'>
-            <label className='font-semibold' htmlFor="names">Nombres</label>
-            <Input required placeholder="Nombres de los invitados" name='names' id="names" onChange={handleChange} />
+            <label className='font-semibold'
+              htmlFor="names">Nombres</label>
+            <Input required
+              placeholder="Nombres de los invitados"
+              name='names'
+              id="names"
+              onChange={handleChange} />
             <p className='text-sm text-slate-400'>Separados por comas. Pej. &quot;Lola,Ramón&quot;</p>
           </article>
 
           <article className='flex flex-col gap-2'>
-            <label className='font-semibold' htmlFor="slug">Enlace</label>
-            <Input ref={slugInput} required placeholder="Slug de la invitación" name='slug' id="slug" />
+            <label className='font-semibold'
+              htmlFor="slug">Enlace</label>
+            <Input ref={slugInput}
+              required
+              placeholder="Slug de la invitación"
+              name='slug'
+              id="slug" />
             <p className='text-sm text-slate-400'>Enlace personalizado y único para cada invitación. Este sirve para distinguir el enlace que enviaras a cada invitado.</p>
           </article>
 
           <article className='flex flex-col gap-2'>
             <div className="flex items-center space-x-2">
-              <Checkbox id="family" name="family" />
+              <Checkbox id="family"
+                name="family" />
               <label
                 htmlFor="family"
               >
@@ -129,11 +148,22 @@ export const AddGuestModal = ({ onNewGuest }: Props) => {
           </article>
 
           <article className='flex flex-col gap-2'>
-            <label className='font-semibold' htmlFor="guests">Invitados</label>
+            <label className='font-semibold'
+              htmlFor="guests">Invitados</label>
             <div className="flex items-center justify-center gap-4">
-              <button type='button' onClick={handleGuestIncrease} data-op="minus"><MinusCircleIcon /></button>
-              <input ref={guestsInput} type='number' min={1} name="guests" id="guests" className='w-8 border-none bg-transparent text-center text-lg' defaultValue={2} />
-              <button type='button' onClick={handleGuestIncrease} data-op="plus"><PlusCircleIcon /></button>
+              <button type='button'
+                onClick={handleGuestIncrease}
+                data-op="minus"><MinusCircleIcon /></button>
+              <input ref={guestsInput}
+                type='number'
+                min={1}
+                name="guests"
+                id="guests"
+                className='w-8 border-none bg-transparent text-center text-lg'
+                defaultValue={2} />
+              <button type='button'
+                onClick={handleGuestIncrease}
+                data-op="plus"><PlusCircleIcon /></button>
             </div>
             <p className='text-sm text-slate-400'>Cuantas personas, como máximo, incluye esta invitación</p>
           </article>
@@ -141,7 +171,8 @@ export const AddGuestModal = ({ onNewGuest }: Props) => {
       </form>
 
       <DialogFooter>
-        <button type='submit' form='add-guest-modal'>{loading ? <Spinner /> : 'Crear'}</button>
+        <button type='submit'
+          form='add-guest-modal'>{loading ? <Spinner /> : 'Crear'}</button>
       </DialogFooter>
     </DialogContent>
   </Dialog>

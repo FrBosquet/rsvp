@@ -35,7 +35,11 @@ export default async function EventDashboardPage({ params }: Route) {
       },
       guests: {
         include: {
-          host: true
+          host: true,
+          notes: true
+        },
+        orderBy: {
+          slug: 'asc'
         }
       }
     }
@@ -45,7 +49,7 @@ export default async function EventDashboardPage({ params }: Route) {
     redirect('/private')
   }
 
-  return <section className="container m-auto flex h-screen flex-col gap-3 p-4 text-reset">
+  return <section className="container m-auto flex h-s-screen flex-col gap-3 p-4 text-reset">
     <header className="flex w-full items-center gap-4 rounded-2xl bg-slate-800 p-2 text-zinc-200 shadow-lg">
       <UserButton />
       <h1 className="text-lg uppercase">{event.name}</h1>

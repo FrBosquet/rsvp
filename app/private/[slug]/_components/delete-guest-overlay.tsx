@@ -3,14 +3,14 @@
 import { deleteGuest } from '@/app/actions'
 import { Spinner } from '@/components/spinner'
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
-import { type Guest } from '@prisma/client'
+import { type GuestWithHost } from '@/types'
 import { useParams } from 'next/navigation'
 import { useState, type FormEvent } from 'react'
 import { toast } from 'sonner'
 
 interface Props {
-  onDeleteGuest: (guest: Guest) => void
-  guest: Guest
+  onDeleteGuest: (guest: GuestWithHost) => void
+  guest: GuestWithHost
   children: React.ReactNode
 }
 
@@ -47,7 +47,8 @@ export const DeleteGuestModal = ({ onDeleteGuest, guest, children }: Props) => {
     }
   }
 
-  return <Dialog open={open} onOpenChange={setOpen}>
+  return <Dialog open={open}
+    onOpenChange={setOpen}>
     <DialogTrigger>{children}</DialogTrigger>
     <DialogContent>
       <DialogHeader>
@@ -55,18 +56,27 @@ export const DeleteGuestModal = ({ onDeleteGuest, guest, children }: Props) => {
         <DialogDescription>Esta acción no puede ser revertida</DialogDescription>
       </DialogHeader>
 
-      <form id='delete-guest-modal' onSubmit={handleSubmit}>
-        <fieldset className='flex flex-col gap-4' disabled={loading}>
-          <input type="hidden" name="eventSlug" value={eventSlug} />
-          <input type="hidden" name="slug" value={guest.slug} />
+      <form id='delete-guest-modal'
+        onSubmit={handleSubmit}>
+        <fieldset className='flex flex-col gap-4'
+          disabled={loading}>
+          <input type="hidden"
+            name="eventSlug"
+            value={eventSlug} />
+          <input type="hidden"
+            name="slug"
+            value={guest.slug} />
         </fieldset>
       </form>
 
       <DialogFooter>
         <menu className='flex w-full justify-between'>
 
-          <button type='button' onClick={() => { setOpen(false) }}>Cancelar</button>
-          <button type='submit' className='rounded-sm bg-red-700 p-1' form='delete-guest-modal'>{loading ? <Spinner /> : 'Eliminar'}</button>
+          <button type='button'
+            onClick={() => { setOpen(false) }}>Cancelar</button>
+          <button type='submit'
+            className='rounded-sm bg-red-700 p-1'
+            form='delete-guest-modal'>{loading ? <Spinner /> : 'Eliminar'}</button>
         </menu>
       </DialogFooter>
     </DialogContent>

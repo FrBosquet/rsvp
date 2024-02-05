@@ -6,7 +6,6 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { type GuestWithHost } from '@/types'
-import { type Guest } from '@prisma/client'
 import { MinusCircleIcon, PlusCircleIcon } from 'lucide-react'
 import { useParams } from 'next/navigation'
 import { useRef, useState, type FormEvent, type MouseEvent } from 'react'
@@ -15,8 +14,8 @@ import { DeleteGuestModal } from './delete-guest-overlay'
 
 interface Props {
   onEditGuest: (guest: GuestWithHost) => void
-  onDeleteGuest: (guest: Guest) => void
-  guest: Guest
+  onDeleteGuest: (guest: GuestWithHost) => void
+  guest: GuestWithHost
   children: React.ReactNode
 }
 
@@ -42,9 +41,6 @@ export const EditGuestModal = ({ onEditGuest, onDeleteGuest, guest, children }: 
       toast.success('Invitación actualizada correctamente')
       setOpen(false)
     } catch (err) {
-      // let message = 'Unknown Error'
-      // if (err instanceof Error) message = err.message
-
       switch (true) {
         default:
           toast.error('Error desconocido! Por favor, contacta con el administrador si el error persiste')
@@ -55,7 +51,7 @@ export const EditGuestModal = ({ onEditGuest, onDeleteGuest, guest, children }: 
     }
   }
 
-  const handleDelete = async (guest: Guest) => {
+  const handleDelete = async (guest: GuestWithHost) => {
     onDeleteGuest(guest)
     setOpen(false)
   }
@@ -74,7 +70,8 @@ export const EditGuestModal = ({ onEditGuest, onDeleteGuest, guest, children }: 
     }
   }
 
-  return <Dialog open={open} onOpenChange={setOpen}>
+  return <Dialog open={open}
+    onOpenChange={setOpen}>
     <DialogTrigger>{children}</DialogTrigger>
     <DialogContent>
       <DialogHeader>
@@ -82,25 +79,40 @@ export const EditGuestModal = ({ onEditGuest, onDeleteGuest, guest, children }: 
         <DialogDescription>Edita una invitación</DialogDescription>
       </DialogHeader>
 
-      <form id='edit-guest-modal' onSubmit={handleSubmit}>
-        <fieldset className='flex flex-col gap-4' disabled={loading}>
-          <input type="hidden" name="eventSlug" value={eventSlug} />
-          <input type="hidden" name="slug" value={guest.slug} />
+      <form id='edit-guest-modal'
+        onSubmit={handleSubmit}>
+        <fieldset className='flex flex-col gap-4'
+          disabled={loading}>
+          <input type="hidden"
+            name="eventSlug"
+            value={eventSlug} />
+          <input type="hidden"
+            name="slug"
+            value={guest.slug} />
 
           <article className='flex flex-col gap-2'>
-            <label className='font-semibold' htmlFor="names">Nombres</label>
-            <Input required placeholder="Nombres de los invitados" name='names' id="names" defaultValue={guest.name} />
+            <label className='font-semibold'
+              htmlFor="names">Nombres</label>
+            <Input required
+              placeholder="Nombres de los invitados"
+              name='names'
+              id="names"
+              defaultValue={guest.name} />
             <p className='text-sm text-slate-400'>Separados por comas. Pej. &quot;Lola,Ramón&quot;</p>
           </article>
 
           <article className='flex flex-col gap-2'>
-            <label className='font-semibold' htmlFor="slug">Enlace</label>
-            <Input disabled id="slug" defaultValue={guest.slug} />
+            <label className='font-semibold'
+              htmlFor="slug">Enlace</label>
+            <Input disabled
+              id="slug"
+              defaultValue={guest.slug} />
           </article>
 
           <article className='flex flex-col gap-2'>
             <div className="flex items-center space-x-2">
-              <Checkbox id="family" name="family" />
+              <Checkbox id="family"
+                name="family" />
               <label
                 htmlFor="family"
               >
@@ -111,11 +123,22 @@ export const EditGuestModal = ({ onEditGuest, onDeleteGuest, guest, children }: 
           </article>
 
           <article className='flex flex-col gap-2'>
-            <label className='font-semibold' htmlFor="guests">Invitados</label>
+            <label className='font-semibold'
+              htmlFor="guests">Invitados</label>
             <div className="flex items-center justify-center gap-4">
-              <button type='button' onClick={handleGuestIncrease} data-op="minus"><MinusCircleIcon /></button>
-              <input ref={guestsInput} type='number' min={1} name="guests" id="guests" className='w-8 border-none bg-transparent text-center text-lg' defaultValue={guest.maxAmount} />
-              <button type='button' onClick={handleGuestIncrease} data-op="plus"><PlusCircleIcon /></button>
+              <button type='button'
+                onClick={handleGuestIncrease}
+                data-op="minus"><MinusCircleIcon /></button>
+              <input ref={guestsInput}
+                type='number'
+                min={1}
+                name="guests"
+                id="guests"
+                className='w-8 border-none bg-transparent text-center text-lg'
+                defaultValue={guest.maxAmount} />
+              <button type='button'
+                onClick={handleGuestIncrease}
+                data-op="plus"><PlusCircleIcon /></button>
             </div>
             <p className='text-sm text-slate-400'>Cuantas personas, como máximo, incluye esta invitación</p>
           </article>
@@ -124,11 +147,15 @@ export const EditGuestModal = ({ onEditGuest, onDeleteGuest, guest, children }: 
 
       <DialogFooter>
         <menu className=' flex w-full justify-between'>
-          <DeleteGuestModal guest={guest} onDeleteGuest={handleDelete}>
-            <button type='button' className='rounded-sm bg-red-700 p-1'>Eliminar</button>
+          <DeleteGuestModal
+            guest={guest}
+            onDeleteGuest={handleDelete}>
+            <button type='button'
+              className='rounded-sm bg-red-700 p-1'>Eliminar</button>
           </DeleteGuestModal>
 
-          <button type='submit' form='edit-guest-modal'>{loading ? <Spinner /> : 'Guardar'}</button>
+          <button type='submit'
+            form='edit-guest-modal'>{loading ? <Spinner /> : 'Guardar'}</button>
         </menu>
       </DialogFooter>
     </DialogContent>

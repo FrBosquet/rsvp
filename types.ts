@@ -26,7 +26,7 @@ export enum GuestType {
   family,
 }
 
-export type GuestWithHost = PrismaGuest & {
+export type GuestWithHost = GuestWithNotes & {
   host: User
 }
 
