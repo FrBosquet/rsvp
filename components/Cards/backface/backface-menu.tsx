@@ -34,7 +34,7 @@ export const Accepted = () => {
 
   return <menu
     className={twMerge(
-      'flex w-full justify-around transition-opacity duration-700 opacity-0 absolute bottom-0 pointer-events-none',
+      'flex w-full justify-around transition-opacity duration-700 opacity-0 absolute bottom-0 pointer-events-none gap-c80',
       guest?.state === STATE.accepted && 'opacity-100 pointer-events-auto'
     )}>
     {
@@ -42,7 +42,7 @@ export const Accepted = () => {
         <AnimatedButton
           key={i}
           onClick={() => { showAcceptedCard(tab) }}
-          className='flex aspect-square flex-col items-center justify-center gap-c80 bg-color-emerald disabled:opacity-50'
+          className='flex aspect-square flex-1 flex-col items-center justify-center gap-c80 border bg-color-emerald disabled:opacity-50'
         >
           <Icon size={24} />
           <span className='text-xs'>{label}</span>

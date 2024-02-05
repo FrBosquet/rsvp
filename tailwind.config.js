@@ -210,7 +210,7 @@ module.exports = {
           transition: 'transform 650ms ease-in-out',
         },
         '.acceptance-card-visible': {
-          transform: 'translateZ(calc(var(--letter-size) * 8)) rotateX(10deg) translateY(calc(var(--card-height) * 0.30))',
+          transform: 'translateZ(calc(var(--letter-size) * 8)) rotateX(2deg) translateY(calc(var(--card-height) * 0.30))',
         },
 
         '.accepted-card': {
