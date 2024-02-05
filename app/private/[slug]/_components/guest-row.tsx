@@ -1,9 +1,16 @@
 'use client'
 
+import { toggleContacted } from '@/app/actions'
+import { CopyText } from '@/components/copy'
+import { useEvent } from '@/components/hooks/use-event'
+import { Spinner } from '@/components/spinner'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { STATE, type GuestWithHost } from '@/types'
-import { Copy, HelpCircle, ThumbsDown, ThumbsUp, type LucideIcon } from 'lucide-react'
+import { HelpCircle, ThumbsDown, ThumbsUp, type LucideIcon } from 'lucide-react'
 import { useParams } from 'next/navigation'
+import { useState } from 'react'
+import { toast } from 'sonner'
+import { twMerge } from 'tailwind-merge'
 import { EditGuestModal } from './edit-guest-modal'
 
 interface Props {
@@ -24,7 +31,13 @@ const StateWidget = ({ state }: { state: string }) => {
 
   return <Tooltip>
     <TooltipTrigger asChild>
-      <Icon size={16} />
+      <Icon size={16}
+        className={twMerge(
+          'text-slate-900',
+          isAccepted && 'text-green-500',
+          isRejected && 'text-red-500',
+          isPending && 'text-yellow-500'
+        )} />
     </TooltipTrigger>
     <TooltipContent>
       <p className="text-sm">
@@ -36,12 +49,47 @@ const StateWidget = ({ state }: { state: string }) => {
   </Tooltip>
 }
 
+const ContactedWidget = ({ guest }: { guest: GuestWithHost }) => {
+  const [loading, setLoading] = useState(false)
+  const params = useParams()
+  const { updateGuest } = useEvent()
+  const eventSlug = (params?.slug as string) ?? null
+
+  const handleCheck = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    try {
+      setLoading(true)
+      const formData = new FormData()
+      formData.append('contacted', e.target.checked ? 'true' : 'false')
+      formData.append('slug', guest.slug)
+      formData.append('event', eventSlug)
+
+      const updatedGuest = await toggleContacted(formData)
+
+      updateGuest(updatedGuest)
+    } catch (err) {
+      toast.error('Error desconocido! Por favor, contacta con el administrador si el error persiste')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return <div className='flex aspect-square w-4 items-center justify-center'>
+    {loading
+      ? <Spinner size={10} />
+      : <input type='checkbox'
+        onChange={handleCheck}
+        className='accent-olive-400'
+        checked={guest.contacted} />}
+  </div>
+}
+
 export const GuestRow = ({ guest, onUpdateGuest, onDeleteGuest }: Props) => {
   const { host } = guest
   const params = useParams<{ slug: string }>()
+  const url = `${location.protocol}//${location.host}/${params?.slug}/${guest.slug}`
 
   return <div className='flex w-full items-center gap-4'>
-    <div className="flex aspect-square w-8 items-center justify-center gap-2 rounded-full bg-pink-400">
+    <div className="flex aspect-square w-6 items-center justify-center gap-2 rounded-full bg-orange-700 text-xs md:w-8 md:text-base">
       {host.name.split(' ').map((name) => name[0])}
     </div>
     <div className="flex">
@@ -53,16 +101,17 @@ export const GuestRow = ({ guest, onUpdateGuest, onDeleteGuest }: Props) => {
         onEditGuest={onUpdateGuest}>
         <p className="text-left text-base font-semibold transition hover:text-pink-400">{guest.name}</p>
       </EditGuestModal>
-      <a href={`/${params?.slug}/${guest.slug}`}
+      <a href={url}
         target='_blank'
         className="font-mono text-sm text-yellow-600"
         rel="noreferrer">/{guest.slug}</a>
     </div>
     <div className="flex items-center gap-4 text-sm">
       <p className="">{guest.state === 'pending' ? '...' : guest.amount}/{guest.maxAmount}</p>
-      <Copy size={16} />
-      <input type='checkbox'
-        checked={guest.contacted} />
+      <CopyText value={url}
+        iconSize={16}
+        onlyIcon />
+      <ContactedWidget guest={guest} />
     </div>
 
   </div>

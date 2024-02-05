@@ -2,7 +2,14 @@ import { Copy } from 'lucide-react'
 import { toast } from 'sonner'
 import { twMerge } from 'tailwind-merge'
 
-export const CopyText = ({ value, className }: { value: string, className?: string }) => {
+interface Props {
+  value: string
+  className?: string
+  onlyIcon?: boolean
+  iconSize?: number
+}
+
+export const CopyText = ({ value, className, onlyIcon, iconSize }: Props) => {
   return (
     <button className={twMerge('flex items-center justify-center gap-4 text-sm font-semibold', className)}
       onClick={async () => {
@@ -12,8 +19,8 @@ export const CopyText = ({ value, className }: { value: string, className?: stri
 
         toast('Copiado al portapapeles')
       }}>
-      <Copy />
-      <span>{value}</span>
+      <Copy size={iconSize} />
+      {!onlyIcon && <span>{value}</span>}
     </button>
   )
 }

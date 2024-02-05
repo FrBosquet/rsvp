@@ -13,8 +13,6 @@ export const Assistance = ({ visible }: Props) => {
   const { guest, showAcceptance, hasAllergies, allergies } = useGuest()
   const { loading, handleReject } = useRejectAssistance()
 
-  console.log('guest', { allergies, hasAllergies, guest })
-
   if (!guest) return null
 
   return (<Wrapper title='Asistencia'

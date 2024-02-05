@@ -2,85 +2,13 @@
 'use client'
 
 import { useEvent } from '@/components/hooks/use-event'
-import { Select, SelectContent, SelectItem, SelectTrigger } from '@/components/ui/select'
-import { STATE, type GuestWithHost } from '@/types'
-import { type User } from '@prisma/client'
-import { UserSearch } from 'lucide-react'
-import { twMerge } from 'tailwind-merge'
+import { type GuestWithHost } from '@/types'
 import { AddGuestModal } from './_components/add-guest-modal'
 import { GuestRow } from './_components/guest-row'
-
-const UserSelector = ({ users, className }: { users: User[], className?: string }) => {
-  const { hosts, setFilter, filters } = useEvent()
-
-  const handleChange = (value: string) => {
-    if (value === '-') {
-      setFilter('host', null)
-    } else {
-      setFilter('host', value)
-    }
-  }
-
-  const hostName = hosts.find((host) => host.id === filters.host)?.name ?? 'Invitado de'
-
-  return <Select onValueChange={handleChange}>
-    <SelectTrigger className={twMerge('max-w-32', className)}>
-      {hostName}
-    </SelectTrigger>
-    <SelectContent>
-      <SelectItem value="-">Todos</SelectItem>
-      {
-        hosts.map((host) => {
-          return <SelectItem key={host.id}
-            value={host.id}>{host.name}</SelectItem>
-        })
-      }
-    </SelectContent>
-  </Select>
-}
-
-const InvitationResume = ({ guestInvited, invitationAmount, className }: { guestInvited: number, invitationAmount: number, className: string }) => {
-  return <p className={twMerge('text-sm font-semibold uppercase', className)}>{invitationAmount} invitaciones / {guestInvited} invitados</p>
-}
-
-const SearchInput = ({ className }: { className?: string }) => {
-  const { updateNameFilter } = useEvent()
-
-  return <p className={twMerge('relative flex items-center px-1', className)}>
-    <UserSearch size={16}
-      className='absolute' />
-    <input className="bg-transparent pl-6"
-      onChange={updateNameFilter}
-      placeholder="buscar..." />
-  </p>
-}
-
-const GuestStateFilter = ({ className }: { className?: string }) => {
-  const { toggleStateFilter, guestPending, guestAccepted, guestRejected, filters } = useEvent()
-
-  return <div className={twMerge('flex gap-1', className)}>
-    <button onClick={() => {
-      toggleStateFilter(STATE.pending)
-    }}
-      data-selected={filters.state === STATE.pending}
-      className="aspect-square w-8 rounded-md border-yellow-500 bg-yellow-500 text-sm font-semibold text-slate-900 hover:bg-yellow-300
-      data-[selected='true']:border data-[selected='true']:bg-transparent data-[selected='true']:text-yellow-300 md:w-6 ">{guestPending}</button>
-
-    <button onClick={() => {
-      toggleStateFilter(STATE.accepted)
-    }}
-      data-selected={filters.state === STATE.accepted}
-      className="aspect-square w-8 rounded-md border-green-500 bg-green-500 text-sm font-semibold text-slate-900 hover:bg-green-300
-      data-[selected='true']:border data-[selected='true']:bg-transparent data-[selected='true']:text-green-300 md:w-6 ">{guestAccepted}</button>
-
-    <button onClick={() => {
-      toggleStateFilter(STATE.rejected)
-    }}
-      data-selected={filters.state === STATE.rejected}
-      className="aspect-square w-8 rounded-md border-red-500 bg-red-500 text-sm font-semibold text-slate-900 hover:bg-red-300
-      data-[selected='true']:border data-[selected='true']:bg-transparent data-[selected='true']:text-red-300 md:w-6 ">{guestRejected}</button>
-  </div>
-}
+import { GuestStateFilter } from './_components/guest-state-filter'
+import { InvitationResume } from './_components/invitation-resume'
+import { SearchInput } from './_components/search-input'
+import { UserSelector } from './_components/user-selector'
 
 export const Manager = ({ serverGuests }: { serverGuests: GuestWithHost[] }) => {
   const { addGuest, updateGuest, deleteGuest, guestInvited, invitationAmount, filteredGuests } = useEvent(serverGuests)

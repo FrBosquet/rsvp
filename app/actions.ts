@@ -229,6 +229,46 @@ const writeNote = async (eventSlug: string, slug: string, type: NOTES, content: 
   })
 }
 
+export async function toggleContacted(formData: FormData): Promise<GuestWithHost> {
+  const eventSlug = formData.get('event') as string
+  const slug = formData.get('slug') as string
+  const contacted = formData.get('contacted') as string
+
+  const data = await prisma.guest.findUnique({
+    where: {
+      eventSlug_slug: {
+        eventSlug,
+        slug
+      }
+    },
+    include: {
+      notes: true
+    }
+  })
+
+  if (!data) {
+    throw new Error('Guest not found')
+  }
+
+  const updatedGuest = await prisma.guest.update({
+    where: {
+      eventSlug_slug: {
+        eventSlug,
+        slug
+      }
+    },
+    data: {
+      contacted: contacted === 'true'
+    },
+    include: {
+      notes: true,
+      host: true
+    }
+  })
+
+  return updatedGuest
+}
+
 export async function replyToInvitation(formData: FormData): Promise<GuestWithNotes> {
   const eventSlug = formData.get('eventSlug') as string
   const slug = formData.get('slug') as string

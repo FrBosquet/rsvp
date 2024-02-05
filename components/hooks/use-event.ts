@@ -109,8 +109,6 @@ export const useEvent = (serverGuests?: GuestWithHost[]) => {
     setGuests([...(guests ?? []), guest].sort((a, b) => a.name.localeCompare(b.name)))
   }
 
-  console.log({ filters })
-
   const filteredGuests = useMemo(() => {
     return (guests ?? []).filter((guest) => {
       if (filters.name) {
