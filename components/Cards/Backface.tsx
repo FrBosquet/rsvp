@@ -37,7 +37,7 @@ export const Backface = () => {
         <AnimatedButton isMarked={guest.state === STATE.rejected}
           onClick={handleReject}
           loading={loading}
-          className='flex-1 bg-color-rose'>No</AnimatedButton>
+          className='relative flex-1 bg-color-rose'>No</AnimatedButton>
 
       </menu>
     </Card>

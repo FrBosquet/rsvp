@@ -18,14 +18,11 @@ export const AnimatedButton = ({ isMarked, onClick, loading, children, className
     {
       loading
         ? <Spinner className='mx-auto' />
-        : <>
-          {children}
-          {
-            isMarked &&
-            <span className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 font-script text-lg font-bold text-zinc-950'>X</span>
-          }
-        </>
+        : children
     }
-
+    <span className={twMerge(
+      'absolute left-1/2 top-1/2 -translate-y-1/2 translate-x-c20 font-script text-lg font-bold text-zinc-950 opacity-0 transition-opacity duration-500',
+      isMarked && 'opacity-100'
+    )}>X</span>
   </button>
 }
