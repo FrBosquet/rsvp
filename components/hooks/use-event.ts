@@ -1,5 +1,5 @@
 import { type GuestWithHost, type STATE } from '@/types'
-import { type User } from '@prisma/client'
+import { type Event, type User } from '@prisma/client'
 import { useEffect, useMemo, type FormEvent } from 'react'
 import { create } from 'zustand'
 
@@ -10,6 +10,9 @@ interface Filter {
 }
 
 interface Store {
+  isReady: boolean
+  setIsReady: (isReady: boolean) => void
+  event: Event | null
   guests: GuestWithHost[] | null
   filters: Filter
   setGuest: (guests: GuestWithHost[]) => void
@@ -17,10 +20,23 @@ interface Store {
   deleteGuest: (guest: GuestWithHost) => void
   setFilter: (k: string, v: string | null) => void
   toggleStateFilter: (stateFilter: STATE) => void
+  setEvent: (event: Event) => void
 }
 
 const useStore = create<Store>((set) => ({
+  isReady: false,
+  setIsReady: (isReady: boolean) => {
+    set({
+      isReady
+    })
+  },
+  event: null,
   guests: null,
+  setEvent: (event: Event) => {
+    set({
+      event
+    })
+  },
   setGuest: (guests: GuestWithHost[]) => {
     set({
       guests
@@ -68,7 +84,9 @@ const useStore = create<Store>((set) => ({
   filters: {}
 }))
 
-export const useEvent = (serverGuests?: GuestWithHost[]) => {
+export const useEvent = (serverEvent?: Event & { guests: GuestWithHost[] }) => {
+  const isReady = useStore((state) => state.isReady)
+  const setReady = useStore((state) => state.setIsReady)
   const guests = useStore((state) => state.guests)
   const setGuests = useStore((state) => state.setGuest)
   const updateGuest = useStore((state) => state.updateGuest)
@@ -77,6 +95,8 @@ export const useEvent = (serverGuests?: GuestWithHost[]) => {
   const filters = useStore((state) => state.filters)
   const setFilter = useStore((state) => state.setFilter)
   const toggleStateFilter = useStore((state) => state.toggleStateFilter)
+  const setEvent = useStore((state) => state.setEvent)
+  const event = useStore((state) => state.event)
 
   const updateNameFilter = (event: FormEvent<HTMLInputElement>) => {
     setFilter('name', event.currentTarget.value)
@@ -122,10 +142,15 @@ export const useEvent = (serverGuests?: GuestWithHost[]) => {
   }, [filters, guests])
 
   useEffect(() => {
-    if (!guests && serverGuests) setGuests(serverGuests)
-  }, [serverGuests])
+    if (!guests && serverEvent?.guests) {
+      setGuests(serverEvent.guests)
+      setEvent(serverEvent)
+      setReady(true)
+    }
+  }, [serverEvent])
 
   return {
+    isReady,
     guests,
     setGuests,
     updateGuest,
@@ -141,6 +166,7 @@ export const useEvent = (serverGuests?: GuestWithHost[]) => {
     toggleStateFilter,
     filters,
     setFilter,
-    hosts
+    hosts,
+    event
   }
 }

@@ -2,7 +2,7 @@
 'use client'
 
 import { useEvent } from '@/components/hooks/use-event'
-import { type GuestWithHost } from '@/types'
+import { Spinner } from '@/components/spinner'
 import { AddGuestModal } from './_components/add-guest-modal'
 import { GuestRow } from './_components/guest-row'
 import { GuestStateFilter } from './_components/guest-state-filter'
@@ -10,8 +10,10 @@ import { InvitationResume } from './_components/invitation-resume'
 import { SearchInput } from './_components/search-input'
 import { UserSelector } from './_components/user-selector'
 
-export const Manager = ({ serverGuests }: { serverGuests: GuestWithHost[] }) => {
-  const { addGuest, updateGuest, deleteGuest, guestInvited, invitationAmount, filteredGuests } = useEvent(serverGuests)
+export const Manager = () => {
+  const { isReady, addGuest, updateGuest, deleteGuest, guestInvited, invitationAmount, filteredGuests } = useEvent()
+
+  if (!isReady) return <Spinner /> // TODO: Add an skeleton
 
   return (
     <>
