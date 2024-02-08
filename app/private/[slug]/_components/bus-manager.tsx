@@ -19,8 +19,9 @@ export const BusManager = () => {
 
   return (
     <>
-      <article className="flex w-full items-center gap-2 rounded-2xl bg-slate-700 p-2 text-zinc-200 shadow-md">
-        {pax} invitados usaran el autobus
+      <article className="flex w-full flex-col items-start gap-1 rounded-2xl bg-slate-700 p-3 text-zinc-200 shadow-md">
+        <h2 className='font-semibold'>Autobus</h2>
+        <p>{pax} invitados usaran el autobus</p>
       </article>
 
       <article className="flex w-full flex-1 flex-col gap-4 rounded-2xl bg-gradient-to-b from-olive-900 to-olive-950/10 p-4 text-slate-200">

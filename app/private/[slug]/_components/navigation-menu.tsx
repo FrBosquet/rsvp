@@ -5,11 +5,12 @@ import {
   MenubarMenu,
   MenubarTrigger
 } from '@/components/ui/menubar'
-import { BusIcon, Menu, NutOffIcon } from 'lucide-react'
+import { BusIcon, Menu, NutOffIcon, UserIcon } from 'lucide-react'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
 
 const links = [
+  { href: '', label: 'Invitados', Icon: UserIcon },
   { href: '/bus', label: 'Autobus', Icon: BusIcon },
   { href: '/allergies', label: 'Allergias', Icon: NutOffIcon }
 ]
@@ -44,7 +45,8 @@ export function NavigationMenu() {
             {
               links.map(({ href, label, Icon }) => {
                 return (
-                  <MenubarItem key={`${href}${label}`}>
+                  <MenubarItem key={`${href}${label}`}
+                    asChild>
                     <Link className='flex items-center gap-4 text-md uppercase hover:text-emerald-500'
                       href={`/private/${slug}/${href}`}>
                       <Icon size={18} />
