@@ -3,14 +3,14 @@
 
 import { useEvent } from '@/components/hooks/use-event'
 import { Spinner } from '@/components/spinner'
-import { AddGuestModal } from './_components/add-guest-modal'
-import { GuestRow } from './_components/guest-row'
-import { GuestStateFilter } from './_components/guest-state-filter'
-import { InvitationResume } from './_components/invitation-resume'
-import { SearchInput } from './_components/search-input'
-import { UserSelector } from './_components/user-selector'
+import { AddGuestModal } from './add-guest-modal'
+import { GuestRow } from './guest-row'
+import { GuestStateFilter } from './guest-state-filter'
+import { InvitationResume } from './invitation-resume'
+import { SearchInput } from './search-input'
+import { UserSelector } from './user-selector'
 
-export const Manager = () => {
+export const GuestManager = () => {
   const { isReady, addGuest, updateGuest, deleteGuest, guestInvited, invitationAmount, filteredGuests } = useEvent()
 
   if (!isReady) return <Spinner /> // TODO: Add an skeleton

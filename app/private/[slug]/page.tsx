@@ -1,11 +1,5 @@
-import { Manager } from './manager'
+import { GuestManager } from './_components/guest-manager'
 
-interface Route {
-  params: {
-    slug: string
-  }
-}
-
-export default async function EventDashboardPage({ params }: Route) {
-  return <Manager />
+export default async function EventDashboardPage() {
+  return <GuestManager />
 }
