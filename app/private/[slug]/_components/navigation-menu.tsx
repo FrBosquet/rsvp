@@ -7,7 +7,7 @@ import {
 } from '@/components/ui/menubar'
 import { BusIcon, Menu, NutOffIcon, UserIcon } from 'lucide-react'
 import Link from 'next/link'
-import { useParams } from 'next/navigation'
+import { useParams, usePathname } from 'next/navigation'
 
 const links = [
   { href: '', label: 'Invitados', Icon: UserIcon },
@@ -17,6 +17,7 @@ const links = [
 
 export function NavigationMenu() {
   const params = useParams<{ slug: string }>()
+  const pathname = usePathname()
 
   const slug = params?.slug
 
@@ -25,10 +26,14 @@ export function NavigationMenu() {
       <ul className='hidden gap-4 md:flex'>
         {
           links.map(({ href, label, Icon }) => {
+            const linkHref = `/private/${slug}${href}`
+            const isSelected = pathname === linkHref
+
             return (
               <li key={`${href}${label}`}>
-                <Link className='flex items-center gap-2 text-md uppercase hover:text-emerald-500'
-                  href={`/private/${slug}/${href}`}>
+                <Link className='flex items-center gap-2 text-md uppercase transition hover:text-emerald-500 aria-disabled:pointer-events-none aria-disabled:opacity-25'
+                  aria-disabled={isSelected}
+                  href={linkHref}>
                   <Icon size={16} />
                   {
                     label
@@ -41,14 +46,19 @@ export function NavigationMenu() {
       <Menubar className='md:hidden'>
         <MenubarMenu>
           <MenubarTrigger className='cursor-pointer'><Menu size={18} /></MenubarTrigger>
-          <MenubarContent>
+          <MenubarContent align='end'>
             {
               links.map(({ href, label, Icon }) => {
+                const linkHref = `/private/${slug}${href}`
+                const isSelected = pathname === linkHref
+
                 return (
                   <MenubarItem key={`${href}${label}`}
                     asChild>
-                    <Link className='flex items-center gap-4 text-md uppercase hover:text-emerald-500'
-                      href={`/private/${slug}/${href}`}>
+                    <Link className='flex items-center gap-4 text-md uppercase hover:text-emerald-500 aria-disabled:pointer-events-none aria-disabled:opacity-25'
+                      href={linkHref}
+                      aria-disabled={isSelected}
+                    >
                       <Icon size={18} />
                       {
                         label
