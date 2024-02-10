@@ -16,7 +16,7 @@ export const Pending = () => {
       'absolute bottom-0 flex w-full flex-col opacity-0 transition-opacity duration-700 pointer-events-none',
       guest?.state !== STATE.accepted && 'opacity-100 pointer-events-auto'
     )}>
-    <p className='pt-c10 font-script text-lg text-red-950'>¿Contamos con vosotros?</p>
+    <p className='skew-x-6 pt-c10 font-dancing text-lg font-semibold italic'>¿Contamos con vosotros?</p>
     <article className='flex justify-center gap-c100 p-c50'>
       <AnimatedButton disabled={loading}
         onClick={showAcceptance}

@@ -1,4 +1,4 @@
-import { Forum, Jost, WindSong } from 'next/font/google'
+import { Dancing_Script, Forum, Noto_Serif, WindSong } from 'next/font/google'
 
 import { Toaster } from '@/components/ui/sonner'
 import '@/styles/globals.css'
@@ -10,12 +10,6 @@ export const metadata = {
   title: 'Jana Y Odette',
   description: 'Invitación a la boda de Jana y Odette'
 }
-
-const sans = Jost({
-  weight: ['200', '400', '600'],
-  subsets: ['latin'],
-  display: 'swap'
-})
 
 const serif = Forum({
   weight: ['400'],
@@ -31,6 +25,20 @@ const script = WindSong({
   variable: '--font-script'
 })
 
+const dancingScript = Dancing_Script({
+  weight: ['400'],
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-dancing-script'
+})
+
+const noto = Noto_Serif({
+  weight: ['400'],
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-noto-sans'
+})
+
 export default function RootLayout({
   children
 }: {
@@ -38,9 +46,8 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider localization={esES}>
-      <html lang="en"
-        className={sans.className}>
-        <body className={`dark min-h-s-screen antialiased ${sans.className} ${script.variable} ${serif.variable} bg-slate-800`}>
+      <html lang="en">
+        <body className={`dark min-h-s-screen antialiased ${noto.className} ${script.variable} ${serif.variable} ${dancingScript.variable} ${noto.variable} bg-slate-800`}>
           <NextTopLoader />
           <Toaster richColors />
 

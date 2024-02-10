@@ -19,6 +19,8 @@ module.exports = {
       fontFamily: {
         script: ['var(--font-script)'],
         serif: ['var(--font-serif)'],
+        dancing: ['var(--font-dancing-script)'],
+        noto: ['var(--font-noto-serif)'],
       },
       fontSize: {
         'xs': 'calc(var(--letter-size) * 0.5)',

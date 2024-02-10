@@ -12,7 +12,7 @@ interface CoverProps { guest: Guest }
 
 const SingleCover = ({ guest: { name } }: CoverProps) => {
   return (
-    <section className='flex w-full flex-col items-center font-serif text-3xl leading-none '>
+    <section className='flex w-full flex-col items-center font-dancing text-3xl leading-none '>
       <p>{name}</p>
     </section>
   )
@@ -21,12 +21,12 @@ const CoupleCover = ({ guest: { name } }: CoverProps) => {
   const names = name.split(',').map((n) => n.trim())
 
   return (
-    <section className='flex w-full flex-col items-center text-center font-serif text-3xl font-extralight leading-08'>
-      <p className='uppercase'>{names[0]}</p>
+    <section className='flex w-full flex-col items-center text-center font-dancing text-4xl font-extralight leading-08'>
+      <p>{names[0]}</p>
       <p className='text-xl text-zinc-500'>
         &
       </p>
-      <p className='uppercase'>{names[1]}</p>
+      <p>{names[1]}</p>
     </section>
   )
 }
@@ -34,13 +34,13 @@ const FamilyCover = ({ guest: { name } }: CoverProps) => {
   const names = name.split(',').map((n) => n.trim())
 
   return (
-    <section className='flex w-full flex-col items-center text-center font-serif text-3xl font-extralight leading-08'>
+    <section className='flex w-full flex-col items-center text-center font-dancing text-3xl font-extralight leading-08'>
       <p className='text-sm text-zinc-500'>Familia de</p>
-      <p className='uppercase'>{names[0]}</p>
+      <p>{names[0]}</p>
       <p className='text-xl text-zinc-500'>
         &
       </p>
-      <p className='uppercase'>{names[1]}</p>
+      <p>{names[1]}</p>
     </section>
   )
 }
