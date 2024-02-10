@@ -18,7 +18,7 @@ export const Backface = () => {
         isFlipped ? 'flipped-back' : 'flipped-non-back'
       )}
     >
-      <div className='flex flex-1 -skew-y-12 flex-col items-center justify-center font-dancing text-5xl font-semibold leading-none'>
+      <div className='flex flex-1 -skew-y-12 flex-col items-center justify-center font-dancing text-5xl font-semibold leading-none backface-hidden'>
         <p>Jana</p>
         <p className='text-xl'>&</p>
         <p>Odette</p>
