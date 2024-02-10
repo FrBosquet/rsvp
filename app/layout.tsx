@@ -1,4 +1,4 @@
-import { Dancing_Script, Forum, Noto_Serif, WindSong } from 'next/font/google'
+import { Dancing_Script, Fira_Sans, Forum, Noto_Serif, WindSong } from 'next/font/google'
 
 import { Toaster } from '@/components/ui/sonner'
 import '@/styles/globals.css'
@@ -39,6 +39,13 @@ const noto = Noto_Serif({
   variable: '--font-noto-sans'
 })
 
+const fira = Fira_Sans({
+  weight: ['400'],
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-fira-sans'
+})
+
 export default function RootLayout({
   children
 }: {
@@ -47,7 +54,7 @@ export default function RootLayout({
   return (
     <ClerkProvider localization={esES}>
       <html lang="en">
-        <body className={`dark min-h-s-screen antialiased ${noto.className} ${script.variable} ${serif.variable} ${dancingScript.variable} ${noto.variable} bg-slate-800`}>
+        <body className={`dark min-h-s-screen antialiased ${noto.className} ${script.variable} ${serif.variable} ${dancingScript.variable} ${noto.variable} ${fira.variable} bg-slate-800`}>
           <NextTopLoader />
           <Toaster richColors />
 

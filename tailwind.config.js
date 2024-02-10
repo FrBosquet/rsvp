@@ -21,6 +21,7 @@ module.exports = {
         serif: ['var(--font-serif)'],
         dancing: ['var(--font-dancing-script)'],
         noto: ['var(--font-noto-serif)'],
+        fira: ['var(--font-fira-sans)'],
       },
       fontSize: {
         'xs': 'calc(var(--letter-size) * 0.5)',
