@@ -291,10 +291,14 @@ export async function replyToInvitation(formData: FormData): Promise<GuestWithNo
   }
 
   if (state === STATE.accepted) {
-    await Promise.all([
-      writeNote(eventSlug, slug, NOTES.bus, bus ? 'true' : 'false'),
-      writeNote(eventSlug, slug, NOTES.allergies, allergies)
-    ])
+    try {
+      await Promise.all([
+        writeNote(eventSlug, slug, NOTES.bus, bus ? 'true' : 'false'),
+        writeNote(eventSlug, slug, NOTES.allergies, allergies)
+      ])
+    } catch (e) {
+      console.error(e)
+    }
   }
 
   const updatedGuest = await prisma.guest.update({
