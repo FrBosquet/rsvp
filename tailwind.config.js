@@ -51,9 +51,9 @@ module.exports = {
         'c8': 'calc(40 * var(--letter-size) / 8)',
         'c5': 'calc(40 * var(--letter-size) / 5)',
         'c1': 'calc(40 * var(--letter-size))',
-        's-screen': '100svh',
-        'l-screen': '100lvh',
-        'd-screen': '100dvh',
+        's-screen': ['100svh', '100vh'],
+        'l-screen': ['100lvh', '100vh'],
+        'd-screen': ['100dvh', '100vh'],
       },
       boxShadow: {
         heavy: '0 0 var(--letter-size) rgba(0, 0, 0, 0.5)',
@@ -189,7 +189,8 @@ module.exports = {
       addComponents({
         '.card': {
           '--ratio': '1.8',
-          '--card-width': 'min(calc(min(90vw, calc((100svh / var(--ratio)) - 2rem))), calc(1020px / var(--ratio)))',
+          '--available-height': ['100vh', '100dvh'],
+          '--card-width': 'min(calc(min(90vw, calc((var(--available-height) / var(--ratio)) - 2rem))), calc(1020px / var(--ratio)))',
           '--card-height': 'calc(var(--card-width) * var(--ratio))',
           '--letter-size': 'calc(var(--card-height) / 40)',
           'display': 'flex',
@@ -197,7 +198,8 @@ module.exports = {
           'transform-style': 'preserve-3d',
           'width': 'var(--card-width)',
           'aspect-ratio': '1 / var(--ratio)',
-          'transition': 'transform 2s ease-in-out, top 1s ease-in-out, opacity 150ms ease-in-out'
+          'transition': 'transform 2s ease-in-out, top 1s ease-in-out, opacity 150ms ease-in-out',
+          'backface-visibility': 'hidden',
         },
         '.button-fill-base': {
           'background-size': '0%',
@@ -209,11 +211,15 @@ module.exports = {
         },
 
         '.acceptance-card': {
+          'aspect-ratio': 'unset',
+          height: 'calc(var(--available-height) * 0.7)',
+          overflow: 'auto',
           transform: 'translateZ(0) rotateX(-10deg) translateY(100lvh)',
           transition: 'transform 650ms ease-in-out',
         },
         '.acceptance-card-visible': {
-          transform: 'translateZ(calc(var(--letter-size) * 8)) rotateX(2deg) translateY(calc(var(--card-height) * 0.30))',
+          'transform-origin': 'top center',
+          transform: 'rotateX(4deg) translateY(calc(var(--available-height)*0.15))',
         },
 
         '.accepted-card': {

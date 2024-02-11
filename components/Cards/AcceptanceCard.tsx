@@ -60,14 +60,14 @@ export const AcceptanceCard = () => {
   return <>
     <button
       className={twMerge(
-        'fixed size-screen left-0 top-0 bg-black opacity-0 transition-opacity duration-1000 pointer-events-none',
+        'fixed size-screen left-0 top-0 bg-black opacity-0 transition-opacity duration-1000 pointer-events-none z-30',
         isAcceptingCardVisible && 'pointer-events-auto opacity-30'
       )}
       onClick={hideAcceptance}
     />
     <Card
       className={twMerge(
-        'shadow-heavy acceptance-card',
+        'shadow-heavy acceptance-card border border-zinc-700/30 z-40',
         isAcceptingCardVisible && 'acceptance-card-visible'
       )}
     >
@@ -144,7 +144,7 @@ export const AcceptanceCard = () => {
         </article>
 
         <AnimatedButton disabled={loading}
-          className='text-lg'>{loading ? <Spinner /> : 'Confirmar'}</AnimatedButton>
+          className='mb-c40 mt-auto text-lg'>{loading ? <Spinner /> : 'Confirmar'}</AnimatedButton>
       </form>
 
     </Card>

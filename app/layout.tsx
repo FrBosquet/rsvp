@@ -8,7 +8,8 @@ import NextTopLoader from 'nextjs-toploader'
 
 export const metadata = {
   title: 'Jana Y Odette',
-  description: 'Invitación a la boda de Jana y Odette'
+  description: 'Invitación a la boda de Jana y Odette',
+  viewPort: 'width=device-width, user-scalable=no'
 }
 
 const serif = Forum({
