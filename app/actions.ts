@@ -269,6 +269,16 @@ export async function toggleContacted(formData: FormData): Promise<GuestWithHost
   return updatedGuest
 }
 
+const deleteAllergyIfPresent = async (eventSlug: string, slug: string) => {
+  await prisma.note.deleteMany({
+    where: {
+      guestSlug: slug,
+      guestEventSlug: eventSlug,
+      type: NOTES.allergies
+    }
+  })
+}
+
 export async function replyToInvitation(formData: FormData): Promise<GuestWithNotes> {
   const eventSlug = formData.get('eventSlug') as string
   const slug = formData.get('slug') as string
@@ -292,10 +302,16 @@ export async function replyToInvitation(formData: FormData): Promise<GuestWithNo
 
   if (state === STATE.accepted) {
     try {
+      const hasAllergies = allergies?.length > 0
+
       await Promise.all([
         writeNote(eventSlug, slug, NOTES.bus, bus ? 'true' : 'false'),
-        writeNote(eventSlug, slug, NOTES.allergies, allergies)
+        hasAllergies && writeNote(eventSlug, slug, NOTES.allergies, allergies)
       ])
+
+      if (!hasAllergies) {
+        await deleteAllergyIfPresent(eventSlug, slug)
+      }
     } catch (e) {
       console.error(e)
     }

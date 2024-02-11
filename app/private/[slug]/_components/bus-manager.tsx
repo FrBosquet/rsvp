@@ -24,7 +24,7 @@ export const BusManager = () => {
         <p>{pax} invitados usaran el autobus</p>
       </article>
 
-      <article className="flex w-full flex-1 flex-col gap-4 rounded-2xl bg-gradient-to-b from-olive-900 to-olive-950/10 p-4 text-slate-200">
+      <article className="flex w-full flex-1 flex-col gap-4 overflow-y-auto rounded-2xl bg-gradient-to-br from-olive-900 to-olive-950 p-4 text-slate-200">
         {guestWithBus?.map((guest) => {
           return <GuestRow onDeleteGuest={deleteGuest}
             onUpdateGuest={updateGuest}

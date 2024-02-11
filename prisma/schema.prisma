@@ -61,7 +61,7 @@ model Note {
   guestSlug      String
   guestEventSlug String
   type           String
-  guest          Guest    @relation(fields: [guestSlug, guestEventSlug], references: [slug, eventSlug])
+  guest          Guest    @relation(fields: [guestSlug, guestEventSlug], references: [slug, eventSlug], onDelete: Cascade)
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 
