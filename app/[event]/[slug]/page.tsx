@@ -2,11 +2,6 @@ import { CardFlipper } from '@/components/Cards/Flipper'
 import { prisma } from '@/lib/prisma'
 import { redirect } from 'next/navigation'
 
-export const metadata = {
-  title: 'Jana Y Odette',
-  description: 'Invitación a la boda de Jana y Odette',
-  viewport: 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no'
-}
 interface Route {
   params: {
     event: string

@@ -4,12 +4,20 @@ import { Toaster } from '@/components/ui/sonner'
 import '@/styles/globals.css'
 import { esES } from '@clerk/localizations'
 import { ClerkProvider } from '@clerk/nextjs'
+import { type Viewport } from 'next'
 import NextTopLoader from 'nextjs-toploader'
 
 export const metadata = {
   title: 'Jana Y Odette',
-  description: 'Invitación a la boda de Jana y Odette',
-  viewPort: 'width=device-width, user-scalable=no'
+  description: 'Invitación a la boda de Jana y Odette'
+}
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  minimumScale: 1,
+  maximumScale: 1,
+  userScalable: false
 }
 
 const serif = Forum({
