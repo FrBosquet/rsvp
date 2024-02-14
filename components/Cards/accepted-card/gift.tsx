@@ -14,7 +14,7 @@ export const Gift = ({ visible }: Props) => {
 
   if (!guest) return null
 
-  const IBAN = 'ES77 2100 1981 3502 0044 7866' // TODO: Move to event config
+  const IBAN = 'ES47 2100 1981 3002 0063 7219' // TODO: Move to event config
 
   return (<Wrapper title='Regalo'
     visible={visible}>
