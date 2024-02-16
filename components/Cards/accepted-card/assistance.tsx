@@ -21,19 +21,19 @@ export const Assistance = ({ visible }: Props) => {
       {
         guest.amount! === 1
           ? 'Has indicado que solo asistirás tú al evento'
-          : `Habeis indicado que asistireis ${guest.amount} personas al evento`
+          : `Habéis indicado que vas a asistir ${guest.amount} personas`
       }. {
         hasAllergies
           ? <>Además, habéis indicado que tenéis las siguientes alergias o intolerancias alimentarias: <em className='text-olive-600'>{allergies}</em></>
           : null
       }
     </p>
-    <p className='text-sm text-zinc-700'>¿Cambio de planes? Podemos actualizar la lista de invitados sin mayor repercusión hasta el 1 de Mayo de 2024:</p>
+    <p className='text-sm text-zinc-700'>¿Cambio de planes? Podemos actualizar la lista de invitados hasta el 1 de Mayo de 2024:</p>
 
     <AnimatedButton
       className='w-full p-3 text-lg bg-color-emerald'
       onClick={showAcceptance}
-    >Cambiar numero de asistentes, alergias o autobus</AnimatedButton>
+    >Cambiar número de asistentes, alergias o autobús</AnimatedButton>
     <AnimatedButton
       loading={loading}
       className='w-full p-3 text-lg bg-color-rose'

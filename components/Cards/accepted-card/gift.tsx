@@ -20,10 +20,10 @@ export const Gift = ({ visible }: Props) => {
     visible={visible}>
     {
       isSingle
-        ? <><p className='text-base'>Si te hemos invitado a nuestra boda es porque eres importante para nosotras. No esperamos nada a cambio.</p>
-          <p className='text-base'>Si aun así te apetece tener un detalle con nosotras, puedes hacerlo en este número de cuenta:</p></>
-        : <><p className='text-base'>Si os hemos invitado a nuestra boda es porque sois importantes para nosotras. No esperamos nada a cambio.</p>
-          <p className='text-base'>Si aun así os apetece tener un detalle con nosotras, podéis hacerlo en este número de cuenta:</p></>
+        ? <><p className='text-base'>Te hemos invitado a nuestra boda porque eres importante; <br /> No esperamos nada a cambio.</p>
+          <p className='text-base'>Si aún así te apetece tener un detalle con nosotras, puedes hacerlo en este número de cuenta:</p></>
+        : <><p className='text-base'>Os hemos invitado a nuestra boda porque sois importantes;<br /> No esperamos nada a cambio.</p>
+          <p className='text-base'>Si aún así os apetece tener un detalle con nosotras, podéis hacerlo en este número de cuenta:</p></>
     }
     <button className='flex items-center justify-center gap-4 text-sm font-semibold'
       onClick={async () => {

@@ -1,7 +1,6 @@
 'use client'
 
 import { useGuest } from '@/components/hooks/use-guest'
-import { PlaceLink } from '@/components/place-link'
 import { AnimatedButton } from '../animated-button'
 import { Wrapper } from './wrapper'
 
@@ -14,7 +13,7 @@ const UseBus = ({ isSingle }: { isSingle: boolean }) => {
     <p className='text-base'>{
       isSingle
         ? 'Has indicado que utilizarás el autobús para desplazarte'
-        : 'Habeis indicado que utilizareis el autobús para desplazaros'
+        : 'Habéis indicado que utilizareis el autobús para desplazaros'
     }. Mas adelante anunciaremos los horarios.</p>
   )
 }
@@ -23,8 +22,8 @@ const DontUseBus = ({ isSingle }: { isSingle: boolean }) => {
   return (
     <p className='text-base'>{
       isSingle
-        ? 'Has indicado que no utilizaras el autobús para desplazarte. Si cambias de opinión puedes actualizar tu elección:'
-        : 'Habéis indicado que no utilizareis el autobús para desplazaros. Si cambiáis de opinión, podeis actualizar vuestra elección:'
+        ? 'Has indicado que no utilizaras el autobús para desplazarte. Si cambias de idea, puedes actualizar tu elección:'
+        : 'Habéis indicado que no utilizareis el autobús para desplazaros. Si cambiáis de idea, podéis actualizar vuestra elección:'
     }</p>
   )
 }
@@ -36,12 +35,24 @@ export const Commuting = ({ visible }: Props) => {
 
   return (<Wrapper title='transporte'
     visible={visible}>
-    <p className='text-base'>La celebración tendrá lugar en <strong>La huerta de Peñalen</strong>. Se encuentra en Camí de l’Assagador, Vilarreal</p>
-    <PlaceLink
-      href='https://maps.app.goo.gl/MGMR8XKxYNHjkjM46'
-      title='La huerta de Peñalen'
-      address='Camí de l’Assagador, Vilarreal'
-    />
+    <p className='text-base'>Como sabemos que quizás acabáis en condiciones de hacer cualquier cosa menos conducir, hemos contratado un servicio de autobuses que os garantizará un traslado seguro.</p>
+    <section className='flex flex-col gap-c80'>
+      <h3 className='text-center text-lg text-emerald-700'>Horarios: </h3>
+      <div>
+        <strong>Ida:</strong>
+        <ul className='pl-c80'>
+          <li>Hotel Civis Jaume I, 12:15h</li>
+          <li>Plaza María Agustina, 12:00h</li>
+        </ul>
+      </div>
+      <div>
+        <strong>Vuelta (al origen):</strong>
+        <ul className='pl-c80'>
+          <li>Primera salida, 22:00h</li>
+          <li>Última salida, 00:15</li>
+        </ul>
+      </div>
+    </section>
     {
       usesBus
         ? <UseBus isSingle={isSingle} />

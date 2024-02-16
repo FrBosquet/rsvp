@@ -16,14 +16,14 @@ export const Housing = ({ visible }: Props) => {
 
   return (<Wrapper title='hotel'
     visible={visible}>
-    <p className='text-base'>Hemos acordado con el hotel <strong>Civis Jaume I</strong> un descuento del 15% para nuestros invitados.</p>
+    <p className='text-base'>Hemos acordado un descuento del 15% para nuestros invitados con:</p>
     <PlaceLink
       href="https://www.hoteljaimei.com/?gclid=CjwKCAiAq4KuBhA6EiwArMAw1B0Yx2_IyPh-MuBy0uiGn0l0oCdBkwg-yiDizb46wbd8UaQXF8f5ahoCBHgQAvD_BwE"
       title='Hotel Civis Jaume I'
-      address='ronda Mijares 67, Castellón de la Plana'
+      address='Ronda Mijares 67, Castellón de la Plana'
     />
 
-    <p>Puedes utilizar el siguiente código a la hora de hacer la reserva para acceder al descuento:</p>
+    <p>Para acceder al descuento, utilizad el siguiente código:</p>
     <CopyText value='JANAYODETTE' />
   </Wrapper>)
 }

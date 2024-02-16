@@ -8,7 +8,7 @@ import { Wrapper } from './wrapper'
 
 const hosts = [
   { name: 'Jana', phone: '+34629201756' },
-  { name: 'Odette', phone: '+35625044726' }
+  { name: 'Odette', phone: '+34625044726' }
 ]
 
 interface Props {
@@ -22,7 +22,7 @@ export const Contact = ({ visible }: Props) => {
 
   return (<Wrapper title='Contacto'
     visible={visible}>
-    <p className='pb-c20 text-base'>Si tenéis alguna duda, podéis mandarnos un Whatsapp:</p>
+    <p className='pb-c20 text-base'>Si tenéis alguna duda o consulta, mandadnos un WhatsApp:</p>
     {
       hosts.map((host, i) => (
         <AnimatedButton

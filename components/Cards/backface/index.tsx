@@ -23,7 +23,7 @@ export const Backface = () => {
         <p className='text-xl'>&</p>
         <p>Odette</p>
       </div>
-      <p className='px-c20 text-md leading-6 text-zinc-500'>¡Estamos deseando que nos acompañéis el día de nuestra boda!</p>
+      <p className='px-c20 text-md leading-6 text-zinc-500'>¡Estamos deseando que nos acompañéis en nuestra boda!</p>
       <p className='font-serif text-xl font-bold uppercase tracking-2xl'>11.05.2024</p>
       <p className='text-md leading-10 text-zinc-500'>
         Sábado, a las 13:00h<br />
