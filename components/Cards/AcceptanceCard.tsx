@@ -24,7 +24,7 @@ export const AcceptanceCard = () => {
 
   if (!guest) return null
 
-  const { event, slug } = params!
+  const { event, slug } = params
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
