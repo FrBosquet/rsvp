@@ -5,14 +5,15 @@ import {
   MenubarMenu,
   MenubarTrigger
 } from '@/components/ui/menubar'
-import { BusIcon, Menu, NutOffIcon, UserIcon } from 'lucide-react'
+import { BusIcon, Menu, NutOffIcon, Settings2Icon, UserIcon } from 'lucide-react'
 import Link from 'next/link'
 import { useParams, usePathname } from 'next/navigation'
 
 const links = [
   { href: '', label: 'Invitados', Icon: UserIcon },
   { href: '/bus', label: 'Autobus', Icon: BusIcon },
-  { href: '/allergies', label: 'Allergias', Icon: NutOffIcon }
+  { href: '/allergies', label: 'Allergias', Icon: NutOffIcon },
+  { href: '/settings', label: 'Configurar', Icon: Settings2Icon }
 ]
 
 export function NavigationMenu() {

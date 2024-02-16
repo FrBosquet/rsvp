@@ -51,3 +51,12 @@ export enum NOTES {
 }
 
 export type GuestWithNotes = PrismaGuest & { notes: Note[] }
+export type GuestWithEvent = GuestWithNotes & { event: { settings: Array<{ type: SETTING, value: string }> } }
+
+export enum SETTING {
+  ogTitle = 'og:title',
+  ogDescription = 'og:description',
+  ogImage = 'og:image',
+}
+
+export type SettingMap = Partial<Record<SETTING, string>>

@@ -1,5 +1,5 @@
 import { AllergiesManager } from '../_components/allergies-manager'
 
-export default async function EventDashboardPage() {
+export default async function AllergiesPage() {
   return <AllergiesManager />
 }

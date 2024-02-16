@@ -25,6 +25,7 @@ model Event {
   createdAt DateTime      @default(now())
   users     UserOnEvent[]
   guests    Guest[]
+  settings  Setting[]
 }
 
 model UserOnEvent {
@@ -66,4 +67,15 @@ model Note {
   updatedAt      DateTime @updatedAt
 
   @@id([guestSlug, guestEventSlug, type])
+}
+
+model Setting {
+  slug      String
+  type      String
+  event     Event    @relation(fields: [slug], references: [slug])
+  value     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@id([slug, type])
 }
