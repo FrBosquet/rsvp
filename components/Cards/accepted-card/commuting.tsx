@@ -14,7 +14,7 @@ const UseBus = ({ isSingle }: { isSingle: boolean }) => {
       isSingle
         ? 'Has indicado que utilizarás el autobús para desplazarte'
         : 'Habéis indicado que utilizareis el autobús para desplazaros'
-    }. Mas adelante anunciaremos los horarios.</p>
+    }.</p>
   )
 }
 
