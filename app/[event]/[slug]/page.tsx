@@ -33,15 +33,12 @@ export async function generateMetadata({ params }: Route) {
   const title = settings[SETTING.ogTitle]
   const description = (settings[SETTING.ogDescription] ?? '').replace(/<GUEST>/g, guest.name)
 
-  console.log('settings', settings)
-
   return {
     openGraph: {
       title,
       description,
       type: 'profile',
-      locale: 'es_ES',
-      image: settings[SETTING.ogImage]
+      locale: 'es_ES'
     }
   }
 }

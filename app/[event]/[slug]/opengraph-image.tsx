@@ -1,11 +1,18 @@
 /* eslint-disable @next/next/no-img-element */
 import { prisma } from '@/lib/prisma'
 import { SETTING } from '@/types'
+import { ImageResponse } from 'next/og'
 
 interface Route {
   params: {
     event: string
   }
+}
+
+export const alt = 'DeVaux RSVP'
+export const size = {
+  width: 600,
+  height: 600
 }
 
 export default async function Image({ params }: Route) {
@@ -19,10 +26,16 @@ export default async function Image({ params }: Route) {
   })
 
   if (setting) {
-    return <img src={setting.value}
-      alt='devaux RSVP'
-      width={256}
-      height={256}
-      style={{ objectFit: 'cover' }} />
+    return new ImageResponse(
+      <div style={{
+        display: 'flex',
+        backgroundImage: `url(${setting.value})`,
+        width: size.width,
+        height: size.height
+      }}>
+        <img src={setting.value}
+          alt={alt}
+        />
+      </div>)
   }
 }
