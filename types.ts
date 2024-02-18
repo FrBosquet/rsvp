@@ -56,6 +56,7 @@ export type GuestWithEvent = GuestWithNotes & { event: { settings: Array<{ type:
 export enum SETTING {
   ogTitle = 'og:title',
   ogDescription = 'og:description',
+  ogDescriptionSingle = 'og:description_single',
   ogImage = 'og:image',
 }
 

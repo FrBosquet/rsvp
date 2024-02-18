@@ -24,6 +24,7 @@ export const OgManager = async ({ slug }: Props) => {
     'use server'
     const title = formData.get('title')
     const description = formData.get('description')
+    const descriptionSingle = formData.get('descriptionSingle')
     const image = formData.get('image')
 
     if (title) {
@@ -64,6 +65,25 @@ export const OgManager = async ({ slug }: Props) => {
       })
     }
 
+    if (descriptionSingle) {
+      await prisma.setting.upsert({
+        where: {
+          slug_type: {
+            slug,
+            type: SETTING.ogDescriptionSingle
+          }
+        },
+        update: {
+          value: descriptionSingle as string
+        },
+        create: {
+          slug,
+          type: SETTING.ogDescriptionSingle,
+          value: descriptionSingle as string
+        }
+      })
+    }
+
     if (image) {
       await prisma.setting.upsert({
         where: {
@@ -99,12 +119,18 @@ export const OgManager = async ({ slug }: Props) => {
         type="text"
         id="title"
         name="title" />
-      <label htmlFor="description">Descripción</label>
+      <label htmlFor="description">Descripción (plural)</label>
       <input className="border bg-transparent p-1"
         defaultValue={settings['og:description']}
         type="text"
         id="description"
         name="description" />
+      <label htmlFor="descriptionSingle">Descripción (singular)</label>
+      <input className="border bg-transparent p-1"
+        defaultValue={settings[SETTING.ogDescriptionSingle]}
+        type="text"
+        id="descriptionSingle"
+        name="descriptionSingle" />
       <p className='text-sm text-zinc-400'>Puedes utilizar la palabra clave <span className='font-mono text-orange-500'>{'<'}GUEST{'>'}</span> dentro de este campo. Se verá substituido por los nombres de los invitados separados por comas en la previsualización del enlace</p>
 
       <ImageInput resourceName={`og_image_${slug}`}

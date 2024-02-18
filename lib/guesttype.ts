@@ -1,16 +1,16 @@
 import { type Guest as PrismaGuest } from '@prisma/client'
-import { GuestType, type Guest } from '../types'
+import { GuestType } from '../types'
 
-export const getGuestType = ({ isFamily, name, amount }: Guest): GuestType => {
+export const getGuestType = ({ isFamily, name, maxAmount }: PrismaGuest): GuestType => {
   if (isFamily) return GuestType.family
   if (!isFamily && name.length === 1) return GuestType.single
-  if (amount === 1) return GuestType.single
+  if (maxAmount === 1) return GuestType.single
 
   return GuestType.couple
 }
 
 export const getGuestTypes = (
-  guest: Guest
+  guest: PrismaGuest
 ): {
   isSingle: boolean
   isFamily: boolean
@@ -43,4 +43,10 @@ export const getTypes = (
   const isCouple = guestType === GuestType.couple
 
   return { isSingle, isFamily, isCouple }
+}
+
+export const isSingle = (guest: PrismaGuest): boolean => {
+  const guestType = getGuestType(guest)
+
+  return guestType === GuestType.single
 }

@@ -1,4 +1,5 @@
 import { CardFlipper } from '@/components/Cards/Flipper'
+import { isSingle } from '@/lib/guesttype'
 import { getSettingsMap } from '@/lib/settings'
 import { SETTING, type GuestWithEvent } from '@/types'
 import { headers } from 'next/headers'
@@ -30,8 +31,11 @@ export async function generateMetadata({ params }: Route) {
 
   const settings = getSettingsMap(guest.event.settings)
 
+  const isGuestSingle = isSingle(guest)
   const title = settings[SETTING.ogTitle]
-  const description = (settings[SETTING.ogDescription] ?? '').replace(/<GUEST>/g, guest.name)
+
+  const settingName = isGuestSingle ? SETTING.ogDescriptionSingle : SETTING.ogDescription
+  const description = (settings[settingName] ?? '').replace(/<GUEST>/g, guest.name)
 
   return {
     openGraph: {
