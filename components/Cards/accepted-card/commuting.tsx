@@ -48,7 +48,7 @@ export const Commuting = ({ visible }: Props) => {
       <div>
         <strong>Vuelta (al origen):</strong>
         <ul className='pl-c80'>
-          <li>Primera salida, 22:00h</li>
+          <li>Primera salida, por definir</li>
           <li>Última salida, 00:15</li>
         </ul>
       </div>
