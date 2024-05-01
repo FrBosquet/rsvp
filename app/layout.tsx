@@ -8,8 +8,8 @@ import { type Viewport } from 'next'
 import NextTopLoader from 'nextjs-toploader'
 
 export const metadata = {
-  title: 'Jana Y Odette',
-  description: 'Invitación a la boda de Jana y Odette'
+  title: 'RSVP - Devaux',
+  description: 'Tus invitaciones de boda de forma digital, sencilla y económica. Gestiona tu lista de invitados y recibe confirmaciones de asistencia en tiempo real.'
 }
 
 export const viewport: Viewport = {
@@ -63,7 +63,7 @@ export default function RootLayout({
   return (
     <ClerkProvider localization={esES}>
       <html lang="en">
-        <body className={`dark min-h-s-screen antialiased ${noto.className} ${script.variable} ${serif.variable} ${dancingScript.variable} ${noto.variable} ${fira.variable} bg-slate-800`}>
+        <body className={`dark min-h-s-screen text-gray-200 antialiased ${noto.className} ${script.variable} ${serif.variable} ${dancingScript.variable} ${noto.variable} ${fira.variable} bg-slate-800`}>
           <NextTopLoader />
           <Toaster richColors />
 
