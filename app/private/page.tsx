@@ -1,52 +1,42 @@
-import { Fieldset, Form } from '@/components/Form'
-import { SubmitButton } from '@/components/SubmitButton'
-import { prisma } from '@/lib/prisma'
 import { UserButton } from '@clerk/nextjs'
 
-import { auth } from '@clerk/nextjs/server'
-import { redirect } from 'next/navigation'
-import { createEvent } from '../actions'
-import { EventCard } from './event-card'
-
 export default async function PrivatePage() {
-  const { userId } = auth()
+  // const { userId } = auth()
 
-  if (!userId) return redirect('/')
+  // const user = await prisma.user.findUnique({
+  //   where: {
+  //     id: userId
+  //   }
+  // })
 
-  const user = await prisma.user.findUnique({
-    where: {
-      id: userId
-    }
-  })
+  // if (!user) return redirect('/private')
 
-  if (!user) return redirect('/private')
+  // const isAdmin = user?.role === 'admin'
 
-  const isAdmin = user?.role === 'admin'
-
-  const events = await prisma.event.findMany({
-    orderBy: {
-      createdAt: 'desc'
-    },
-    include: {
-      users: {
-        include: {
-          user: true
-        }
-      }
-    },
-    where: !isAdmin
-      ? {
-        users: {
-          some: {
-            OR: [
-              { userId },
-              { email: user?.email }
-            ]
-          }
-        }
-      }
-      : undefined
-  })
+  // const events = await prisma.event.findMany({
+  //   orderBy: {
+  //     createdAt: 'desc'
+  //   },
+  //   include: {
+  //     users: {
+  //       include: {
+  //         user: true
+  //       }
+  //     }
+  //   },
+  //   where: !isAdmin
+  //     ? {
+  //       users: {
+  //         some: {
+  //           OR: [
+  //             { userId },
+  //             { email: user?.email }
+  //           ]
+  //         }
+  //       }
+  //     }
+  //     : undefined
+  // })
 
   return <section className="container m-auto flex flex-col gap-3 p-4 text-reset">
     <header className="flex w-full items-center gap-2 rounded-2xl bg-slate-800 p-2 text-zinc-200 shadow-lg">
@@ -54,7 +44,7 @@ export default async function PrivatePage() {
       <h1 className="text-lg uppercase">Tus eventos</h1>
     </header>
 
-    {isAdmin
+    {/* {isAdmin
       ? <article className="flex w-full gap-2 rounded-2xl bg-green-900 p-2 text-zinc-200 shadow-md">
         <h2 className="font-semibold">Crear nuevo evento</h2>
         <Form action={createEvent}
@@ -73,12 +63,14 @@ export default async function PrivatePage() {
         </Form>
       </article>
       : null
-    }
+    } */}
 
-    <article className="grid gap-2 pt-6 md:grid-cols-2 xl:grid-cols-3">
+    hola
+
+    {/* <article className="grid gap-2 pt-6 md:grid-cols-2 xl:grid-cols-3">
       {events.map(event => <EventCard key={event.slug}
         event={event}
         isAdmin={isAdmin} />)}
-    </article>
+    </article> */}
   </section>
 }
