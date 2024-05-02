@@ -17,7 +17,7 @@ export default function HomePage() {
           src="/party.webp"
           width={1920}
           height={1280}
-          layout='cover' />
+        />
         <div className="absolute inset-0 bg-black/50" />
         <div className="absolute inset-0 flex flex-col items-center justify-center gap-6 px-4 text-center text-white">
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">Tus invitaciones, sin esfuerzo</h1>
@@ -78,7 +78,7 @@ export default function HomePage() {
                     src="/crisyfran.webp"
                     width={200}
                     height={200}
-                    layout='cover' />
+                  />
                   <div>
                     <div className="font-medium">Cris y Fran</div>
                     <div className="text-gray-500 dark:text-gray-400">Casados en 2023</div>
@@ -95,9 +95,9 @@ export default function HomePage() {
                     src="/janayodette.webp"
                     width={200}
                     height={200}
-                    layout='cover' />
+                  />
                   <div>
-                    <div className="font-medium">Jan y Odette</div>
+                    <div className="font-medium">Jana y Odette</div>
                     <div className="text-gray-500 dark:text-gray-400">Casadas en 2024</div>
                   </div>
                 </div>

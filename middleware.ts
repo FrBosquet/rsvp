@@ -1,13 +1,11 @@
-import { authMiddleware } from '@clerk/nextjs'
+import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
 
-export default authMiddleware({
-  publicRoutes: [
-    '/',
-    '/janayodette/(.*)' // How can I make this dynamic??
-  ],
-  ignoredRoutes: [
-    '/api/(.*)'
-  ]
+const isProtectedRoute = createRouteMatcher([
+  '/private(./*)'
+])
+
+export default clerkMiddleware((auth, req) => {
+  if (isProtectedRoute(req)) auth().protect()
 })
 
 export const config = {

@@ -2,7 +2,8 @@
 
 import { prisma } from '@/lib/prisma'
 import { NOTES, STATE, type GuestWithHost, type GuestWithNotes } from '@/types'
-import { currentUser } from '@clerk/nextjs'
+import { currentUser } from '@clerk/nextjs/server'
+
 import { redirect } from 'next/navigation'
 
 // events

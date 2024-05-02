@@ -24,7 +24,8 @@ export const Button = ({ children, className }: Pick<Props, 'children' | 'classN
 export const Fieldset = ({ children, className }: Pick<Props, 'children' | 'className'>) => {
   const { pending } = useFormStatus()
 
-  return <fieldset disabled={pending} className={twMerge('flex', className)}>{children}</fieldset>
+  return <fieldset disabled={pending}
+    className={twMerge('flex', className)}>{children}</fieldset>
 }
 
 export const Form = ({ action, className, children }: Props) => {
@@ -32,7 +33,8 @@ export const Form = ({ action, className, children }: Props) => {
   const [state, formAction] = useFormState(action as any, { error: '' })
   const { pending } = useFormStatus()
 
-  return <form className={twMerge('flex gap-2', className)} action={formAction}>
+  return <form className={twMerge('flex gap-2', className)}
+    action={formAction}>
 
     {children}
     {
