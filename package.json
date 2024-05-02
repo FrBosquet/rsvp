@@ -1,7 +1,8 @@
 {
-  "name": "jana-y-odette",
+  "name": "rsvp",
   "version": "0.1.0",
   "private": true,
+  "description": "DeVaux's RSVP app",
   "scripts": {
     "dev": "next dev",
     "build": "prisma generate & next build",

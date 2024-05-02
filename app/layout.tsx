@@ -63,7 +63,7 @@ export default function RootLayout({
   return (
     <ClerkProvider localization={esES}>
       <html lang="en">
-        <body className={`dark min-h-s-screen text-gray-200 antialiased ${noto.className} ${script.variable} ${serif.variable} ${dancingScript.variable} ${noto.variable} ${fira.variable} bg-slate-800`}>
+        <body className={`min-h-s-screen antialiased ${noto.className} ${script.variable} ${serif.variable} ${dancingScript.variable} ${noto.variable} ${fira.variable}`}>
           <NextTopLoader />
           <Toaster richColors />
 

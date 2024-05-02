@@ -24,13 +24,16 @@ export default function HomePage() {
           <p className="max-w-xl text-lg">
             Gestione las invitaciones de su día especial con nuestra completa aplicación de reserva de bodas.
           </p>
-          <Button className="rounded-full bg-rose-500 px-8 py-3 text-lg font-medium transition-colors hover:bg-rose-600">
-            Crea tu invitación ahora
+          <Button variant="cta"
+            asChild>
+            <Link href="/private">
+              Crea tu invitación ahora
+            </Link>
           </Button>
         </div>
       </div>
       <section className="py-16 md:py-24">
-        <div className="container mx-auto px-4">
+        <div className="container">
           <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
             <div className="flex flex-col items-center gap-4 rounded-lg bg-white p-6 shadow-lg dark:bg-gray-900">
               <Calendar className="size-12 text-rose-500" />
@@ -46,7 +49,7 @@ export default function HomePage() {
             </div>
             <div className="flex flex-col items-center gap-4 rounded-lg bg-white p-6 shadow-lg dark:bg-gray-900">
               <UsersIcon className="size-12 text-rose-500" />
-              <h3 className="text-xl font-bold">Lista de invitados</h3>
+              <h3 className="text-xl font-bold">Conectado</h3>
               <p className="text-gray-500 dark:text-gray-400">
                 Gestiona tu lista de invitados y recibe confirmaciones de asistencia en tiempo real.
               </p>
@@ -55,7 +58,7 @@ export default function HomePage() {
         </div>
       </section>
       <section className="bg-gray-100 py-16 dark:bg-gray-800 md:py-24">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto max-w-screen-lg px-4">
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
             <div className="flex flex-col items-start gap-4">
               <div className="inline-block rounded-full bg-rose-500 px-4 py-2 text-sm text-white">Testimonios</div>
@@ -104,7 +107,7 @@ export default function HomePage() {
         </div>
       </section>
       <footer className="bg-gray-900 py-8 text-white">
-        <div className="container mx-auto px-4">
+        <div className="container">
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
             <div className="flex items-center gap-2 text-gray-600">
               <Camera className="size-6 text-rose-500" />
