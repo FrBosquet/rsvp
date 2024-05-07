@@ -41,15 +41,15 @@ export const Commuting = ({ visible }: Props) => {
       <div>
         <strong>Ida:</strong>
         <ul className='pl-c80'>
-          <li>Hotel Civis Jaume I, 12:15h</li>
-          <li>Plaza María Agustina, 12:00h</li>
+          <li>Plaza María Agustina, 11:45h</li>
+          <li>Hotel Civis Jaume I, 12:00h</li>
         </ul>
       </div>
       <div>
         <strong>Vuelta (al origen):</strong>
         <ul className='pl-c80'>
-          <li>Primera salida, por definir</li>
-          <li>Última salida, 00:15</li>
+          <li>Primera salida, 21:30</li>
+          <li>Última salida, 00:30</li>
         </ul>
       </div>
     </section>
