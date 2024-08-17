@@ -1,76 +1,18 @@
 import { UserButton } from '@clerk/nextjs'
+import { auth, currentUser } from '@clerk/nextjs/server'
 
 export default async function PrivatePage() {
-  // const { userId } = auth()
+  const { userId } = auth()
 
-  // const user = await prisma.user.findUnique({
-  //   where: {
-  //     id: userId
-  //   }
-  // })
+  const user = await currentUser()
 
-  // if (!user) return redirect('/private')
-
-  // const isAdmin = user?.role === 'admin'
-
-  // const events = await prisma.event.findMany({
-  //   orderBy: {
-  //     createdAt: 'desc'
-  //   },
-  //   include: {
-  //     users: {
-  //       include: {
-  //         user: true
-  //       }
-  //     }
-  //   },
-  //   where: !isAdmin
-  //     ? {
-  //       users: {
-  //         some: {
-  //           OR: [
-  //             { userId },
-  //             { email: user?.email }
-  //           ]
-  //         }
-  //       }
-  //     }
-  //     : undefined
-  // })
-
-  return <section className="container m-auto flex flex-col gap-3 p-4 text-reset">
-    <header className="flex w-full items-center gap-2 rounded-2xl bg-slate-800 p-2 text-zinc-200 shadow-lg">
-      <UserButton />
-      <h1 className="text-lg uppercase">Tus eventos</h1>
+  return <section className="container mx-auto flex flex-col gap-3 p-4">
+    <header className="flex w-full items-center justify-between gap-2 rounded-2xl py-4">
+      <h1 className="text-lg font-bold uppercase">Tus eventos</h1>
+      <UserButton afterSignOutUrl='/'
+        showName />
     </header>
 
-    {/* {isAdmin
-      ? <article className="flex w-full gap-2 rounded-2xl bg-green-900 p-2 text-zinc-200 shadow-md">
-        <h2 className="font-semibold">Crear nuevo evento</h2>
-        <Form action={createEvent}
-          className="flex w-full">
-          <Fieldset className="flex w-full flex-1 gap-2">
-            <input required
-              className="flex-1 border-b-2 bg-transparent p-1"
-              name="name"
-              placeholder="Nombre del evento" />
-            <input required
-              className="flex-1 border-b-2 bg-transparent p-1"
-              name="slug"
-              placeholder="URL del evento" />
-          </Fieldset>
-          <SubmitButton>Crear</SubmitButton>
-        </Form>
-      </article>
-      : null
-    } */}
-
-    hola
-
-    {/* <article className="grid gap-2 pt-6 md:grid-cols-2 xl:grid-cols-3">
-      {events.map(event => <EventCard key={event.slug}
-        event={event}
-        isAdmin={isAdmin} />)}
-    </article> */}
+    {userId} {user?.fullName}
   </section>
 }
