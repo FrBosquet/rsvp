@@ -32,6 +32,7 @@ model UserOnEvent {
   id        String   @id @unique @default(cuid())
   user      User?    @relation(fields: [userId], references: [id])
   userId    String?
+  role      String?  @default("host")
   email     String
   event     Event    @relation(fields: [eventSlug], references: [slug])
   eventSlug String

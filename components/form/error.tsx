@@ -18,9 +18,9 @@ export const FormError = ({ errors }: Props) => {
 
   const error = params.get('error')
 
-  if (!error) return null
-
   useEffect(() => {
+    if (!error) return
+
     const type = error.split('::').pop()
 
     if (!type) return

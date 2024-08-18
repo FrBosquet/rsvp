@@ -1,21 +1,46 @@
 import { Fieldset } from '@/components/Form'
 import { FormError } from '@/components/form/error'
 import { Input } from '@/components/form/input'
+import { InputList } from '@/components/form/input-list'
 import { SubmitButton } from '@/components/SubmitButton'
 import { prisma } from '@/lib/prisma'
+import { currentUser } from '@clerk/nextjs/server'
 import { redirect } from 'next/navigation'
 
 export default function NewEventPage() {
   const action = async (formData: FormData) => {
     'use server'
+    const clerkUser = await currentUser()
+
+    if (!clerkUser) return
+
     const name = formData.get('name')
     const slug = formData.get('slug')
+
+    const ownerEmail = clerkUser.emailAddresses[0].emailAddress
+    const usersEmails = formData.getAll('user')
+
+    if (!usersEmails.includes(ownerEmail)) {
+      usersEmails.push(ownerEmail)
+    }
+
+    const userData = usersEmails.map((email) => {
+      return {
+        email: email as string,
+        role: email === ownerEmail ? 'owner' : 'host'
+      }
+    })
 
     try {
       await prisma.event.create({
         data: {
           name: name as string,
-          slug: slug as string
+          slug: slug as string,
+          users: {
+            createMany: {
+              data: userData
+            }
+          }
         }
       })
     } catch (e) {
@@ -46,6 +71,10 @@ export default function NewEventPage() {
           name='name' />
         <Input label="Slug"
           name='slug'
+          required />
+        <InputList label="Participantes (email)"
+          name='user'
+          type="email"
           required />
       </Fieldset>
       <SubmitButton className='mt-4'>Crear</SubmitButton>
