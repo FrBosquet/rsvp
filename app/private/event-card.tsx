@@ -22,7 +22,8 @@ const AcceptInvitation = ({ eventSlug }: { eventSlug: string }) => {
     <input type="hidden"
       name="userId"
       value={userId!} />
-    <SubmitButton className="bg-green-600 p-1">Aceptar</SubmitButton>
+    <SubmitButton variant='acceptance'
+      className="bg-green-600 p-1">Aceptar</SubmitButton>
   </form>
 }
 
@@ -50,7 +51,8 @@ const UserLine = ({ userOnEvent, isAdmin, eventSlug }: { userOnEvent: UserOnEven
           <input type="hidden"
             name="email"
             value={userOnEvent.email} />
-          <SubmitButton className="bg-red-600 p-1"><Trash size={10} /></SubmitButton>
+          <SubmitButton variant='acceptance'
+            className="bg-red-600 p-1"><Trash size={10} /></SubmitButton>
         </form>
         : null
     }
@@ -82,7 +84,8 @@ export const EventCard = ({ event, isAdmin }: Props) => {
             <input type="hidden"
               name="slug"
               value={event.slug} />
-            <SubmitButton className="bg-red-600"><Trash size={14} /></SubmitButton>
+            <SubmitButton variant='acceptance'
+              className="bg-red-600"><Trash size={14} /></SubmitButton>
           </form>
           : null
       }
@@ -98,7 +101,7 @@ export const EventCard = ({ event, isAdmin }: Props) => {
               name="email"
               placeholder="email"
               className="border-none bg-transparent text-zinc-200" />
-            <SubmitButton>invitar</SubmitButton>
+            <SubmitButton variant='acceptance'>invitar</SubmitButton>
           </form>
           : null
       }

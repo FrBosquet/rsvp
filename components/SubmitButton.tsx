@@ -1,21 +1,24 @@
 'use client'
 
+import { Loader2 } from 'lucide-react'
 import { useFormStatus } from 'react-dom'
-import { twMerge } from 'tailwind-merge'
+import { Button, type ButtonProps } from './ui/button'
 
 interface Props {
   children: React.ReactNode
   className?: string
+  variant?: ButtonProps['variant']
 }
 
-export const SubmitButton = ({ children, className }: Props) => {
+export const SubmitButton = ({ children, className, variant }: Props) => {
   const { pending } = useFormStatus()
 
-  return <button
+  return <Button
+    variant={variant}
     aria-disabled={pending}
     disabled={pending}
-    className={twMerge('uppercase text-sm font-bold bg-orange-400 hover:bg-rose-400 text-zinc-800 p-2 rounded-2xl shadow-lg disabled:opacity-25 disabled:cursor-wait', className)}
+    className={className}
     type="submit">
-    {children}
-  </button>
+    {pending ? <Loader2 className='animate-spin' /> : children}
+  </Button>
 }

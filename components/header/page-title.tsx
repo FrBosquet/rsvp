@@ -7,12 +7,17 @@ const useTitle = () => {
 
   // Slice to remove the initial /
   const chunks = pathname.slice(1).split('/')
+  const chunkAmount = chunks.length
 
-  if (chunks.length === 2 && chunks[0] === 'private') {
+  if (chunkAmount === 2 && chunks[1] === 'new') {
+    return 'Nuevo evento'
+  }
+
+  if (chunkAmount === 2 && chunks[0] === 'private') {
     return 'Tu evento'
   }
 
-  if (chunks.length === 1 && chunks[0] === 'private') {
+  if (chunkAmount === 1 && chunks[0] === 'private') {
     return 'Tus eventos'
   }
 

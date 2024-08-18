@@ -1,6 +1,6 @@
 'use client'
 
-import { useFormState, useFormStatus } from 'react-dom'
+import { useFormStatus } from 'react-dom'
 import { twMerge } from 'tailwind-merge'
 
 interface Props {
@@ -25,20 +25,5 @@ export const Fieldset = ({ children, className }: Pick<Props, 'children' | 'clas
   const { pending } = useFormStatus()
 
   return <fieldset disabled={pending}
-    className={twMerge('flex', className)}>{children}</fieldset>
-}
-
-export const Form = ({ action, className, children }: Props) => {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-  const [state, formAction] = useFormState(action as any, { error: '' })
-  const { pending } = useFormStatus()
-
-  return <form className={twMerge('flex gap-2', className)}
-    action={formAction}>
-
-    {children}
-    {
-      state?.error && !pending && <p className="text-red-500">{state.error}</p>
-    }
-  </form>
+    className={twMerge('contents', className)}>{children}</fieldset>
 }

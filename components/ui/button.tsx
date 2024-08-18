@@ -12,6 +12,7 @@ const buttonVariants = cva(
         default: "bg-primary text-primary-foreground hover:bg-primary/90 flex",
         cta: "rounded-full bg-rose-500 px-8 py-3 text-lg font-medium transition-colors hover:bg-rose-600",
         menu: "bg-primary text-primary-foreground hover:bg-primary/90 flex",
+        acceptance: "uppercase text-sm font-bold bg-orange-400 hover:bg-rose-400 text-zinc-800 p-2 rounded-2xl shadow-lg disabled:opacity-25 disabled:cursor-wait"
       },
       size: {
         default: "h-10 px-4 py-2 gap-4",

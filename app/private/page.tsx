@@ -27,13 +27,15 @@ export default async function PrivatePage() {
     include: {
       users: true
     },
-    where: {
-      users: {
-        some: {
-          email: user.email
+    where: isAdmin
+      ? {}
+      : {
+        users: {
+          some: {
+            email: user.email
+          }
         }
       }
-    }
   })
 
   const menu = <menu>
