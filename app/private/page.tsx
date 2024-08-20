@@ -1,3 +1,4 @@
+import { EventItem } from '@/components/event-list/event-item'
 import { Button } from '@/components/ui/button'
 import { prisma } from '@/lib/prisma'
 import { currentUser } from '@clerk/nextjs/server'
@@ -25,7 +26,11 @@ export default async function PrivatePage() {
 
   const events = await prisma.event.findMany({
     include: {
-      users: true
+      users: {
+        include: {
+          user: true
+        }
+      }
     },
     where: isAdmin
       ? {}
@@ -55,15 +60,9 @@ export default async function PrivatePage() {
     }
     <ul className='flex flex-col gap-2'>
       {events.map(event => {
-        return <li key={event.slug}
-          className='contents'>
-          <Link href={`private/${event.slug}`}
-            className='w-full border p-2 hover:bg-slate-200'>
-            <h2>
-              {event.name}
-            </h2>
-          </Link>
-        </li>
+        return <EventItem key={event.slug}
+          event={event}
+          currentUser={user} />
       })}
     </ul>
   </section>

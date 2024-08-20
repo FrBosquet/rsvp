@@ -1,4 +1,4 @@
-import { type Note, type Guest as PrismaGuest, type User } from '@prisma/client'
+import { type Note, type Guest as PrismaGuest, type User, type UserOnEvent, type Event } from '@prisma/client'
 
 export enum States {
   pending = 'pending',
@@ -61,3 +61,9 @@ export enum SETTING {
 }
 
 export type SettingMap = Partial<Record<SETTING, string>>
+
+export type EventWithUsers = Event & {
+  users: Array<UserOnEvent & {
+    user: User | null
+  }>
+}
