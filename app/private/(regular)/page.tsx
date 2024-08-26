@@ -1,24 +1,12 @@
 import { EventItem } from '@/components/event-list/event-item'
 import { Button } from '@/components/ui/button'
 import { prisma } from '@/lib/prisma'
-import { currentUser } from '@clerk/nextjs/server'
+import { getUser } from '@/lib/server/user'
 import { PlusCircle } from 'lucide-react'
 import Link from 'next/link'
-import { redirect } from 'next/navigation'
 
 export default async function PrivatePage() {
-  const clerkUser = await currentUser()
-
-  if (!clerkUser) redirect('/sign-in')
-
-  const user = await prisma.user.findUnique({
-    where: {
-      id: clerkUser.id
-    }
-  })
-
-  // TODO: Handle user being created but not in the database yet
-  if (!user) redirect('/sign-in')
+  const user = await getUser()
 
   const { role } = user
 

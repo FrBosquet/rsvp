@@ -5,7 +5,7 @@ import { type Event, type User, type UserOnEvent } from '@prisma/client'
 import { ArrowRightCircle, Trash, UserCheck, UserSearch } from 'lucide-react'
 import Link from 'next/link'
 import { twMerge } from 'tailwind-merge'
-import { acceptEventOwnership, addOwnerToEvent, deleteEvent, removeOwnerFromEvent } from '../actions'
+import { acceptEventOwnership, addOwnerToEvent, deleteEvent, removeOwnerFromEvent } from '../../actions'
 
 interface Props {
   isAdmin: boolean
