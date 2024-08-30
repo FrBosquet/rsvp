@@ -1,8 +1,4 @@
-/**
- * v0 by Vercel.
- * @see https://v0.dev/t/tVajKoYutsw
- * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
- */
+import { SignedIn, SignedOut, SignInButton } from '@clerk/nextjs'
 import { Calendar, Camera, DollarSign, UsersIcon } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -29,9 +25,16 @@ export default function HomePage() {
             Gestione las invitaciones de su día especial con nuestra completa
             aplicación de reserva de bodas.
           </p>
-          <Button asChild variant="cta">
-            <Link href="/private">Crea tu invitación ahora</Link>
-          </Button>
+          <SignedIn>
+            <Button asChild variant="cta">
+              <Link href="/private">Crea tu invitación ahora</Link>
+            </Button>
+          </SignedIn>
+          <SignedOut>
+            <Button asChild variant="cta">
+              <SignInButton mode="modal">Inicia sesión</SignInButton>
+            </Button>
+          </SignedOut>
         </div>
       </div>
       <section className="py-16 md:py-24">
