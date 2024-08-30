@@ -4,6 +4,4 @@ interface Props {
   user: User | null
 }
 
-const Avatar = ({ user }: Props) => {
-
-}
+const Avatar = ({ user }: Props) => {}

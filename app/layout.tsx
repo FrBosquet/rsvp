@@ -1,15 +1,23 @@
-import { Dancing_Script, Fira_Sans, Forum, Noto_Serif, WindSong } from 'next/font/google'
-
-import { Toaster } from '@/components/ui/sonner'
 import '@/styles/globals.css'
+
 import { esES } from '@clerk/localizations'
 import { ClerkProvider } from '@clerk/nextjs'
 import { type Viewport } from 'next'
+import {
+  Dancing_Script,
+  Fira_Sans,
+  Forum,
+  Noto_Serif,
+  WindSong
+} from 'next/font/google'
 import NextTopLoader from 'nextjs-toploader'
+
+import { Toaster } from '@/components/ui/sonner'
 
 export const metadata = {
   title: 'RSVP - Devaux',
-  description: 'Tus invitaciones de boda de forma digital, sencilla y económica. Gestiona tu lista de invitados y recibe confirmaciones de asistencia en tiempo real.'
+  description:
+    'Tus invitaciones de boda de forma digital, sencilla y económica. Gestiona tu lista de invitados y recibe confirmaciones de asistencia en tiempo real.'
 }
 
 export const viewport: Viewport = {
@@ -63,7 +71,9 @@ export default function RootLayout({
   return (
     <ClerkProvider localization={esES}>
       <html lang="en">
-        <body className={`min-h-s-screen antialiased ${noto.className} ${script.variable} ${serif.variable} ${dancingScript.variable} ${noto.variable} ${fira.variable}`}>
+        <body
+          className={`min-h-s-screen antialiased ${noto.className} ${script.variable} ${serif.variable} ${dancingScript.variable} ${noto.variable} ${fira.variable}`}
+        >
           <NextTopLoader />
           <Toaster richColors />
 

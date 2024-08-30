@@ -1,13 +1,15 @@
-import { replyToInvitation } from '@/app/actions'
-import { STATE } from '@/types'
 import { useParams } from 'next/navigation'
 import { useState } from 'react'
+
+import { replyToInvitation } from '@/app/actions'
+import { STATE } from '@/types'
+
 import { useGuest } from './use-guest'
 
 export const useRejectAssistance = () => {
   const [loading, setLoading] = useState<boolean>(false)
   const { updateGuest, hideAcceptedCard } = useGuest()
-  const params = useParams<{ event: string, slug: string }>()
+  const params = useParams<{ event: string; slug: string }>()
 
   const handleReject = async () => {
     setLoading(true)
@@ -22,7 +24,9 @@ export const useRejectAssistance = () => {
       hideAcceptedCard()
       updateGuest(updatedGuest)
     } catch (e) {
-      alert('Error al enviar la respuesta. Inténtelo de nuevo y si persiste póngase en contacto con su anfitrión.')
+      alert(
+        'Error al enviar la respuesta. Inténtelo de nuevo y si persiste póngase en contacto con su anfitrión.'
+      )
     } finally {
       setLoading(false)
     }

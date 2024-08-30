@@ -1,13 +1,17 @@
 'use server'
 
-import { prisma } from '@/lib/prisma'
-import { NOTES, STATE, type GuestWithHost, type GuestWithNotes } from '@/types'
 import { currentUser } from '@clerk/nextjs/server'
-
 import { redirect } from 'next/navigation'
 
+import { prisma } from '@/lib/prisma'
+import { logger } from '@/lib/server/logger'
+import { type GuestWithHost, type GuestWithNotes, NOTES, STATE } from '@/types'
+
 // events
-export async function createEvent(prevState: { error: string }, formData: FormData) {
+export async function createEvent(
+  prevState: { error: string },
+  formData: FormData
+) {
   const name = formData.get('name')
   const slug = formData.get('slug')
 
@@ -108,10 +112,15 @@ export async function acceptEventOwnership(formData: FormData) {
 }
 
 // guests
-export async function addGuestToEvent(formData: FormData): Promise<GuestWithHost> {
+export async function addGuestToEvent(
+  formData: FormData
+): Promise<GuestWithHost> {
   const eventSlug = formData.get('eventSlug') as string
 
-  const name = (formData.get('names') as string).split(',').map((name) => name.trim()).join(', ')
+  const name = (formData.get('names') as string)
+    .split(',')
+    .map((name) => name.trim())
+    .join(', ')
   const slug = formData.get('slug')
   const isFamily = formData.get('family') === 'on'
   const maxAmount = formData.get('guests')
@@ -146,7 +155,10 @@ export async function editGuest(formData: FormData): Promise<GuestWithHost> {
   const eventSlug = formData.get('eventSlug') as string
   const slug = formData.get('slug') as string
 
-  const name = (formData.get('names') as string).split(',').map((name) => name.trim()).join(', ')
+  const name = (formData.get('names') as string)
+    .split(',')
+    .map((name) => name.trim())
+    .join(', ')
   const isFamily = formData.get('family') === 'on'
   const maxAmount = formData.get('guests')
 
@@ -203,7 +215,12 @@ export async function deleteGuest(formData: FormData): Promise<GuestWithHost> {
   return data
 }
 
-const writeNote = async (eventSlug: string, slug: string, type: NOTES, content: string) => {
+const writeNote = async (
+  eventSlug: string,
+  slug: string,
+  type: NOTES,
+  content: string
+) => {
   await prisma.note.upsert({
     where: {
       guestSlug_guestEventSlug_type: {
@@ -230,7 +247,9 @@ const writeNote = async (eventSlug: string, slug: string, type: NOTES, content: 
   })
 }
 
-export async function toggleContacted(formData: FormData): Promise<GuestWithHost> {
+export async function toggleContacted(
+  formData: FormData
+): Promise<GuestWithHost> {
   const eventSlug = formData.get('event') as string
   const slug = formData.get('slug') as string
   const contacted = formData.get('contacted') as string
@@ -280,7 +299,9 @@ const deleteAllergyIfPresent = async (eventSlug: string, slug: string) => {
   })
 }
 
-export async function replyToInvitation(formData: FormData): Promise<GuestWithNotes> {
+export async function replyToInvitation(
+  formData: FormData
+): Promise<GuestWithNotes> {
   const eventSlug = formData.get('eventSlug') as string
   const slug = formData.get('slug') as string
   const amount = formData.get('amount') as string
@@ -314,7 +335,7 @@ export async function replyToInvitation(formData: FormData): Promise<GuestWithNo
         await deleteAllergyIfPresent(eventSlug, slug)
       }
     } catch (e) {
-      console.error(e)
+      logger.error(e)
     }
   }
 

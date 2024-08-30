@@ -1,6 +1,8 @@
+import { revalidatePath, revalidateTag } from 'next/cache'
+
 import { prisma } from '@/lib/prisma'
 import { SETTING } from '@/types'
-import { revalidatePath, revalidateTag } from 'next/cache'
+
 import { ImageInput } from './image-input'
 import { SubmitButton } from './submit-button'
 
@@ -15,10 +17,13 @@ export const OgManager = async ({ slug }: Props) => {
     }
   })
 
-  const settings = rawSettings.reduce<Record<string, string>>((acc, setting) => {
-    acc[setting.type] = setting.value
-    return acc
-  }, {})
+  const settings = rawSettings.reduce<Record<string, string>>(
+    (acc, setting) => {
+      acc[setting.type] = setting.value
+      return acc
+    },
+    {}
+  )
 
   const handleSubmit = async (formData: FormData) => {
     'use server'
@@ -107,37 +112,56 @@ export const OgManager = async ({ slug }: Props) => {
     revalidatePath(`/private/${slug}/settings`)
   }
 
-  return <article className="flex flex-col gap-1 rounded-2xl bg-slate-700 p-3 text-zinc-200 shadow-md">
-    <h1 className="text-lg">Configuración Open Graph</h1>
-    <p className="text-sm text-zinc-400">Open graph es el protocolo que permite mostrar previsualizaciones de una web al pegar el enlace en aplicaciones como WhatsApp, Twitter o Facebook</p>
+  return (
+    <article className="flex flex-col gap-1 rounded-2xl bg-slate-700 p-3 text-zinc-200 shadow-md">
+      <h1 className="text-lg">Configuración Open Graph</h1>
+      <p className="text-sm text-zinc-400">
+        Open graph es el protocolo que permite mostrar previsualizaciones de una
+        web al pegar el enlace en aplicaciones como WhatsApp, Twitter o Facebook
+      </p>
 
-    <form action={handleSubmit}
-      className="grid gap-2">
-      <label htmlFor="title">Título</label>
-      <input className="border bg-transparent p-1"
-        defaultValue={settings['og:title']}
-        type="text"
-        id="title"
-        name="title" />
-      <label htmlFor="description">Descripción (plural)</label>
-      <input className="border bg-transparent p-1"
-        defaultValue={settings['og:description']}
-        type="text"
-        id="description"
-        name="description" />
-      <label htmlFor="descriptionSingle">Descripción (singular)</label>
-      <input className="border bg-transparent p-1"
-        defaultValue={settings[SETTING.ogDescriptionSingle]}
-        type="text"
-        id="descriptionSingle"
-        name="descriptionSingle" />
-      <p className='text-sm text-zinc-400'>Puedes utilizar la palabra clave <span className='font-mono text-orange-500'>{'<'}GUEST{'>'}</span> dentro de este campo. Se verá substituido por los nombres de los invitados separados por comas en la previsualización del enlace</p>
+      <form action={handleSubmit} className="grid gap-2">
+        <label htmlFor="title">Título</label>
+        <input
+          className="border bg-transparent p-1"
+          defaultValue={settings['og:title']}
+          id="title"
+          name="title"
+          type="text"
+        />
+        <label htmlFor="description">Descripción (plural)</label>
+        <input
+          className="border bg-transparent p-1"
+          defaultValue={settings['og:description']}
+          id="description"
+          name="description"
+          type="text"
+        />
+        <label htmlFor="descriptionSingle">Descripción (singular)</label>
+        <input
+          className="border bg-transparent p-1"
+          defaultValue={settings[SETTING.ogDescriptionSingle]}
+          id="descriptionSingle"
+          name="descriptionSingle"
+          type="text"
+        />
+        <p className="text-sm text-zinc-400">
+          Puedes utilizar la palabra clave{' '}
+          <span className="font-mono text-orange-500">
+            {'<'}GUEST{'>'}
+          </span>{' '}
+          dentro de este campo. Se verá substituido por los nombres de los
+          invitados separados por comas en la previsualización del enlace
+        </p>
 
-      <ImageInput resourceName={`og_image_${slug}`}
-        defaultValue={settings['og:image']}
-        name="image" />
+        <ImageInput
+          defaultValue={settings['og:image']}
+          name="image"
+          resourceName={`og_image_${slug}`}
+        />
 
-      <SubmitButton >Guardar</SubmitButton>
-    </form>
-  </article>
+        <SubmitButton>Guardar</SubmitButton>
+      </form>
+    </article>
+  )
 }

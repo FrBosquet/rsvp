@@ -10,11 +10,7 @@ interface Props {
   defaultValue?: string
 }
 
-export const ImageInput = ({
-  resourceName,
-  name,
-  defaultValue
-}: Props) => {
+export const ImageInput = ({ resourceName, name, defaultValue }: Props) => {
   const [url, setUrl] = React.useState<string | null>(defaultValue ?? null)
   const [loading, setLoading] = React.useState(false)
 
@@ -35,23 +31,27 @@ export const ImageInput = ({
     setLoading(false)
   }
 
-  return <>
-    <label htmlFor="file"
-      className="flex cursor-pointer flex-col gap-2">
-      <h3>Imagen</h3>
-      <img src={url ?? '/defimage.svg'}
-        className={twMerge('size-72 rounded-xl object-cover object-center', loading ? ' animate-pulse' : '')}
-        alt={resourceName} />
-    </label>
-    <input type="file"
-      className='hidden'
-      onChange={handleChange}
-      accept="image/*"
-      id="file"
-    />
-    {url && <input type='text'
-      name={name}
-      hidden
-      value={url} />}
-  </>
+  return (
+    <>
+      <label className="flex cursor-pointer flex-col gap-2" htmlFor="file">
+        <h3>Imagen</h3>
+        <img
+          alt={resourceName}
+          className={twMerge(
+            'size-72 rounded-xl object-cover object-center',
+            loading ? ' animate-pulse' : ''
+          )}
+          src={url ?? '/defimage.svg'}
+        />
+      </label>
+      <input
+        accept="image/*"
+        className="hidden"
+        id="file"
+        type="file"
+        onChange={handleChange}
+      />
+      {url && <input hidden name={name} type="text" value={url} />}
+    </>
+  )
 }

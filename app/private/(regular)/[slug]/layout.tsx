@@ -1,7 +1,9 @@
-import { prisma } from '@/lib/prisma'
 import { auth } from '@clerk/nextjs/server'
 import { redirect } from 'next/navigation'
 import React from 'react'
+
+import { prisma } from '@/lib/prisma'
+
 import { EventHeader } from './_components/event-header'
 
 interface Route {
@@ -47,12 +49,18 @@ export default async function EventDashboardPage({ params, children }: Route) {
     }
   })
 
-  if (!event || (!isAdmin && !event?.users.some((userOnEvent) => userOnEvent.userId === userId))) {
+  if (
+    !event ||
+    (!isAdmin &&
+      !event?.users.some((userOnEvent) => userOnEvent.userId === userId))
+  ) {
     redirect('/private')
   }
 
-  return <section className="container m-auto flex h-s-screen flex-col gap-3 p-4 text-reset">
-    <EventHeader serverEvent={event} />
-    {children}
-  </section>
+  return (
+    <section className="container m-auto flex h-s-screen flex-col gap-3 p-4 text-reset">
+      <EventHeader serverEvent={event} />
+      {children}
+    </section>
+  )
 }

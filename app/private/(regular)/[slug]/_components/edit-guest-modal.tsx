@@ -1,15 +1,25 @@
 'use client'
 
+import { MinusCircleIcon, PlusCircleIcon } from 'lucide-react'
+import { useParams } from 'next/navigation'
+import { type FormEvent, type MouseEvent, useRef, useState } from 'react'
+import { toast } from 'sonner'
+
 import { editGuest } from '@/app/actions'
 import { Spinner } from '@/components/spinner'
 import { Checkbox } from '@/components/ui/checkbox'
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger
+} from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { type GuestWithHost } from '@/types'
-import { MinusCircleIcon, PlusCircleIcon } from 'lucide-react'
-import { useParams } from 'next/navigation'
-import { useRef, useState, type FormEvent, type MouseEvent } from 'react'
-import { toast } from 'sonner'
+
 import { DeleteGuestModal } from './delete-guest-overlay'
 
 interface Props {
@@ -19,7 +29,12 @@ interface Props {
   children: React.ReactNode
 }
 
-export const EditGuestModal = ({ onEditGuest, onDeleteGuest, guest, children }: Props) => {
+export const EditGuestModal = ({
+  onEditGuest,
+  onDeleteGuest,
+  guest,
+  children
+}: Props) => {
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
   const params = useParams()
@@ -43,7 +58,9 @@ export const EditGuestModal = ({ onEditGuest, onDeleteGuest, guest, children }: 
     } catch (err) {
       switch (true) {
         default:
-          toast.error('Error desconocido! Por favor, contacta con el administrador si el error persiste')
+          toast.error(
+            'Error desconocido! Por favor, contacta con el administrador si el error persiste'
+          )
           break
       }
     } finally {
@@ -70,94 +87,103 @@ export const EditGuestModal = ({ onEditGuest, onDeleteGuest, guest, children }: 
     }
   }
 
-  return <Dialog open={open}
-    onOpenChange={setOpen}>
-    <DialogTrigger>{children}</DialogTrigger>
-    <DialogContent>
-      <DialogHeader>
-        <DialogTitle>Editar invitación de {guest.name}</DialogTitle>
-        <DialogDescription>Edita una invitación</DialogDescription>
-      </DialogHeader>
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger>{children}</DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Editar invitación de {guest.name}</DialogTitle>
+          <DialogDescription>Edita una invitación</DialogDescription>
+        </DialogHeader>
 
-      <form id='edit-guest-modal'
-        onSubmit={handleSubmit}>
-        <fieldset className='flex flex-col gap-4'
-          disabled={loading}>
-          <input type="hidden"
-            name="eventSlug"
-            value={eventSlug} />
-          <input type="hidden"
-            name="slug"
-            value={guest.slug} />
+        <form id="edit-guest-modal" onSubmit={handleSubmit}>
+          <fieldset className="flex flex-col gap-4" disabled={loading}>
+            <input name="eventSlug" type="hidden" value={eventSlug} />
+            <input name="slug" type="hidden" value={guest.slug} />
 
-          <article className='flex flex-col gap-2'>
-            <label className='font-semibold'
-              htmlFor="names">Nombres</label>
-            <Input required
-              placeholder="Nombres de los invitados"
-              name='names'
-              id="names"
-              defaultValue={guest.name} />
-            <p className='text-sm text-slate-400'>Separados por comas. Pej. &quot;Lola,Ramón&quot;</p>
-          </article>
-
-          <article className='flex flex-col gap-2'>
-            <label className='font-semibold'
-              htmlFor="slug">Enlace</label>
-            <Input disabled
-              id="slug"
-              defaultValue={guest.slug} />
-          </article>
-
-          <article className='flex flex-col gap-2'>
-            <div className="flex items-center space-x-2">
-              <Checkbox id="family"
-                name="family" />
-              <label
-                htmlFor="family"
-              >
-                Es una familia
+            <article className="flex flex-col gap-2">
+              <label className="font-semibold" htmlFor="names">
+                Nombres
               </label>
-            </div>
-            <p className='text-sm text-slate-400'>Marcar si van mas miembros a parte de los nombrados</p>
-          </article>
+              <Input
+                required
+                defaultValue={guest.name}
+                id="names"
+                name="names"
+                placeholder="Nombres de los invitados"
+              />
+              <p className="text-sm text-slate-400">
+                Separados por comas. Pej. &quot;Lola,Ramón&quot;
+              </p>
+            </article>
 
-          <article className='flex flex-col gap-2'>
-            <label className='font-semibold'
-              htmlFor="guests">Invitados</label>
-            <div className="flex items-center justify-center gap-4">
-              <button type='button'
-                onClick={handleGuestIncrease}
-                data-op="minus"><MinusCircleIcon /></button>
-              <input ref={guestsInput}
-                type='number'
-                min={1}
-                name="guests"
-                id="guests"
-                className='w-8 border-none bg-transparent text-center text-lg'
-                defaultValue={guest.maxAmount} />
-              <button type='button'
-                onClick={handleGuestIncrease}
-                data-op="plus"><PlusCircleIcon /></button>
-            </div>
-            <p className='text-sm text-slate-400'>Cuantas personas, como máximo, incluye esta invitación</p>
-          </article>
-        </fieldset>
-      </form>
+            <article className="flex flex-col gap-2">
+              <label className="font-semibold" htmlFor="slug">
+                Enlace
+              </label>
+              <Input disabled defaultValue={guest.slug} id="slug" />
+            </article>
 
-      <DialogFooter>
-        <menu className=' flex w-full justify-between'>
-          <DeleteGuestModal
-            guest={guest}
-            onDeleteGuest={handleDelete}>
-            <button type='button'
-              className='rounded-sm bg-red-700 p-1'>Eliminar</button>
-          </DeleteGuestModal>
+            <article className="flex flex-col gap-2">
+              <div className="flex items-center space-x-2">
+                <Checkbox id="family" name="family" />
+                <label htmlFor="family">Es una familia</label>
+              </div>
+              <p className="text-sm text-slate-400">
+                Marcar si van mas miembros a parte de los nombrados
+              </p>
+            </article>
 
-          <button type='submit'
-            form='edit-guest-modal'>{loading ? <Spinner /> : 'Guardar'}</button>
-        </menu>
-      </DialogFooter>
-    </DialogContent>
-  </Dialog>
+            <article className="flex flex-col gap-2">
+              <label className="font-semibold" htmlFor="guests">
+                Invitados
+              </label>
+              <div className="flex items-center justify-center gap-4">
+                <button
+                  data-op="minus"
+                  type="button"
+                  onClick={handleGuestIncrease}
+                >
+                  <MinusCircleIcon />
+                </button>
+                <input
+                  ref={guestsInput}
+                  className="w-8 border-none bg-transparent text-center text-lg"
+                  defaultValue={guest.maxAmount}
+                  id="guests"
+                  min={1}
+                  name="guests"
+                  type="number"
+                />
+                <button
+                  data-op="plus"
+                  type="button"
+                  onClick={handleGuestIncrease}
+                >
+                  <PlusCircleIcon />
+                </button>
+              </div>
+              <p className="text-sm text-slate-400">
+                Cuantas personas, como máximo, incluye esta invitación
+              </p>
+            </article>
+          </fieldset>
+        </form>
+
+        <DialogFooter>
+          <menu className=" flex w-full justify-between">
+            <DeleteGuestModal guest={guest} onDeleteGuest={handleDelete}>
+              <button className="rounded-sm bg-red-700 p-1" type="button">
+                Eliminar
+              </button>
+            </DeleteGuestModal>
+
+            <button form="edit-guest-modal" type="submit">
+              {loading ? <Spinner /> : 'Guardar'}
+            </button>
+          </menu>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  )
 }

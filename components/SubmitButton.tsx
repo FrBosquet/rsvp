@@ -2,6 +2,7 @@
 
 import { Loader2 } from 'lucide-react'
 import { useFormStatus } from 'react-dom'
+
 import { Button, type ButtonProps } from './ui/button'
 
 interface Props {
@@ -13,12 +14,15 @@ interface Props {
 export const SubmitButton = ({ children, className, variant }: Props) => {
   const { pending } = useFormStatus()
 
-  return <Button
-    variant={variant}
-    aria-disabled={pending}
-    disabled={pending}
-    className={className}
-    type="submit">
-    {pending ? <Loader2 className='animate-spin' /> : children}
-  </Button>
+  return (
+    <Button
+      aria-disabled={pending}
+      className={className}
+      disabled={pending}
+      type="submit"
+      variant={variant}
+    >
+      {pending ? <Loader2 className="animate-spin" /> : children}
+    </Button>
+  )
 }

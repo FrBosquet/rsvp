@@ -1,7 +1,8 @@
-import { type GuestWithHost, type STATE } from '@/types'
 import { type Event, type User } from '@prisma/client'
-import { useEffect, useMemo, type FormEvent } from 'react'
+import { type FormEvent, useEffect, useMemo } from 'react'
 import { create } from 'zustand'
+
+import { type GuestWithHost, type STATE } from '@/types'
 
 interface Filter {
   name?: string
@@ -114,25 +115,38 @@ export const useEvent = (serverEvent?: Event & { guests: GuestWithHost[] }) => {
     return hosts.sort((a, b) => a.name.localeCompare(b.name))
   }, [guests])
 
-  const { guestInvited, guestAccepted, guestPending, guestRejected } = useMemo(() => (guests ?? []).reduce((acc, guest) => {
-    acc.guestInvited += guest.maxAmount
-    if (guest.state === 'accepted') {
-      acc.guestAccepted += guest.amount!
-      acc.guestRejected += (guest.maxAmount) - (guest.amount!)
-    }
-    if (guest.state === 'pending') acc.guestPending += guest.maxAmount
-    if (guest.state === 'rejected') acc.guestRejected += guest.maxAmount
-    return acc
-  }, { guestInvited: 0, guestAccepted: 0, guestPending: 0, guestRejected: 0 }), [guests])
+  const { guestInvited, guestAccepted, guestPending, guestRejected } = useMemo(
+    () =>
+      (guests ?? []).reduce(
+        (acc, guest) => {
+          acc.guestInvited += guest.maxAmount
+          if (guest.state === 'accepted') {
+            acc.guestAccepted += guest.amount!
+            acc.guestRejected += guest.maxAmount - guest.amount!
+          }
+          if (guest.state === 'pending') acc.guestPending += guest.maxAmount
+          if (guest.state === 'rejected') acc.guestRejected += guest.maxAmount
+          return acc
+        },
+        { guestInvited: 0, guestAccepted: 0, guestPending: 0, guestRejected: 0 }
+      ),
+    [guests]
+  )
 
   const addGuest = (guest: GuestWithHost) => {
-    setGuests([...(guests ?? []), guest].sort((a, b) => a.name.localeCompare(b.name)))
+    setGuests(
+      [...(guests ?? []), guest].sort((a, b) => a.name.localeCompare(b.name))
+    )
   }
 
   const filteredGuests = useMemo(() => {
     return (guests ?? []).filter((guest) => {
       if (filters.name) {
-        if (!guest.name.toLowerCase().includes(filters.name) || !guest.slug.toLowerCase().includes(filters.name)) return false
+        if (
+          !guest.name.toLowerCase().includes(filters.name) ||
+          !guest.slug.toLowerCase().includes(filters.name)
+        )
+          return false
       }
       if (filters.state && guest.state !== filters.state) return false
       if (filters.host && guest.host.id !== filters.host) return false
@@ -147,7 +161,7 @@ export const useEvent = (serverEvent?: Event & { guests: GuestWithHost[] }) => {
       setEvent(serverEvent)
       setReady(true)
     }
-  }, [serverEvent])
+  }, [guests, serverEvent, setEvent, setGuests, setReady])
 
   return {
     isReady,

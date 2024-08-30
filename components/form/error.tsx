@@ -25,7 +25,7 @@ export const FormError = ({ errors }: Props) => {
 
     if (!type) return
     toast.error(logError(type, errors))
-  }, [error])
+  }, [error, errors])
 
   return null
 }

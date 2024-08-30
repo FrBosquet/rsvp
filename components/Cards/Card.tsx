@@ -8,13 +8,15 @@ interface Props {
 
 export const Card = ({ children, onClick, className }: Props) => {
   return (
-    <div role='button'
-      onClick={onClick}
+    <div
       className={twMerge(
         'bg-cover bg-[url(/paper/paper.webp)] bg-center absolute card flex flex-col items-center justify-center backface-hidden shadow-2xl text-inset',
         onClick ? 'cursor-pointer' : 'cursor-auto',
         className
-      )}>
+      )}
+      role="button"
+      onClick={onClick}
+    >
       {children}
     </div>
   )

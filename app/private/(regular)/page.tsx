@@ -1,9 +1,10 @@
+import { PlusCircle } from 'lucide-react'
+import Link from 'next/link'
+
 import { EventItem } from '@/components/event-list/event-item'
 import { Button } from '@/components/ui/button'
 import { prisma } from '@/lib/prisma'
 import { getUser } from '@/lib/server/user'
-import { PlusCircle } from 'lucide-react'
-import Link from 'next/link'
 
 export default async function PrivatePage() {
   const user = await getUser()
@@ -23,35 +24,33 @@ export default async function PrivatePage() {
     where: isAdmin
       ? {}
       : {
-        users: {
-          some: {
-            email: user.email
+          users: {
+            some: {
+              email: user.email
+            }
           }
         }
-      }
   })
 
-  const menu = <menu>
-    <Link href="/private/new"
-      className='contents'>
-      <Button size="sm"
-        variant="menu">
-        <PlusCircle />
-        Crear evento
-      </Button>
-    </Link>
-  </menu>
+  const menu = (
+    <menu>
+      <Link className="contents" href="/private/new">
+        <Button size="sm" variant="menu">
+          <PlusCircle />
+          Crear evento
+        </Button>
+      </Link>
+    </menu>
+  )
 
-  return <section className='flex flex-col gap-4'>
-    {
-      isAdmin && menu
-    }
-    <ul className='flex flex-col gap-2'>
-      {events.map(event => {
-        return <EventItem key={event.slug}
-          event={event}
-          currentUser={user} />
-      })}
-    </ul>
-  </section>
+  return (
+    <section className="flex flex-col gap-4">
+      {isAdmin && menu}
+      <ul className="flex flex-col gap-2">
+        {events.map((event) => {
+          return <EventItem key={event.slug} currentUser={user} event={event} />
+        })}
+      </ul>
+    </section>
+  )
 }

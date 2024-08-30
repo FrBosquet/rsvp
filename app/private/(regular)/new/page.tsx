@@ -1,11 +1,12 @@
+import { currentUser } from '@clerk/nextjs/server'
+import { redirect } from 'next/navigation'
+
 import { Fieldset } from '@/components/Form'
 import { FormError } from '@/components/form/error'
 import { Input } from '@/components/form/input'
 import { InputList } from '@/components/form/input-list'
 import { SubmitButton } from '@/components/SubmitButton'
 import { prisma } from '@/lib/prisma'
-import { currentUser } from '@clerk/nextjs/server'
-import { redirect } from 'next/navigation'
 
 export default function NewEventPage() {
   const action = async (formData: FormData) => {
@@ -44,11 +45,12 @@ export default function NewEventPage() {
         }
       })
     } catch (e) {
-      console.log('>> e:', e)
       let error = 'generic'
       const message = (e as { message: string }).message
 
-      if (message.includes('Unique constraint failed on the fields: (`slug`)')) {
+      if (
+        message.includes('Unique constraint failed on the fields: (`slug`)')
+      ) {
         error = 'used_slug'
       }
 
@@ -58,26 +60,27 @@ export default function NewEventPage() {
     redirect('/private')
   }
 
-  return <section className='flex flex-col gap-4'>
-    <FormError errors={{
-      generic: 'Ocurrió un error inesperado al crear el evento',
-      used_slug: 'El slug ya está en uso. Utiliza un slug diferente'
-    }} />
-    <form className='flex flex-col gap-2'
-      action={action}>
-      <Fieldset>
-        <Input label="Nombre"
-          required
-          name='name' />
-        <Input label="Slug"
-          name='slug'
-          required />
-        <InputList label="Participantes (email)"
-          name='user'
-          type="email"
-          required />
-      </Fieldset>
-      <SubmitButton className='mt-4'>Crear</SubmitButton>
-    </form>
-  </section>
+  return (
+    <section className="flex flex-col gap-4">
+      <FormError
+        errors={{
+          generic: 'Ocurrió un error inesperado al crear el evento',
+          used_slug: 'El slug ya está en uso. Utiliza un slug diferente'
+        }}
+      />
+      <form action={action} className="flex flex-col gap-2">
+        <Fieldset>
+          <Input required label="Nombre" name="name" />
+          <Input required label="Slug" name="slug" />
+          <InputList
+            required
+            label="Participantes (email)"
+            name="user"
+            type="email"
+          />
+        </Fieldset>
+        <SubmitButton className="mt-4">Crear</SubmitButton>
+      </form>
+    </section>
+  )
 }

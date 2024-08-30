@@ -1,15 +1,18 @@
-/* eslint-disable @typescript-eslint/naming-convention */
-import { prisma } from '@/lib/prisma'
 import { type WebhookEvent } from '@clerk/nextjs/server'
 import { headers } from 'next/headers'
 import { Webhook } from 'svix'
+
+import { prisma } from '@/lib/prisma'
+import { logger } from '@/lib/server/logger'
 
 export async function POST(req: Request) {
   // You can find this in the Clerk Dashboard -> Webhooks -> choose the webhook
   const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET
 
   if (!WEBHOOK_SECRET) {
-    throw new Error('Please add WEBHOOK_SECRET from Clerk Dashboard to .env or .env.local')
+    throw new Error(
+      'Please add WEBHOOK_SECRET from Clerk Dashboard to .env or .env.local'
+    )
   }
 
   // Get the headers
@@ -42,7 +45,7 @@ export async function POST(req: Request) {
       'svix-signature': svix_signature
     }) as WebhookEvent
   } catch (err) {
-    console.error('Error verifying webhook:', err)
+    logger.error('Error verifying webhook:', err)
     return new Response('Error occured', {
       status: 400
     })
@@ -54,12 +57,7 @@ export async function POST(req: Request) {
 
   switch (eventType) {
     case 'user.created': {
-      const {
-        email_addresses,
-        first_name,
-        last_name,
-        image_url
-      } = evt.data
+      const { email_addresses, first_name, last_name, image_url } = evt.data
 
       await prisma.user.create({
         data: {

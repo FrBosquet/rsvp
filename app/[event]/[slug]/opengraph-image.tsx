@@ -1,7 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
+import { ImageResponse } from 'next/og'
+
 import { prisma } from '@/lib/prisma'
 import { SETTING } from '@/types'
-import { ImageResponse } from 'next/og'
 
 interface Route {
   params: {
@@ -27,15 +28,18 @@ export default async function Image({ params }: Route) {
 
   if (setting) {
     return new ImageResponse(
-      <div style={{
-        display: 'flex',
-        backgroundImage: `url(${setting.value})`,
-        width: size.width,
-        height: size.height
-      }}>
-        <img src={setting.value}
-          alt={alt}
-        />
-      </div>)
+      (
+        <div
+          style={{
+            display: 'flex',
+            backgroundImage: `url(${setting.value})`,
+            width: size.width,
+            height: size.height
+          }}
+        >
+          <img alt={alt} src={setting.value} />
+        </div>
+      )
+    )
   }
 }

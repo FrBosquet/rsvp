@@ -3,6 +3,7 @@
 
 import { useEvent } from '@/components/hooks/use-event'
 import { Spinner } from '@/components/spinner'
+
 import { AddGuestModal } from './add-guest-modal'
 import { GuestRow } from './guest-row'
 import { GuestStateFilter } from './guest-state-filter'
@@ -11,36 +12,51 @@ import { SearchInput } from './search-input'
 import { UserSelector } from './user-selector'
 
 export const GuestManager = () => {
-  const { isReady, addGuest, updateGuest, deleteGuest, guestInvited, invitationAmount, filteredGuests } = useEvent()
+  const {
+    isReady,
+    addGuest,
+    updateGuest,
+    deleteGuest,
+    guestInvited,
+    invitationAmount,
+    filteredGuests
+  } = useEvent()
 
   if (!isReady) return <Spinner /> // TODO: Add an skeleton
 
   return (
     <>
-      <InvitationResume guestInvited={guestInvited}
+      <InvitationResume
+        className="text-zinc-200 md:hidden"
+        guestInvited={guestInvited}
         invitationAmount={invitationAmount}
-        className='text-zinc-200 md:hidden' />
+      />
       <article className="flex w-full items-center gap-2 rounded-2xl bg-slate-700 p-2 text-zinc-200 shadow-md">
         <UserSelector users={[]} />
         <SearchInput />
-        <InvitationResume guestInvited={guestInvited}
+        <InvitationResume
+          className="hidden flex-1 md:block"
+          guestInvited={guestInvited}
           invitationAmount={invitationAmount}
-          className='hidden flex-1 md:block' />
-        <AddGuestModal className='hidden md:block'
-          onNewGuest={addGuest} />
-        <div className='mx-3 hidden h-6 border-l-2 md:block' />
-        <GuestStateFilter className='hidden md:flex' />
+        />
+        <AddGuestModal className="hidden md:block" onNewGuest={addGuest} />
+        <div className="mx-3 hidden h-6 border-l-2 md:block" />
+        <GuestStateFilter className="hidden md:flex" />
       </article>
 
       <article className="flex w-full flex-1 flex-col gap-4 overflow-y-auto rounded-2xl bg-gradient-to-br from-olive-900 to-olive-950 p-4 text-slate-200">
         {filteredGuests.map((guest) => {
-          return <GuestRow onDeleteGuest={deleteGuest}
-            onUpdateGuest={updateGuest}
-            key={guest.slug}
-            guest={guest} />
+          return (
+            <GuestRow
+              key={guest.slug}
+              guest={guest}
+              onDeleteGuest={deleteGuest}
+              onUpdateGuest={updateGuest}
+            />
+          )
         })}
       </article>
-      <menu className='flex w-full items-center justify-between gap-2 rounded-xl bg-slate-900 p-3 text-zinc-200 md:hidden'>
+      <menu className="flex w-full items-center justify-between gap-2 rounded-xl bg-slate-900 p-3 text-zinc-200 md:hidden">
         <GuestStateFilter />
         <AddGuestModal onNewGuest={addGuest} />
       </menu>

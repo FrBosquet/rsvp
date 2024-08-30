@@ -1,7 +1,8 @@
 'use client'
 
-import { TABS } from '@/types'
 import { Bus, GiftIcon, Hotel, Phone, User } from 'lucide-react'
+
+import { TABS } from '@/types'
 
 export const sections = [
   { Icon: User, label: 'Asistencia', tab: TABS.assistance },

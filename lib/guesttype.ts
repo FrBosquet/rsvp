@@ -1,7 +1,12 @@
 import { type Guest as PrismaGuest } from '@prisma/client'
+
 import { GuestType } from '../types'
 
-export const getGuestType = ({ isFamily, name, maxAmount }: PrismaGuest): GuestType => {
+export const getGuestType = ({
+  isFamily,
+  name,
+  maxAmount
+}: PrismaGuest): GuestType => {
   if (isFamily) return GuestType.family
   if (!isFamily && name.length === 1) return GuestType.single
   if (maxAmount === 1) return GuestType.single
@@ -35,7 +40,8 @@ export const getTypes = (
   let guestType: GuestType = GuestType.couple
 
   if (guest.isFamily) guestType = GuestType.family
-  if (!guest.isFamily && guest.name.split(',').length === 1) guestType = GuestType.single
+  if (!guest.isFamily && guest.name.split(',').length === 1)
+    guestType = GuestType.single
   if (guest.maxAmount === 1) guestType = GuestType.single
 
   const isSingle = guestType === GuestType.single

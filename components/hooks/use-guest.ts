@@ -1,8 +1,9 @@
-import { getTypes } from '@/lib/guesttype'
-import { NOTES, TABS, type GuestWithNotes } from '@/types'
 import { type Guest } from '@prisma/client'
 import { useEffect } from 'react'
 import { create } from 'zustand'
+
+import { getTypes } from '@/lib/guesttype'
+import { type GuestWithNotes, NOTES, TABS } from '@/types'
 
 interface Store {
   guest: GuestWithNotes | null
@@ -55,26 +56,34 @@ export const useGuest = (serverGuest?: GuestWithNotes) => {
   const updateGuest = useStore((state) => state.setGuest)
   const isFlipped = useStore((state) => state.isFlipped)
   const setFlipped = useStore((state) => state.setFlipped)
-  const isAcceptingCardVisible = useStore((state) => state.isAcceptingCardVisible)
+  const isAcceptingCardVisible = useStore(
+    (state) => state.isAcceptingCardVisible
+  )
   const isAcceptedCardVisible = useStore((state) => state.isAcceptedCardVisible)
-  const setAcceptedCardVisible = useStore((state) => state.setAcceptedCardVisible)
-  const setAcceptingCardVisible = useStore((state) => state.setAcceptingCardVisible)
+  const setAcceptedCardVisible = useStore(
+    (state) => state.setAcceptedCardVisible
+  )
+  const setAcceptingCardVisible = useStore(
+    (state) => state.setAcceptingCardVisible
+  )
   const currentTab = useStore((state) => state.currentTab)
   const setCurrentTab = useStore((state) => state.setCurrentTab)
 
-  const {
-    isSingle,
-    isFamily,
-    isCouple
-  } = guest ? getTypes(guest as Guest) : { isSingle: false, isFamily: false, isCouple: false }
+  const { isSingle, isFamily, isCouple } = guest
+    ? getTypes(guest as Guest)
+    : { isSingle: false, isFamily: false, isCouple: false }
 
-  const usesBus = guest?.notes?.some((note) => note.type === NOTES.bus && note.content === 'true')
-  const allergies = guest?.notes?.find((note) => note.type === NOTES.allergies)?.content
+  const usesBus = guest?.notes?.some(
+    (note) => note.type === NOTES.bus && note.content === 'true'
+  )
+  const allergies = guest?.notes?.find(
+    (note) => note.type === NOTES.allergies
+  )?.content
   const hasAllergies = Boolean(allergies)
 
   useEffect(() => {
     if (!guest && serverGuest) updateGuest(serverGuest)
-  }, [serverGuest])
+  }, [guest, serverGuest, updateGuest])
 
   const flip = () => {
     setFlipped(!isFlipped)

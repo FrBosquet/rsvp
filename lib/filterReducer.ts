@@ -1,3 +1,5 @@
+import { logger } from './server/logger'
+
 export interface FilterState {
   host: string
   name: string
@@ -16,7 +18,7 @@ export enum FilterActions {
   setFilter,
   resetFilter,
   toggleFilter,
-  setFilters,
+  setFilters
 }
 
 interface Action {
@@ -62,7 +64,7 @@ export const reducer = (state: FilterState, action: Action): FilterState => {
   try {
     localStorage.setItem('adminFilter', JSON.stringify(derivedState))
   } catch {
-    console.error('Failed to serialize filter state')
+    logger.error('Failed to serialize filter state')
   }
 
   return derivedState

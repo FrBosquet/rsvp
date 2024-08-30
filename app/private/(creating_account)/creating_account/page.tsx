@@ -12,13 +12,16 @@ export default function CreatingAccountPage() {
       router.push('/private')
     }, 500)
 
-    return () => { clearTimeout(timer) }
-  }, [])
+    return () => {
+      clearTimeout(timer)
+    }
+  }, [router])
 
-  return <section className="flex h-screen flex-col items-center justify-center">
-    <Loader2 size={60}
-      className='animate-spin' />
-    <h1 className="text-xl">Estamos creando tu cuenta...</h1>
-    <p>Podría tardar unos minutos</p>
-  </section>
+  return (
+    <section className="flex h-screen flex-col items-center justify-center">
+      <Loader2 className="animate-spin" size={60} />
+      <h1 className="text-xl">Estamos creando tu cuenta...</h1>
+      <p>Podría tardar unos minutos</p>
+    </section>
+  )
 }

@@ -1,16 +1,22 @@
 'use client'
 
-import { toggleContacted } from '@/app/actions'
-import { CopyText } from '@/components/copy'
-import { useEvent } from '@/components/hooks/use-event'
-import { Spinner } from '@/components/spinner'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
-import { STATE, type GuestWithHost } from '@/types'
-import { HelpCircle, ThumbsDown, ThumbsUp, type LucideIcon } from 'lucide-react'
+import { HelpCircle, type LucideIcon, ThumbsDown, ThumbsUp } from 'lucide-react'
 import { useParams } from 'next/navigation'
 import { useState } from 'react'
 import { toast } from 'sonner'
 import { twMerge } from 'tailwind-merge'
+
+import { toggleContacted } from '@/app/actions'
+import { CopyText } from '@/components/copy'
+import { useEvent } from '@/components/hooks/use-event'
+import { Spinner } from '@/components/spinner'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger
+} from '@/components/ui/tooltip'
+import { type GuestWithHost, STATE } from '@/types'
+
 import { EditGuestModal } from './edit-guest-modal'
 
 interface Props {
@@ -29,24 +35,28 @@ const StateWidget = ({ state }: { state: string }) => {
   if (isAccepted) Icon = ThumbsUp
   if (isRejected) Icon = ThumbsDown
 
-  return <Tooltip>
-    <TooltipTrigger asChild>
-      <Icon size={16}
-        className={twMerge(
-          'text-slate-900',
-          isAccepted && 'text-green-500',
-          isRejected && 'text-red-500',
-          isPending && 'text-yellow-500'
-        )} />
-    </TooltipTrigger>
-    <TooltipContent>
-      <p className="text-sm">
-        {isAccepted ? 'El invitado ha aceptado la invitación' : null}
-        {isRejected ? 'El invitado ha rechazado la invitación' : null}
-        {isPending ? 'El invitado aun no ha contestado la invitación' : null}
-      </p>
-    </TooltipContent>
-  </Tooltip>
+  return (
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <Icon
+          className={twMerge(
+            'text-slate-900',
+            isAccepted && 'text-green-500',
+            isRejected && 'text-red-500',
+            isPending && 'text-yellow-500'
+          )}
+          size={16}
+        />
+      </TooltipTrigger>
+      <TooltipContent>
+        <p className="text-sm">
+          {isAccepted ? 'El invitado ha aceptado la invitación' : null}
+          {isRejected ? 'El invitado ha rechazado la invitación' : null}
+          {isPending ? 'El invitado aun no ha contestado la invitación' : null}
+        </p>
+      </TooltipContent>
+    </Tooltip>
+  )
 }
 
 const ContactedWidget = ({ guest }: { guest: GuestWithHost }) => {
@@ -67,20 +77,28 @@ const ContactedWidget = ({ guest }: { guest: GuestWithHost }) => {
 
       updateGuest(updatedGuest)
     } catch (err) {
-      toast.error('Error desconocido! Por favor, contacta con el administrador si el error persiste')
+      toast.error(
+        'Error desconocido! Por favor, contacta con el administrador si el error persiste'
+      )
     } finally {
       setLoading(false)
     }
   }
 
-  return <div className='flex aspect-square w-4 items-center justify-center'>
-    {loading
-      ? <Spinner size={10} />
-      : <input type='checkbox'
-        onChange={handleCheck}
-        className='accent-olive-400'
-        checked={guest.contacted} />}
-  </div>
+  return (
+    <div className="flex aspect-square w-4 items-center justify-center">
+      {loading ? (
+        <Spinner size={10} />
+      ) : (
+        <input
+          checked={guest.contacted}
+          className="accent-olive-400"
+          type="checkbox"
+          onChange={handleCheck}
+        />
+      )}
+    </div>
+  )
 }
 
 export const GuestRow = ({ guest, onUpdateGuest, onDeleteGuest }: Props) => {
@@ -88,31 +106,40 @@ export const GuestRow = ({ guest, onUpdateGuest, onDeleteGuest }: Props) => {
   const params = useParams<{ slug: string }>()
   const url = `${location.protocol}//${location.host}/${params?.slug}/${guest.slug}`
 
-  return <div className='flex w-full items-center gap-4'>
-    <div className="flex aspect-square w-6 items-center justify-center gap-2 rounded-full bg-orange-700 text-xs md:w-8 md:text-base">
-      {host.name.split(' ').map((name) => name[0])}
+  return (
+    <div className="flex w-full items-center gap-4">
+      <div className="flex aspect-square w-6 items-center justify-center gap-2 rounded-full bg-orange-700 text-xs md:w-8 md:text-base">
+        {host.name.split(' ').map((name) => name[0])}
+      </div>
+      <div className="flex">
+        <StateWidget state={guest.state} />
+      </div>
+      <div className="flex flex-1 flex-col">
+        <EditGuestModal
+          guest={guest}
+          onDeleteGuest={onDeleteGuest}
+          onEditGuest={onUpdateGuest}
+        >
+          <p className="text-left text-base font-semibold transition hover:text-pink-400">
+            {guest.name}
+          </p>
+        </EditGuestModal>
+        <a
+          className="font-mono text-sm text-yellow-600"
+          href={url}
+          rel="noreferrer"
+          target="_blank"
+        >
+          /{guest.slug}
+        </a>
+      </div>
+      <div className="flex items-center gap-4 text-sm">
+        <p className="">
+          {guest.state === 'pending' ? '...' : guest.amount}/{guest.maxAmount}
+        </p>
+        <CopyText onlyIcon iconSize={16} value={url} />
+        <ContactedWidget guest={guest} />
+      </div>
     </div>
-    <div className="flex">
-      <StateWidget state={guest.state} />
-    </div>
-    <div className="flex flex-1 flex-col">
-      <EditGuestModal onDeleteGuest={onDeleteGuest}
-        guest={guest}
-        onEditGuest={onUpdateGuest}>
-        <p className="text-left text-base font-semibold transition hover:text-pink-400">{guest.name}</p>
-      </EditGuestModal>
-      <a href={url}
-        target='_blank'
-        className="font-mono text-sm text-yellow-600"
-        rel="noreferrer">/{guest.slug}</a>
-    </div>
-    <div className="flex items-center gap-4 text-sm">
-      <p className="">{guest.state === 'pending' ? '...' : guest.amount}/{guest.maxAmount}</p>
-      <CopyText value={url}
-        iconSize={16}
-        onlyIcon />
-      <ContactedWidget guest={guest} />
-    </div>
-
-  </div>
+  )
 }
