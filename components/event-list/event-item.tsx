@@ -16,14 +16,20 @@ const UserAvatars = ({ event, currentUser }: Props) => {
 
   return (
     <ul className="flex">
-      {users.map((user) => (
-        <AvatarWithProfile
-          key={user.id}
-          className="-ml-2"
-          itsYou={currentUser.id === user.userId}
-          userOnEvent={user}
-        />
-      ))}
+      {users
+        .filter((user) => {
+          if (currentUser.role === 'admin') return true
+
+          return user.role === 'host'
+        })
+        .map((user) => (
+          <AvatarWithProfile
+            key={user.id}
+            className="-ml-2"
+            itsYou={currentUser.id === user.userId}
+            userOnEvent={user}
+          />
+        ))}
     </ul>
   )
 }
