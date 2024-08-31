@@ -3,11 +3,29 @@ import Link from 'next/link'
 
 import { type EventWithUsers } from '@/types'
 
+import { AvatarWithProfile } from '../avatar/profile'
 import { AcceptHostButton } from './accept-host-button'
 
 interface Props {
   event: EventWithUsers
   currentUser: User
+}
+
+const UserAvatars = ({ event, currentUser }: Props) => {
+  const { users } = event
+
+  return (
+    <ul className="flex">
+      {users.map((user) => (
+        <AvatarWithProfile
+          key={user.id}
+          className="-ml-2"
+          itsYou={currentUser.id === user.userId}
+          userOnEvent={user}
+        />
+      ))}
+    </ul>
+  )
 }
 
 export const EventItem = ({ event, currentUser }: Props) => {
@@ -23,7 +41,11 @@ export const EventItem = ({ event, currentUser }: Props) => {
       <Link className="block flex-1" href={`private/${event.slug}`}>
         {event.name}
       </Link>
-      <p>{isAccepted ? 'si' : <AcceptHostButton event={event} />}</p>
+      {isAccepted ? (
+        <UserAvatars currentUser={currentUser} event={event} />
+      ) : (
+        <AcceptHostButton event={event} />
+      )}
     </li>
   )
 }

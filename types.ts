@@ -1,9 +1,15 @@
-import { type Note, type Guest as PrismaGuest, type User, type UserOnEvent, type Event } from '@prisma/client'
+import {
+  type Event,
+  type Guest as PrismaGuest,
+  type Note,
+  type User,
+  type UserOnEvent
+} from '@prisma/client'
 
 export enum States {
   pending = 'pending',
   accepted = 'accepted',
-  declined = 'declined',
+  declined = 'declined'
 }
 
 export interface Guest {
@@ -23,7 +29,7 @@ export interface Guest {
 export enum GuestType {
   single,
   couple,
-  family,
+  family
 }
 
 export type GuestWithHost = GuestWithNotes & {
@@ -51,19 +57,23 @@ export enum NOTES {
 }
 
 export type GuestWithNotes = PrismaGuest & { notes: Note[] }
-export type GuestWithEvent = GuestWithNotes & { event: { settings: Array<{ type: SETTING, value: string }> } }
+export type GuestWithEvent = GuestWithNotes & {
+  event: { settings: Array<{ type: SETTING; value: string }> }
+}
 
 export enum SETTING {
   ogTitle = 'og:title',
   ogDescription = 'og:description',
   ogDescriptionSingle = 'og:description_single',
-  ogImage = 'og:image',
+  ogImage = 'og:image'
 }
 
 export type SettingMap = Partial<Record<SETTING, string>>
 
+export type UserOnEventWithUser = UserOnEvent & {
+  user: User | null
+}
+
 export type EventWithUsers = Event & {
-  users: Array<UserOnEvent & {
-    user: User | null
-  }>
+  users: Array<UserOnEventWithUser>
 }
