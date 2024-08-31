@@ -1,6 +1,7 @@
 import { type User } from '@prisma/client'
 import Link from 'next/link'
 
+import { cn } from '@/lib/utils'
 import { type EventWithUsers } from '@/types'
 
 import { AvatarWithProfile } from '../avatar/profile'
@@ -42,11 +43,18 @@ export const EventItem = ({ event, currentUser }: Props) => {
   return (
     <li
       key={event.slug}
-      className="flex w-full gap-2 border p-2 hover:bg-slate-200"
+      className={cn(
+        'flex w-full gap-2 border p-2',
+        isAccepted && 'hover:bg-slate-200'
+      )}
     >
-      <Link className="block flex-1" href={`private/${event.slug}`}>
-        {event.name}
-      </Link>
+      {isAccepted ? (
+        <Link className="block flex-1" href={`private/${event.slug}`}>
+          {event.name}
+        </Link>
+      ) : (
+        <p className="block flex-1">{event.name}</p>
+      )}
       {isAccepted ? (
         <UserAvatars currentUser={currentUser} event={event} />
       ) : (
