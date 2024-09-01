@@ -1,4 +1,3 @@
-/* eslint-disable tailwindcss/no-arbitrary-value */
 'use client'
 
 import { useMemo } from 'react'
