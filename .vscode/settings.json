@@ -22,7 +22,8 @@
     }
   ],
   "typescript.preferences.autoImportFileExcludePatterns": [
-    "@radix-ui/**/*"
+    "@radix-ui/**/*",
+    "@clerk/nextjs/dist/types/*"
   ],
   "typescript.tsdk": "node_modules/typescript/lib"
 }

@@ -1,8 +1,9 @@
 'use server'
 
-import { prisma } from '@/lib/prisma'
 import { currentUser } from '@clerk/nextjs/server'
 import { redirect } from 'next/navigation'
+
+import { prismaClient } from '@/lib/prisma'
 
 export const acceptHost = async (formData: FormData) => {
   const user = await currentUser()
@@ -10,7 +11,7 @@ export const acceptHost = async (formData: FormData) => {
 
   const slug = formData.get('slug')
 
-  const userOnEvent = await prisma.userOnEvent.findFirst({
+  const userOnEvent = await prismaClient.userOnEvent.findFirst({
     where: {
       email: user.emailAddresses[0].emailAddress,
       eventSlug: slug as string
@@ -20,7 +21,7 @@ export const acceptHost = async (formData: FormData) => {
   if (!userOnEvent) throw new Error('UserOnEvent not found')
 
   // Upsert userOnEvent to attach user id
-  await prisma.userOnEvent.update({
+  await prismaClient.userOnEvent.update({
     where: {
       id: userOnEvent.id
     },

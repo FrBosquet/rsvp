@@ -6,6 +6,7 @@ type JSONValue =
   | JSONArray
   | JSONObject
   | Date
+  | undefined
 
 // eslint-disable-next-line prettier/prettier
 interface JSONArray extends Array<JSONValue> { }
@@ -15,9 +16,13 @@ interface JSONObject {
 }
 
 type Props = {
-  object: JSONObject
+  object: JSONObject | JSONObject[] | undefined
 }
 
 export const JsonRenderer = ({ object }: Props) => {
+  if (!object) {
+    return 'JSON object is empty'
+  }
+
   return <pre>{JSON.stringify(object, null, 2)}</pre>
 }

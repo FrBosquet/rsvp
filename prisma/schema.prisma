@@ -9,14 +9,15 @@ datasource db {
 }
 
 model User {
-  id        String        @id @unique @default(cuid())
-  name      String
-  email     String        @unique
-  image     String
-  createdAt DateTime      @default(now())
-  role      String        @default("user")
-  events    UserOnEvent[]
-  guests    Guest[]
+  id          String        @id @unique @default(cuid())
+  name        String
+  email       String        @unique
+  image       String
+  createdAt   DateTime      @default(now())
+  role        String        @default("user")
+  events      UserOnEvent[]
+  guests      Guest[]
+  preferences Preference[]
 }
 
 model Event {
@@ -70,6 +71,7 @@ model Note {
   @@id([guestSlug, guestEventSlug, type])
 }
 
+// Project settings
 model Setting {
   slug      String
   type      String
@@ -79,4 +81,16 @@ model Setting {
   updatedAt DateTime @updatedAt
 
   @@id([slug, type])
+}
+
+// User preferences
+model Preference {
+  userId    String
+  type      String
+  value     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  User      User     @relation(fields: [userId], references: [id])
+
+  @@id([userId, type])
 }

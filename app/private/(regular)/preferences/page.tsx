@@ -1,27 +1,24 @@
-import { Languages } from 'lucide-react'
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient
+} from '@tanstack/react-query'
 
-import { Select } from '@/components/form/select'
+import { getUserPrefs } from '@/actions/prefs'
 
-export default async function PrivatePage() {
+import { PreferencesContent } from './content'
+
+export default async function PreferencesPage() {
+  const queryClient = new QueryClient()
+
+  await queryClient.prefetchQuery({
+    queryKey: ['user-prefs'],
+    queryFn: getUserPrefs
+  })
+
   return (
-    <section className="flex flex-col gap-4">
-      <h2 className="flex items-center gap-2 border-b-2 font-sans text-xl uppercase">
-        <Languages /> Idioma
-      </h2>
-
-      <Select
-        name="language"
-        values={[
-          {
-            value: 'en',
-            label: 'English'
-          },
-          {
-            value: 'es',
-            label: 'Español'
-          }
-        ]}
-      />
-    </section>
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <PreferencesContent />
+    </HydrationBoundary>
   )
 }
