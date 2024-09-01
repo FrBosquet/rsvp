@@ -20,5 +20,9 @@
       "scheme": "untitled",
       "pattern": "Untitled-1"
     }
-  ]
+  ],
+  "typescript.preferences.autoImportFileExcludePatterns": [
+    "@radix-ui/**/*"
+  ],
+  "typescript.tsdk": "node_modules/typescript/lib"
 }
