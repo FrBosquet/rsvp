@@ -7,6 +7,20 @@ import { Button } from '@/components/ui/button'
 import { prisma } from '@/lib/prisma'
 import { getUserData } from '@/lib/server/user'
 
+const getWhereQuery = (isAdmin: boolean, email: string) => {
+  if (isAdmin) {
+    return {}
+  }
+
+  return {
+    users: {
+      some: {
+        email
+      }
+    }
+  }
+}
+
 export default async function PrivatePage() {
   const authUser = await currentUser()
   if (!authUser) return null
@@ -24,15 +38,7 @@ export default async function PrivatePage() {
         }
       }
     },
-    where: isAdmin
-      ? {}
-      : {
-        users: {
-          some: {
-            email: user.email
-          }
-        }
-      }
+    where: getWhereQuery(isAdmin, user.email)
   })
 
   const menu = (

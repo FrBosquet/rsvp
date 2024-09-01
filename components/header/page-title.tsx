@@ -1,5 +1,7 @@
 'use client'
 
+import { Home } from 'lucide-react'
+import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 const useTitle = () => {
@@ -20,5 +22,12 @@ const useTitle = () => {
 export const PageTitle = () => {
   const title = useTitle()
 
-  return <h1 className="text-lg font-bold uppercase">{title}</h1>
+  return (
+    <h1 className="flex items-center gap-2 text-lg font-bold uppercase">
+      <Link className="grow-0" href="/private">
+        <Home />
+      </Link>
+      {title}
+    </h1>
+  )
 }
