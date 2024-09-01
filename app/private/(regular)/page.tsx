@@ -27,12 +27,12 @@ export default async function PrivatePage() {
     where: isAdmin
       ? {}
       : {
-          users: {
-            some: {
-              email: user.email
-            }
+        users: {
+          some: {
+            email: user.email
           }
         }
+      }
   })
 
   const menu = (

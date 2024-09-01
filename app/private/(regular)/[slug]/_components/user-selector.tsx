@@ -1,4 +1,3 @@
-/* eslint-disable tailwindcss/no-arbitrary-value */
 'use client'
 
 import { type User } from '@prisma/client'
@@ -13,7 +12,6 @@ import {
 } from '@/components/ui/select'
 
 export const UserSelector = ({
-  users,
   className
 }: {
   users: User[]
