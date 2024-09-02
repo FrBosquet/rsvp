@@ -24,3 +24,31 @@ export const getUserPrefs = async () => {
 
   return prefs
 }
+
+export const setUserPrefs = async (formData: FormData) => {
+  const user = await currentUser()
+
+  if (!user) {
+    return {}
+  }
+
+  const dataEntries = Array.from(formData.entries())
+
+  const data = dataEntries.map(([type, value]) => {
+    return {
+      userId: user.id,
+      type,
+      value: value as string
+    }
+  })
+
+  await prismaClient.preference.deleteMany({
+    where: {
+      userId: user.id
+    }
+  })
+
+  await prismaClient.preference.createMany({
+    data
+  })
+}

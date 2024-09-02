@@ -16,9 +16,16 @@ type Props = {
   values: { value: string; label: string }[]
   defaultValue?: string
   label?: string
+  isDisabled?: boolean
 }
 
-export const Select = ({ values, className, defaultValue, name }: Props) => {
+export const Select = ({
+  values,
+  className,
+  defaultValue,
+  name,
+  isDisabled
+}: Props) => {
   const [value, setValue] = useState<string | undefined>(defaultValue)
 
   return (
@@ -26,12 +33,13 @@ export const Select = ({ values, className, defaultValue, name }: Props) => {
       <input name={name} type="hidden" value={value} />
       <SelectRoot
         defaultValue={defaultValue}
+        disabled={isDisabled}
         onValueChange={(newValue) => {
           setValue(newValue)
         }}
       >
         <SelectTrigger className={className}>
-          <SelectValue placeholder="Select an option" />
+          <SelectValue placeholder="Elige una opción" />
         </SelectTrigger>
         <SelectContent>
           {values.map((value) => {
