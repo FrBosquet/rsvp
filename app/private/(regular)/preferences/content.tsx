@@ -6,9 +6,11 @@ import { toast } from 'sonner'
 
 import { getUserPrefs, setUserPrefs } from '@/actions/prefs'
 import { Select } from '@/components/form/select'
+import { useIntl } from '@/components/providers/translator'
 import { Button } from '@/components/ui/button'
 
 export const PreferencesContent = () => {
+  const { setLang } = useIntl()
   const queryClient = useQueryClient()
 
   const { data } = useQuery({
@@ -18,8 +20,13 @@ export const PreferencesContent = () => {
 
   const { isPending, mutate } = useMutation({
     mutationFn: (data: FormData) => setUserPrefs(data),
-    onSuccess: () => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['user-prefs'] })
+
+      if (data?.language) {
+        setLang(data.language)
+      }
+
       toast.success('Preferencias guardadas')
     }
   })

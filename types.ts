@@ -6,6 +6,8 @@ import {
   type UserOnEvent
 } from '@prisma/client'
 
+import { LangKey } from './lib/translator'
+
 export enum States {
   pending = 'pending',
   accepted = 'accepted',
@@ -76,4 +78,8 @@ export type UserOnEventWithUser = UserOnEvent & {
 
 export type EventWithUsers = Event & {
   users: Array<UserOnEventWithUser>
+}
+
+export type UserPrefs = {
+  language?: LangKey
 }

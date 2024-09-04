@@ -1,14 +1,21 @@
+import { UserPrefs } from '@/types'
+
 import { TooltipProvider } from '../ui/tooltip'
 import { QueryProvider } from './query'
+import { TranslatorProvider } from './translator'
 
 type Props = {
   children: React.ReactNode
+  prefs: UserPrefs
 }
 
-export const RootProvider = ({ children }: Props) => {
+// TODO: Move here the clerk provider
+export const RootProvider = ({ children, prefs }: Props) => {
   return (
-    <QueryProvider>
-      <TooltipProvider>{children}</TooltipProvider>
-    </QueryProvider>
+    <TranslatorProvider defaultLanguage={prefs.language}>
+      <QueryProvider>
+        <TooltipProvider>{children}</TooltipProvider>
+      </QueryProvider>
+    </TranslatorProvider>
   )
 }

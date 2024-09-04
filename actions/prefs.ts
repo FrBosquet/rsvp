@@ -3,6 +3,11 @@
 import { currentUser } from '@clerk/nextjs/server'
 
 import { prismaClient } from '@/lib/prisma'
+import { LangKey } from '@/lib/translator'
+
+type UserPrefs = {
+  language?: LangKey
+}
 
 export const getUserPrefs = async () => {
   const user = await currentUser()
@@ -22,7 +27,7 @@ export const getUserPrefs = async () => {
     return acc
   }, {})
 
-  return prefs
+  return prefs as UserPrefs
 }
 
 export const setUserPrefs = async (formData: FormData) => {
@@ -51,4 +56,17 @@ export const setUserPrefs = async (formData: FormData) => {
   await prismaClient.preference.createMany({
     data
   })
+
+  const rawPref = await prismaClient.preference.findMany({
+    where: {
+      userId: user.id
+    }
+  })
+
+  const prefs = rawPref.reduce<Record<string, string>>((acc, pref) => {
+    acc[pref.type] = pref.value
+    return acc
+  }, {})
+
+  return prefs as UserPrefs
 }
