@@ -2,7 +2,12 @@
 
 import { createContext, useContext, useMemo, useState } from 'react'
 
-import { LangKey, TranslationKey, Translator } from '@/lib/translator'
+import {
+  LangKey,
+  TranslationKey,
+  TranslationValue,
+  Translator
+} from '@/lib/translator'
 
 type Props = {
   children: React.ReactNode
@@ -12,7 +17,10 @@ type Props = {
 const TranslatorContext = createContext<{
   lang: LangKey
   setLang: (lang: LangKey) => void
-  intl: (key: TranslationKey) => string
+  intl: (
+    key: TranslationKey,
+    values?: Record<string, TranslationValue>
+  ) => string
 }>({
   lang: 'en',
   setLang: () => null,
@@ -40,8 +48,11 @@ export const TranslatorProvider = ({
     setLang(lang)
   }
 
-  const intl = (key: TranslationKey) => {
-    return translator.getTranslation(key)
+  const intl = (
+    key: TranslationKey,
+    values?: Record<string, TranslationValue>
+  ) => {
+    return translator.intl(key, values)
   }
 
   return (

@@ -10,7 +10,7 @@ import { useIntl } from '@/components/providers/translator'
 import { Button } from '@/components/ui/button'
 
 export const PreferencesContent = () => {
-  const { setLang } = useIntl()
+  const { setLang, intl } = useIntl()
   const queryClient = useQueryClient()
 
   const { data } = useQuery({
@@ -43,7 +43,7 @@ export const PreferencesContent = () => {
     <section className="flex flex-col gap-4">
       <form className="contents" onSubmit={handleSubmit}>
         <h2 className="flex items-center gap-2 border-b-2 font-sans text-xl uppercase">
-          <Languages /> Idioma
+          <Languages /> {intl('preferences.language')}
         </h2>
 
         <Select
@@ -53,18 +53,18 @@ export const PreferencesContent = () => {
           values={[
             {
               value: 'en',
-              label: 'English'
+              label: intl('preferences.language.en')
             },
             {
               value: 'es',
-              label: 'Español'
+              label: intl('preferences.language.es')
             }
           ]}
         />
 
         <section>
           <Button disabled={isPending} type="submit" variant="default">
-            Guardar
+            {intl('preferences.save')}
           </Button>
         </section>
       </form>

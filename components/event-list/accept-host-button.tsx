@@ -6,6 +6,7 @@ import { toast } from 'sonner'
 import { acceptHost } from '@/actions/event'
 import { type EventWithUsers } from '@/types'
 
+import { useIntl } from '../providers/translator'
 import { Button } from '../ui/button'
 import {
   Dialog,
@@ -20,6 +21,7 @@ interface Props {
 }
 
 export const AcceptHostButton = ({ event }: Props) => {
+  const { intl } = useIntl()
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
 
@@ -33,7 +35,7 @@ export const AcceptHostButton = ({ event }: Props) => {
 
       await acceptHost(formData)
     } catch (error) {
-      toast.error('Error al aceptar la invitación')
+      toast.error(intl('errors.dashboard.accept_event'))
     } finally {
       setOpen(false)
       setLoading(false)
@@ -44,9 +46,9 @@ export const AcceptHostButton = ({ event }: Props) => {
     <>
       <Dialog open={open || loading} onOpenChange={setOpen}>
         <DialogContent>
-          <DialogHeader>Aceptar invitación</DialogHeader>
+          <DialogHeader>{intl('dashboard.event.accept')}</DialogHeader>
           <DialogDescription>
-            <p>¿Quieres ser anfitrión de este evento?</p>
+            <p>{intl('dashboard.event.i-own')}</p>
           </DialogDescription>
           <DialogFooter>
             <Button
@@ -56,10 +58,10 @@ export const AcceptHostButton = ({ event }: Props) => {
                 setOpen(false)
               }}
             >
-              Cancelar
+              {intl('cancel')}
             </Button>
             <Button disabled={loading} onClick={handleAccept}>
-              Aceptar
+              {intl('accept')}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -69,7 +71,7 @@ export const AcceptHostButton = ({ event }: Props) => {
           setOpen(true)
         }}
       >
-        Soy anfitrión de este evento
+        {intl('dashboard.event.i-own')}
       </Button>
     </>
   )

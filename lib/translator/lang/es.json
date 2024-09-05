@@ -1,4 +1,20 @@
 {
+  "accept": "Aceptar",
+  "cancel": "Cancelar",
+  "dashboard.create": "Crear evento",
+  "dashboard.event.accept": "Aceptar invitación",
+  "dashboard.event.i-own": "Soy anfitrión de este evento",
+  "dashboard.event.ownership-question": "¿Quieres ser anfitrión de este evento?",
   "dashboard.title": "Tus eventos",
-  "preferences.title": "Preferencias"
+  "preferences.language": "Idioma",
+  "preferences.language.en": "Inglés",
+  "preferences.language.es": "Español",
+  "preferences.save": "Guardar",
+  "preferences.title": "Preferencias",
+  "errors.dashboard.accept_event": "Error al aceptar la invitación",
+  "save": "Guardar",
+  "dashboard.event.invite.invited": "Usuario invitado. Esperando que acceda a la plataforma.",
+  "dashboard.event.invite.date": "Invitación creada el {{date}}",
+  "you": "Tú",
+  "dashboard.event.invite.since": "Usuario desde el {{date}}"
 }

@@ -6,6 +6,7 @@ import { EventItem } from '@/components/event-list/event-item'
 import { Button } from '@/components/ui/button'
 import { prisma } from '@/lib/prisma'
 import { getUserData } from '@/lib/server/user'
+import { getTranslator } from '@/lib/translator'
 
 const getWhereQuery = (isAdmin: boolean, email: string) => {
   if (isAdmin) {
@@ -41,12 +42,14 @@ export default async function PrivatePage() {
     where: getWhereQuery(isAdmin, user.email)
   })
 
+  const translator = getTranslator(user.prefs.language)
+
   const menu = (
     <menu>
       <Link className="contents" href="/private/new">
         <Button size="sm" variant="menu">
           <PlusCircle />
-          Crear evento
+          {translator.intl('dashboard.create')}
         </Button>
       </Link>
     </menu>

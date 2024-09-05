@@ -1,6 +1,8 @@
+'use client'
 import { cn } from '@/lib/utils'
 import { UserOnEventWithUser } from '@/types'
 
+import { useIntl } from '../providers/translator'
 import { Tooltip } from '../tooltip/tooltip'
 import { AvatarChip } from './chip'
 
@@ -11,19 +13,17 @@ type Props = {
 }
 
 const Profile = ({ userOnEvent, itsYou }: Props) => {
+  const { intl } = useIntl()
   const { user, email, createdAt: invitationCreatedAt } = userOnEvent
 
   if (!user)
     return (
       <div className="flex w-36 flex-col items-center gap-2">
-        <p>Usuario invitado. Esperando que acceda a la plataforma</p>
+        <p>{intl('dashboard.event.invite.invited')}</p>
         <p className="w-full text-slate-400">{email}</p>
         <p className="w-full font-sans text-xs">
-          Invitación creada el{' '}
-          {new Date(invitationCreatedAt).toLocaleDateString('es', {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric'
+          {intl('dashboard.event.invite.date', {
+            date: { date: invitationCreatedAt }
           })}
         </p>
       </div>
@@ -40,11 +40,8 @@ const Profile = ({ userOnEvent, itsYou }: Props) => {
       <p className="text-xs uppercase"></p>
       <p className="w-full text-slate-400">{user.email}</p>
       <p className="w-full font-sans text-xs">
-        Usuario desde el{' '}
-        {new Date(userCreatedAt).toLocaleDateString('es', {
-          day: '2-digit',
-          month: '2-digit',
-          year: 'numeric'
+        {intl('dashboard.event.invite.since', {
+          date: { date: userCreatedAt }
         })}
       </p>
     </div>

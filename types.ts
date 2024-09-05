@@ -83,3 +83,7 @@ export type EventWithUsers = Event & {
 export type UserPrefs = {
   language?: LangKey
 }
+
+export type UserWithPrefs = User & {
+  prefs: UserPrefs
+}
