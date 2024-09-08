@@ -7,8 +7,11 @@ import { Input } from '@/components/form/input'
 import { InputList } from '@/components/form/input-list'
 import { SubmitButton } from '@/components/SubmitButton'
 import { prisma } from '@/lib/prisma'
+import { getUserIntl } from '@/lib/server/user'
 
-export default function NewEventPage() {
+export default async function NewEventPage() {
+  const { t } = await getUserIntl()
+
   const action = async (formData: FormData) => {
     'use server'
     const clerkUser = await currentUser()
@@ -64,22 +67,22 @@ export default function NewEventPage() {
     <section className="flex flex-col gap-4">
       <FormError
         errors={{
-          generic: 'Ocurrió un error inesperado al crear el evento',
-          used_slug: 'El slug ya está en uso. Utiliza un slug diferente'
+          generic: t('errors.dashboard.create_event'),
+          used_slug: t('errors.dashboard.slug_in_use')
         }}
       />
       <form action={action} className="flex flex-col gap-2">
         <Fieldset>
-          <Input required label="Nombre" name="name" />
-          <Input required label="Slug" name="slug" />
+          <Input required label={t('name')} name="name" />
+          <Input required label={t('slug')} name="slug" />
           <InputList
             required
-            label="Participantes (email)"
+            label={t('dashboard.event.new.participants_label')}
             name="user"
             type="email"
           />
         </Fieldset>
-        <SubmitButton className="mt-4">Crear</SubmitButton>
+        <SubmitButton className="mt-4">{t('create')}</SubmitButton>
       </form>
     </section>
   )

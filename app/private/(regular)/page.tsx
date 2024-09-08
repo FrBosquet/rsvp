@@ -1,4 +1,3 @@
-import { currentUser } from '@clerk/nextjs/server'
 import { PlusCircle } from 'lucide-react'
 import Link from 'next/link'
 
@@ -23,9 +22,7 @@ const getWhereQuery = (isAdmin: boolean, email: string) => {
 }
 
 export default async function PrivatePage() {
-  const authUser = await currentUser()
-  if (!authUser) return null
-  const user = await getUserData(authUser)
+  const user = await getUserData()
 
   const { role } = user
 

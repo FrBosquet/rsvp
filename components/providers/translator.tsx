@@ -14,17 +14,21 @@ type Props = {
   defaultLanguage?: LangKey
 }
 
+type IntlFunction = (
+  key: TranslationKey,
+  values?: Record<string, TranslationValue>
+) => string
+
 const TranslatorContext = createContext<{
   lang: LangKey
   setLang: (lang: LangKey) => void
-  intl: (
-    key: TranslationKey,
-    values?: Record<string, TranslationValue>
-  ) => string
+  intl: IntlFunction
+  t: IntlFunction
 }>({
   lang: 'en',
   setLang: () => null,
-  intl: (key) => key
+  intl: (key) => key,
+  t: (key) => key
 })
 
 export const useIntl = () => {
@@ -56,7 +60,9 @@ export const TranslatorProvider = ({
   }
 
   return (
-    <TranslatorContext.Provider value={{ lang, setLang: handleSetLang, intl }}>
+    <TranslatorContext.Provider
+      value={{ lang, setLang: handleSetLang, intl, t: intl }}
+    >
       {children}
     </TranslatorContext.Provider>
   )

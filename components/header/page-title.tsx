@@ -7,7 +7,7 @@ import { usePathname } from 'next/navigation'
 import { useIntl } from '../providers/translator'
 
 const useTitle = () => {
-  const { intl } = useIntl()
+  const { t } = useIntl()
 
   const pathname = usePathname()
 
@@ -15,12 +15,11 @@ const useTitle = () => {
   const chunks = pathname.slice(1).split('/')
   const chunkAmount = chunks.length
 
-  if (chunkAmount === 2 && chunks[1] === 'new') return 'Nuevo evento'
+  if (chunkAmount === 2 && chunks[1] === 'new') return t('new_event.title')
   if (chunkAmount === 2 && chunks[1] === 'preferences')
-    return intl('preferences.title')
-  if (chunkAmount === 2 && chunks[0] === 'private') return 'Tu evento'
-  if (chunkAmount === 1 && chunks[0] === 'private')
-    return intl('dashboard.title')
+    return t('preferences.title')
+  if (chunkAmount === 2 && chunks[0] === 'private') return t('event.title')
+  if (chunkAmount === 1 && chunks[0] === 'private') return t('dashboard.title')
 
   return pathname
 }

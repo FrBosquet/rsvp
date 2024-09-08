@@ -30,6 +30,10 @@ export class Translator {
     // Spanish is the lang by default
     // During dev time we cannot use a key which is not in the es.json
     // During test time, we check that the key is in the en.json as well
+
+    if (!langs[key]) {
+      throw new Error(`No language found for key ${key}`)
+    }
     this.langKey = key
     this.lang = langs[key] as Lang
   }
@@ -45,6 +49,10 @@ export class Translator {
    * @returns the content
    */
   intl(key: TranslationKey, values: Record<string, TranslationValue> = {}) {
+    if (!this.lang) {
+      throw new Error('No language set')
+    }
+
     let str = this.lang[key]
 
     if (!str) {
@@ -89,4 +97,6 @@ export class Translator {
    * @returns the content
    */
   getTranslation = this.intl
+
+  t = this.intl
 }

@@ -1,13 +1,18 @@
-import { User } from '@clerk/nextjs/server'
+import { currentUser } from '@clerk/nextjs/server'
 import { redirect } from 'next/navigation'
 
 import { prisma } from '../prisma'
+import { getTranslator } from '../translator'
 import { fromRawPrefs } from './prefs'
 
-export const getUserData = async (clerkUser: User) => {
+export const getUserData = async () => {
+  const authUser = await currentUser()
+
+  if (!authUser) return redirect('/private/creating_account')
+
   const user = await prisma.user.findUnique({
     where: {
-      id: clerkUser.id
+      id: authUser.id
     },
     include: {
       preferences: true
@@ -22,4 +27,14 @@ export const getUserData = async (clerkUser: User) => {
     ...userData,
     prefs: fromRawPrefs(preferences)
   }
+}
+
+export const getUserIntl = async () => {
+  const user = await getUserData()
+
+  const translator = getTranslator(user.prefs.language)
+
+  const { t } = translator
+
+  return { user, t: t.bind(translator) }
 }
