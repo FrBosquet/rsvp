@@ -1,3 +1,20 @@
 {
-  "dashboard.title": "Your events"
+  "accept": "Accept",
+  "cancel": "Cancel",
+  "dashboard.create": "Create event",
+  "dashboard.event.accept": "Accept invitation",
+  "dashboard.event.i-own": "I host this event",
+  "dashboard.event.invite.date": "Invitation created at {{date}}",
+  "dashboard.event.invite.invited": "User invited. Waiting for it to access the platform.",
+  "dashboard.event.invite.since": "User since {{date}}",
+  "dashboard.event.ownership-question": "Do you want to be a host for this event?",
+  "dashboard.title": "Your events",
+  "errors.dashboard.accept_event": "Error accepting the invitation",
+  "preferences.language": "Language",
+  "preferences.language.en": "English",
+  "preferences.language.es": "Spanish",
+  "preferences.save": "Save",
+  "preferences.title": "Preferences",
+  "save": "Save",
+  "you": "You"
 }
