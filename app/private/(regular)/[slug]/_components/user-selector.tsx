@@ -4,6 +4,7 @@ import { type User } from '@prisma/client'
 import { twMerge } from 'tailwind-merge'
 
 import { useEvent } from '@/components/hooks/use-event'
+import { useIntl } from '@/components/providers/translator'
 import {
   Select,
   SelectContent,
@@ -17,6 +18,7 @@ export const UserSelector = ({
   users: User[]
   className?: string
 }) => {
+  const { t } = useIntl()
   const { hosts, setFilter, filters } = useEvent()
 
   const handleChange = (value: string) => {
@@ -28,7 +30,7 @@ export const UserSelector = ({
   }
 
   const hostName =
-    hosts.find((host) => host.id === filters.host)?.name ?? 'Invitado de'
+    hosts.find((host) => host.id === filters.host)?.name ?? t('event.guest_of')
 
   return (
     <Select onValueChange={handleChange}>
@@ -36,7 +38,7 @@ export const UserSelector = ({
         {hostName}
       </SelectTrigger>
       <SelectContent>
-        <SelectItem value="-">Todos</SelectItem>
+        <SelectItem value="-">{t('everyone')}</SelectItem>
         {hosts.map((host) => {
           return (
             <SelectItem key={host.id} value={host.id}>

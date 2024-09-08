@@ -14,7 +14,7 @@ type DateTranslationValue = {
   date: Date
   format?: Intl.DateTimeFormatOptions
 }
-export type TranslationValue = string | DateTranslationValue
+export type TranslationValue = string | number | DateTranslationValue
 
 const DEFAULT_LANG = 'es'
 
@@ -60,15 +60,18 @@ export class Translator {
     }
 
     const substitutes = str.match(/{{(.*?)}}/g)
+
     if (substitutes) {
       substitutes.forEach((match) => {
         const key = match.slice(2, -2)
         let value = values[key]
 
-        if (value) {
+        if (value != null) {
           if (typeof value === 'string') {
             str = str.replace(match, value)
             return
+          } else if (typeof value === 'number') {
+            str = str.replace(match, value.toString())
           } else if (value.date instanceof Date) {
             str = str.replace(
               match,

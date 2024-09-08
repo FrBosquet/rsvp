@@ -1,6 +1,5 @@
 'use client'
 
-import { UserButton } from '@clerk/nextjs'
 import { type Event } from '@prisma/client'
 
 import { useEvent } from '@/components/hooks/use-event'
@@ -18,10 +17,6 @@ export const EventHeader = ({ serverEvent }: Props) => {
 
   return (
     <header className="flex w-full items-center gap-4 rounded-2xl bg-slate-800 p-2 text-zinc-200 shadow-lg">
-      <div className="relative size-8 overflow-hidden rounded-full">
-        <Skeleton className="absolute size-8 bg-slate-700" />
-        <UserButton />
-      </div>
       <h1 className="flex-1 text-lg uppercase">
         {isReady ? (
           event?.name

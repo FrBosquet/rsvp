@@ -14,7 +14,8 @@
     "env": "pnpx vercel env pull",
     "test": "jest",
     "test:watch": "jest --watch",
-    "prepare": "husky"
+    "prepare": "husky",
+    "sync_translations": "ts-node ./scripts/sync_translations.ts"
   },
   "dependencies": {
     "@clerk/localizations": "^2.7.1",

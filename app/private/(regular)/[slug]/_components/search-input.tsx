@@ -5,8 +5,10 @@ import { UserSearch } from 'lucide-react'
 import { twMerge } from 'tailwind-merge'
 
 import { useEvent } from '@/components/hooks/use-event'
+import { useIntl } from '@/components/providers/translator'
 
 export const SearchInput = ({ className }: { className?: string }) => {
+  const { t } = useIntl()
   const { updateNameFilter } = useEvent()
 
   return (
@@ -14,7 +16,7 @@ export const SearchInput = ({ className }: { className?: string }) => {
       <UserSearch className="absolute" size={16} />
       <input
         className="bg-transparent pl-6"
-        placeholder="buscar..."
+        placeholder={t('search_dots')}
         onChange={updateNameFilter}
       />
     </p>

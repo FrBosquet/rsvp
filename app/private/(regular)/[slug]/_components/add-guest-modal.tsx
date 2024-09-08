@@ -1,5 +1,3 @@
-'use client'
-
 import { useUser } from '@clerk/nextjs'
 import { MinusCircleIcon, PlusCircleIcon } from 'lucide-react'
 import { useParams } from 'next/navigation'
@@ -8,6 +6,7 @@ import removeAccents from 'remove-accents'
 import { toast } from 'sonner'
 
 import { addGuestToEvent } from '@/app/actions'
+import { useIntl } from '@/components/providers/translator'
 import { Spinner } from '@/components/spinner'
 import { Checkbox } from '@/components/ui/checkbox'
 import {
@@ -44,6 +43,7 @@ interface Props {
 }
 
 export const AddGuestModal = ({ onNewGuest, className }: Props) => {
+  const { t } = useIntl()
   const { user } = useUser()
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -65,7 +65,7 @@ export const AddGuestModal = ({ onNewGuest, className }: Props) => {
       const newGuest = await addGuestToEvent(formData)
 
       onNewGuest(newGuest)
-      toast.success('Invitación creada correctamente')
+      toast.success(t('event.create_invitation.success'))
       setOpen(false)
     } catch (err) {
       let message = 'Unknown Error'
@@ -73,14 +73,10 @@ export const AddGuestModal = ({ onNewGuest, className }: Props) => {
 
       switch (true) {
         case message.includes('Unique constraint'):
-          toast.error(
-            'El enlace único especificado ya existe para este evento. Por favor, utiliza un enlace diferente!'
-          )
+          toast.error(t('errors.event.unique_slug'))
           break
         default:
-          toast.error(
-            'Error desconocido! Por favor, contacta con el administrador si el error persiste'
-          )
+          toast.error(t('errors.event.unknown'))
           break
       }
     } finally {
@@ -134,17 +130,17 @@ export const AddGuestModal = ({ onNewGuest, className }: Props) => {
 
             <article className="flex flex-col gap-2">
               <label className="font-semibold" htmlFor="names">
-                Nombres
+                {t('names')}
               </label>
               <Input
                 required
                 id="names"
                 name="names"
-                placeholder="Nombres de los invitados"
+                placeholder={t('events.guest_names')}
                 onChange={handleChange}
               />
               <p className="text-sm text-slate-400">
-                Separados por comas. Pej. &quot;Lola,Ramón&quot;
+                {t('events.guest_names.helptext')}
               </p>
             </article>
 

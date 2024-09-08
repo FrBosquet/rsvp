@@ -3,6 +3,8 @@
 
 import { twMerge } from 'tailwind-merge'
 
+import { useIntl } from '@/components/providers/translator'
+
 export const InvitationResume = ({
   guestInvited,
   invitationAmount,
@@ -12,9 +14,14 @@ export const InvitationResume = ({
   invitationAmount: number
   className: string
 }) => {
+  const { t } = useIntl()
+
   return (
     <p className={twMerge('text-sm font-semibold uppercase', className)}>
-      {invitationAmount} invitaciones / {guestInvited} invitados
+      {t('event.resume', {
+        amount: invitationAmount,
+        guest: guestInvited
+      })}
     </p>
   )
 }
