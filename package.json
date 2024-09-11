@@ -15,7 +15,8 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "prepare": "husky",
-    "sync_translation": "dotenv -e .env.local -- ts-node ./scripts/sync_keys.ts"
+    "sync_translation": "dotenv -e .env.local -- ts-node ./scripts/sync_keys.ts",
+    "look_keys": "dotenv -e .env.local -- ts-node ./scripts/look_keys.ts"
   },
   "dependencies": {
     "@clerk/localizations": "^2.7.1",

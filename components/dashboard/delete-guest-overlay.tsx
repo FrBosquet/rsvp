@@ -1,5 +1,3 @@
-'use client'
-
 import { useParams } from 'next/navigation'
 import { type FormEvent, useState } from 'react'
 import { toast } from 'sonner'
@@ -17,6 +15,8 @@ import {
 } from '@/components/ui/dialog'
 import { type GuestWithHost } from '@/types'
 
+import { useIntl } from '../providers/translator'
+
 interface Props {
   onDeleteGuest: (guest: GuestWithHost) => void
   guest: GuestWithHost
@@ -24,6 +24,7 @@ interface Props {
 }
 
 export const DeleteGuestModal = ({ onDeleteGuest, guest, children }: Props) => {
+  const { t } = useIntl()
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
   const params = useParams()
@@ -63,13 +64,8 @@ export const DeleteGuestModal = ({ onDeleteGuest, guest, children }: Props) => {
       <DialogTrigger>{children}</DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>
-            {' '}
-            ¿Estas seguro de que quieres borrar esta invitación?
-          </DialogTitle>
-          <DialogDescription>
-            Esta acción no puede ser revertida
-          </DialogDescription>
+          <DialogTitle>{t('del-guest.title')}</DialogTitle>
+          <DialogDescription>{t('del-guest.description')}</DialogDescription>
         </DialogHeader>
 
         <form id="delete-guest-modal" onSubmit={handleSubmit}>
@@ -87,14 +83,14 @@ export const DeleteGuestModal = ({ onDeleteGuest, guest, children }: Props) => {
                 setOpen(false)
               }}
             >
-              Cancelar
+              {t('cancel')}
             </button>
             <button
               className="rounded-sm bg-red-700 p-1"
               form="delete-guest-modal"
               type="submit"
             >
-              {loading ? <Spinner /> : 'Eliminar'}
+              {loading ? <Spinner /> : t('delete')}
             </button>
           </menu>
         </DialogFooter>
