@@ -1,0 +1,8 @@
+{
+  "langDir": "lib/translator/lang",
+  "defaultLang": "es",
+  "langs": [
+    "es",
+    "en"
+  ]
+}

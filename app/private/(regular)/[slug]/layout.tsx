@@ -4,7 +4,7 @@ import React from 'react'
 
 import { prisma } from '@/lib/prisma'
 
-import { EventHeader } from './_components/event-header'
+import { EventHeader } from '../../../../components/dashboard/event-header'
 
 interface Route {
   params: {

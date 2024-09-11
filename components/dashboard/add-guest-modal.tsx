@@ -26,17 +26,6 @@ import {
 } from '@/components/ui/tooltip'
 import { type GuestWithHost } from '@/types'
 
-const AddButton = () => {
-  return (
-    <Tooltip>
-      <TooltipTrigger asChild>
-        <PlusCircleIcon />
-      </TooltipTrigger>
-      <TooltipContent>Añadir invitado</TooltipContent>
-    </Tooltip>
-  )
-}
-
 interface Props {
   onNewGuest: (guest: GuestWithHost) => void
   className?: string
@@ -115,12 +104,17 @@ export const AddGuestModal = ({ onNewGuest, className }: Props) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger className={className}>
-        <AddButton />
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <PlusCircleIcon />
+          </TooltipTrigger>
+          <TooltipContent>{t('add-guest.title')}</TooltipContent>
+        </Tooltip>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Añadir invitado</DialogTitle>
-          <DialogDescription>Crea una nueva invitación</DialogDescription>
+          <DialogTitle>{t('add-guest.title')}</DialogTitle>
+          <DialogDescription>{t('add-guest.description')}</DialogDescription>
         </DialogHeader>
 
         <form id="add-guest-modal" onSubmit={handleSubmit}>
@@ -146,34 +140,33 @@ export const AddGuestModal = ({ onNewGuest, className }: Props) => {
 
             <article className="flex flex-col gap-2">
               <label className="font-semibold" htmlFor="slug">
-                Enlace
+                {t('link')}
               </label>
               <Input
                 ref={slugInput}
                 required
                 id="slug"
                 name="slug"
-                placeholder="Slug de la invitación"
+                placeholder={t('add-guest.slug.title')}
               />
               <p className="text-sm text-slate-400">
-                Enlace personalizado y único para cada invitación. Este sirve
-                para distinguir el enlace que enviaras a cada invitado.
+                {t('add-guest.guests.help_test')}
               </p>
             </article>
 
             <article className="flex flex-col gap-2">
               <div className="flex items-center space-x-2">
                 <Checkbox id="family" name="family" />
-                <label htmlFor="family">Es una familia</label>
+                <label htmlFor="family">{t('add-guest.family.label')}</label>
               </div>
               <p className="text-sm text-slate-400">
-                Marcar si van mas miembros a parte de los nombrados
+                {t('add-guest.family.help_test')}
               </p>
             </article>
 
             <article className="flex flex-col gap-2">
               <label className="font-semibold" htmlFor="guests">
-                Invitados
+                {t('add-guest.guests.label')}
               </label>
               <div className="flex items-center justify-center gap-4">
                 <button
@@ -201,7 +194,7 @@ export const AddGuestModal = ({ onNewGuest, className }: Props) => {
                 </button>
               </div>
               <p className="text-sm text-slate-400">
-                Cuantas personas, como máximo, incluye esta invitación
+                {t('add-guest.guests.help_test')}
               </p>
             </article>
           </fieldset>
@@ -209,7 +202,7 @@ export const AddGuestModal = ({ onNewGuest, className }: Props) => {
 
         <DialogFooter>
           <button form="add-guest-modal" type="submit">
-            {loading ? <Spinner /> : 'Crear'}
+            {loading ? <Spinner /> : t('create')}
           </button>
         </DialogFooter>
       </DialogContent>
