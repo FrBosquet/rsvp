@@ -53,14 +53,12 @@ export const EditGuestModal = ({
       const newGuest = await editGuest(formData)
 
       onEditGuest(newGuest)
-      toast.success('Invitación actualizada correctamente')
+      toast.success(t('edit-guest.success'))
       setOpen(false)
     } catch (err) {
       switch (true) {
         default:
-          toast.error(
-            'Error desconocido! Por favor, contacta con el administrador si el error persiste'
-          )
+          toast.error(t('errors.edit-guest.unknown'))
           break
       }
     } finally {
@@ -95,7 +93,7 @@ export const EditGuestModal = ({
           <DialogTitle>
             {t('edit-guest.title', { guestName: guest.name })}
           </DialogTitle>
-          <DialogDescription>Edita una invitación</DialogDescription>
+          <DialogDescription>{t('edit-guest.description')}</DialogDescription>
         </DialogHeader>
 
         <form id="edit-guest-modal" onSubmit={handleSubmit}>
@@ -105,23 +103,23 @@ export const EditGuestModal = ({
 
             <article className="flex flex-col gap-2">
               <label className="font-semibold" htmlFor="names">
-                Nombres
+                {t('names')}
               </label>
               <Input
                 required
                 defaultValue={guest.name}
                 id="names"
                 name="names"
-                placeholder="Nombres de los invitados"
+                placeholder={t('edit-guest.names.placeholder')}
               />
               <p className="text-sm text-slate-400">
-                Separados por comas. Pej. &quot;Lola,Ramón&quot;
+                {t('edit-guest.names.helptext')}
               </p>
             </article>
 
             <article className="flex flex-col gap-2">
               <label className="font-semibold" htmlFor="slug">
-                Enlace
+                {t('link')}
               </label>
               <Input disabled defaultValue={guest.slug} id="slug" />
             </article>
@@ -129,16 +127,16 @@ export const EditGuestModal = ({
             <article className="flex flex-col gap-2">
               <div className="flex items-center space-x-2">
                 <Checkbox id="family" name="family" />
-                <label htmlFor="family">Es una familia</label>
+                <label htmlFor="family">{t('edit-guest.family.label')}</label>
               </div>
               <p className="text-sm text-slate-400">
-                Marcar si van mas miembros a parte de los nombrados
+                {t('edit-guest.family.helptext')}
               </p>
             </article>
 
             <article className="flex flex-col gap-2">
               <label className="font-semibold" htmlFor="guests">
-                Invitados
+                {t('edit-guest.guests.label')}
               </label>
               <div className="flex items-center justify-center gap-4">
                 <button
@@ -166,7 +164,7 @@ export const EditGuestModal = ({
                 </button>
               </div>
               <p className="text-sm text-slate-400">
-                Cuantas personas, como máximo, incluye esta invitación
+                {t('edit-guest.guests.helptext')}
               </p>
             </article>
           </fieldset>
@@ -176,12 +174,12 @@ export const EditGuestModal = ({
           <menu className=" flex w-full justify-between">
             <DeleteGuestModal guest={guest} onDeleteGuest={handleDelete}>
               <button className="rounded-sm bg-red-700 p-1" type="button">
-                Eliminar
+                {t('delete')}
               </button>
             </DeleteGuestModal>
 
             <button form="edit-guest-modal" type="submit">
-              {loading ? <Spinner /> : 'Guardar'}
+              {loading ? <Spinner /> : t('save')}
             </button>
           </menu>
         </DialogFooter>

@@ -78,7 +78,8 @@ exec(command, (error, stdout, stderr) => {
 
       if (newKey in defaultLang) {
         logger.error(`Key ${newKey} already exists and trying rewrite. Check ${newKey} in ${file}`)
-
+        logger.whisper('Using previous value...')
+        exec(`sed -i 's/${key}/${newKey}/g' ${file}`)
         return
       }
 
