@@ -23,6 +23,7 @@
   "del-guest.description": "This action cannot be undone",
   "del-guest.title": "Are you sure you want to delete this invitation?",
   "delete": "Delete",
+  "edit-guest.title": "Edit invitation for {{guestName}}",
   "errors.dashboard.accept_event": "Error accepting the invitation",
   "errors.dashboard.create_event": "An unexpected error occurred while creating the event",
   "errors.dashboard.slug_in_use": "The slug is already in use. Use a different slug",

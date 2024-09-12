@@ -1,5 +1,3 @@
-'use client'
-
 import { MinusCircleIcon, PlusCircleIcon } from 'lucide-react'
 import { useParams } from 'next/navigation'
 import { type FormEvent, type MouseEvent, useRef, useState } from 'react'
@@ -20,6 +18,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { type GuestWithHost } from '@/types'
 
+import { useIntl } from '../providers/translator'
 import { DeleteGuestModal } from './delete-guest-overlay'
 
 interface Props {
@@ -35,6 +34,7 @@ export const EditGuestModal = ({
   guest,
   children
 }: Props) => {
+  const { t } = useIntl()
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
   const params = useParams()
@@ -92,7 +92,9 @@ export const EditGuestModal = ({
       <DialogTrigger>{children}</DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Editar invitación de {guest.name}</DialogTitle>
+          <DialogTitle>
+            {t('edit-guest.title', { guestName: guest.name })}
+          </DialogTitle>
           <DialogDescription>Edita una invitación</DialogDescription>
         </DialogHeader>
 

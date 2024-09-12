@@ -1,10 +1,17 @@
 /* eslint-disable prettier/prettier */
-import { exec } from 'child_process'
-import path from 'path'
+import { exec } from 'child_process';
+import path from 'path';
 
-import { logger } from '@/lib/server/logger'
+import { logger } from '@/lib/server/logger';
 
-import { LangConfig, readJson, sortObjectKeys, writeJson } from './utils'
+import { LangConfig, readJson, sortObjectKeys, writeJson } from './utils';
+
+function convertToCamelCase(input: string): string {
+  const parts = input.split('.');
+  const [firstPart, secondPart] = parts;
+  const capitalizedSecondPart = secondPart.charAt(0).toUpperCase() + secondPart.slice(1);
+  return firstPart + capitalizedSecondPart;
+}
 
 logger.info('Looking for usage of t(*)...')
 logger.whisper('Loading config...')
@@ -67,7 +74,7 @@ exec(command, (error, stdout, stderr) => {
     added++
 
     if (key.includes('->')) {
-      const [newKey, newContent] = key.split('->')
+      let [newKey, newContent] = key.split('->')
 
       if (newKey in defaultLang) {
         logger.error(`Key ${newKey} already exists and trying rewrite. Check ${newKey} in ${file}`)
@@ -75,7 +82,27 @@ exec(command, (error, stdout, stderr) => {
         return
       }
 
-      exec(`sed -i 's/${key}/${newKey}/g' ${file}`)
+      // Detect if content has any characters beetween curly braces, like {user.name}
+      const hasCurlyBraces = newContent.match(/{.*?}/)
+      if (hasCurlyBraces) {
+        const replacements = hasCurlyBraces.map(key => key.replace(/[{}]/g, ''))
+
+        logger.whisper(replacements)
+
+        let valuesObj = '{'
+
+        replacements.forEach(replacement => {
+          const key = convertToCamelCase(replacement)
+          valuesObj += ` ${key}: ${replacement}, `
+          newContent = newContent.replace(`{${replacement}}`, `{{${key}}}`)
+        })
+
+        valuesObj += '}'
+
+        exec(`sed -i "s/${key}')/${newKey}',${valuesObj})/g" ${file}`)
+      } else {
+        exec(`sed -i 's/${key}/${newKey}/g' ${file}`)
+      }
 
       key = newKey
       content = newContent
@@ -88,8 +115,6 @@ exec(command, (error, stdout, stderr) => {
     logger.info('No new keys found')
     return
   } else {
-
-
     logger.info(`${added} new keys found`)
     logger.whisper('Writing new keys to default lang...')
 

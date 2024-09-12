@@ -23,6 +23,7 @@
   "del-guest.description": "Esta acción no puede ser revertida",
   "del-guest.title": "¿Estas seguro de que quieres borrar esta invitación?",
   "delete": "Eliminar",
+  "edit-guest.title": "Editar invitación de {{guestName}}",
   "errors.dashboard.accept_event": "Error al aceptar la invitación",
   "errors.dashboard.create_event": "Ocurrió un error inesperado al crear el evento",
   "errors.dashboard.slug_in_use": "El slug ya está en uso. Utiliza un slug diferente",
