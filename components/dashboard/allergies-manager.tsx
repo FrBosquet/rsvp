@@ -6,9 +6,11 @@ import { useEvent } from '@/components/hooks/use-event'
 import { Spinner } from '@/components/spinner'
 import { NOTES } from '@/types'
 
+import { useIntl } from '../providers/translator'
 import { GuestRow } from './guest-row'
 
 export const AllergiesManager = () => {
+  const { t } = useIntl()
   const { isReady, updateGuest, deleteGuest, guests } = useEvent()
 
   const guestWithAllergies = useMemo(
@@ -26,7 +28,7 @@ export const AllergiesManager = () => {
   return (
     <>
       <article className="flex w-full flex-col items-start gap-1 rounded-2xl bg-slate-700 p-3 text-zinc-200 shadow-md">
-        <h2 className="font-semibold">Alergias</h2>
+        <h2 className="font-semibold">{t('allergies.title')}</h2>
         <p>{pax} invitaciones se anotaron con alergias</p>
       </article>
 
