@@ -29,12 +29,12 @@ export const BusManager = () => {
 
   return (
     <>
-      <article className="flex w-full flex-col items-start gap-1 rounded-2xl bg-slate-700 p-3 text-zinc-200 shadow-md">
+      <article className="flex w-full flex-col items-start gap-1 bg-zinc-200 p-3 shadow-inner">
         <h2 className="font-semibold">{t('event.bus.title')}</h2>
-        <p>{t('event.bus.guests', { pax })}</p>
+        <p className="text-sm">{t('event.bus.guests', { pax })}</p>
       </article>
 
-      <article className="flex w-full flex-1 flex-col gap-4 overflow-y-auto rounded-2xl bg-gradient-to-br from-olive-900 to-olive-950 p-4 text-slate-200">
+      <article className="flex w-full flex-1 flex-col gap-4 overflow-y-auto rounded-2xl bg-gradient-to-br p-4">
         {guestWithBus?.map((guest) => {
           return (
             <GuestRow

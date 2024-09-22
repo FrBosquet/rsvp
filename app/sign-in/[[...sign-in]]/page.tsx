@@ -1,15 +1,8 @@
 'use client'
 
-import { SignedIn, SignedOut, SignIn, useUser } from '@clerk/nextjs'
-import { redirect } from 'next/navigation'
+import { SignedIn, SignedOut, SignIn } from '@clerk/nextjs'
 
 export default function Page() {
-  const user = useUser()
-
-  if (user) {
-    redirect('/private')
-  }
-
   return (
     <>
       <SignedIn>Volver</SignedIn>
