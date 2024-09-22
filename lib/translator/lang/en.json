@@ -9,6 +9,7 @@
   "add-guest.slug.placeholder": "Custom link",
   "add-guest.slug.title": "Link",
   "add-guest.title": "Add Guest",
+  "allergies.guests": "{{pax}} invitations have been noted with allergies",
   "allergies.title": "Allergies",
   "cancel": "Cancel",
   "create": "Create",
@@ -86,6 +87,8 @@
   "preferences.title": "Preferences",
   "save": "Save",
   "search_dots": "Search...",
+  "setti": "",
+  "settings": "Settings",
   "slug": "Slug",
   "you": "You"
 }

@@ -27,12 +27,12 @@ export const AllergiesManager = () => {
 
   return (
     <>
-      <article className="flex w-full flex-col items-start gap-1 rounded-2xl bg-slate-700 p-3 text-zinc-200 shadow-md">
+      <article className="flex w-full flex-col items-start gap-1 bg-zinc-200 p-3 shadow-inner">
         <h2 className="font-semibold">{t('allergies.title')}</h2>
-        <p>{pax} invitaciones se anotaron con alergias</p>
+        <p className="text-sm">{t('allergies.guests', { pax })}</p>
       </article>
 
-      <article className="flex w-full flex-1 flex-col gap-2 overflow-y-auto rounded-2xl bg-gradient-to-br from-olive-900 to-olive-950 p-2 text-slate-200">
+      <article className="flex w-full flex-1 flex-col gap-2 overflow-y-auto rounded-2xl p-2 text-slate-200">
         {guestWithAllergies?.map((guest) => {
           return (
             <article

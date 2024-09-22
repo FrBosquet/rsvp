@@ -15,6 +15,10 @@ const useTitle = () => {
   const chunks = pathname.slice(1).split('/')
   const chunkAmount = chunks.length
 
+  if (chunkAmount === 3 && chunks[2] === 'bus') return t('event.bus.title')
+  if (chunkAmount === 3 && chunks[2] === 'settings') return t('settings')
+  if (chunkAmount === 3 && chunks[2] === 'allergies')
+    return t('allergies.title')
   if (chunkAmount === 2 && chunks[1] === 'new') return t('new_event.title')
   if (chunkAmount === 2 && chunks[1] === 'preferences')
     return t('preferences.title')
