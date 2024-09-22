@@ -4,8 +4,12 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 import { Button } from '@/components/ui/button'
+import { getTranslator } from '@/lib/translator'
 
 export default function HomePage() {
+  const t = getTranslator('es')
+  const price = '49.95'
+
   return (
     <>
       <div className="relative h-screen w-full overflow-hidden">
@@ -19,20 +23,17 @@ export default function HomePage() {
         <div className="absolute inset-0 bg-black/50" />
         <div className="absolute inset-0 flex flex-col items-center justify-center gap-6 px-4 text-center text-white">
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
-            Tus invitaciones, sin esfuerzo
+            {t('home.title')}
           </h1>
-          <p className="max-w-xl text-lg">
-            Gestione las invitaciones de su día especial con nuestra completa
-            aplicación de reserva de bodas.
-          </p>
+          <p className="max-w-xl text-lg">{t('home.subtitle')}</p>
           <SignedIn>
             <Button asChild variant="cta">
-              <Link href="/private">Crea tu invitación ahora</Link>
+              <Link href="/private">{t('home.cta.unsigned')}</Link>
             </Button>
           </SignedIn>
           <SignedOut>
             <Button asChild variant="cta">
-              <SignInButton mode="modal">Inicia sesión</SignInButton>
+              <SignInButton mode="modal">{t('home.cta.signed')}</SignInButton>
             </Button>
           </SignedOut>
         </div>
@@ -42,50 +43,50 @@ export default function HomePage() {
           <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
             <div className="flex flex-col items-center gap-4 rounded-lg bg-white p-6 shadow-lg dark:bg-gray-900">
               <Calendar className="size-12 text-rose-500" />
-              <h3 className="text-xl font-bold">Sencillo</h3>
+              <h3 className="text-xl font-bold">{t('home.features.simple')}</h3>
               <p className="text-gray-500 dark:text-gray-400">
-                Genera tu invitación en minutos con nuestras plantillas
-                personalizables.
+                {t('home.features.simple.description')}
               </p>
             </div>
             <div className="flex flex-col items-center gap-4 rounded-lg bg-white p-6 shadow-lg dark:bg-gray-900">
               <DollarSign className="size-12 text-rose-500" />
-              <h3 className="text-xl font-bold">Económico</h3>
+              <h3 className="text-xl font-bold">
+                {t('home.features.affordable')}
+              </h3>
               <p className="text-gray-500 dark:text-gray-400">
-                Tu evento para cualquier cantidad de invitados por solo 49,99€
+                {t('home.features.affordable.description', { price })}
               </p>
             </div>
             <div className="flex flex-col items-center gap-4 rounded-lg bg-white p-6 shadow-lg dark:bg-gray-900">
               <UsersIcon className="size-12 text-rose-500" />
-              <h3 className="text-xl font-bold">Conectado</h3>
+              <h3 className="text-xl font-bold">
+                {t('home.features.connected')}
+              </h3>
               <p className="text-gray-500 dark:text-gray-400">
-                Gestiona tu lista de invitados y recibe confirmaciones de
-                asistencia en tiempo real.
+                {t('home.features.connected.description')}
               </p>
             </div>
           </div>
         </div>
       </section>
       <section className="bg-gray-100 py-16 dark:bg-gray-800 md:py-24">
-        <div className="container mx-auto max-w-screen-lg px-4">
+        <div className="container">
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
             <div className="flex flex-col items-start gap-4">
               <div className="inline-block rounded-full bg-rose-500 px-4 py-2 text-sm text-white">
-                Testimonios
+                {t('home.testimonials')}
               </div>
               <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-                Lo que dicen nuestras parejas
+                {t('home.testimonials.title')}
               </h2>
               <p className="text-gray-500 dark:text-gray-400">
-                Escuche a parejas reales que han utilizado nuestra aplicación
-                para planificar la boda de sus sueños.
+                {t('home.testimonials.subtitle')}
               </p>
             </div>
             <div className="grid gap-6">
               <div className="rounded-lg bg-white p-6 shadow-lg dark:bg-gray-900">
                 <blockquote className="text-lg font-medium leading-relaxed">
-                  &quot;La aplicación de reserva de bodas hizo que planear
-                  nuestra boda fuera pan comido. Muy recomendable.&quot;
+                  &quot;{t('home.testimonials.first.content')}&quot;
                 </blockquote>
                 <div className="mt-4 flex items-center gap-4">
                   <Image
@@ -96,18 +97,18 @@ export default function HomePage() {
                     width={200}
                   />
                   <div>
-                    <div className="font-medium">Cris y Fran</div>
+                    <div className="font-medium">
+                      {t('home.testimonials.first.names')}
+                    </div>
                     <div className="text-gray-500 dark:text-gray-400">
-                      Casados en 2023
+                      {t('home.testimonials.first.date')}
                     </div>
                   </div>
                 </div>
               </div>
               <div className="rounded-lg bg-white p-6 shadow-lg dark:bg-gray-900">
                 <blockquote className="text-lg font-medium leading-relaxed">
-                  &quot;Esta aplicación cambia las reglas del juego de la
-                  organización de bodas. No podríamos haberlo hecho sin
-                  ella.&quot;
+                  &quot;{t('home.testimonials.second.content')}&quot;
                 </blockquote>
                 <div className="mt-4 flex items-center gap-4">
                   <Image
@@ -118,9 +119,11 @@ export default function HomePage() {
                     width={200}
                   />
                   <div>
-                    <div className="font-medium">Jana y Odette</div>
+                    <div className="font-medium">
+                      {t('home.testimonials.second.names')}
+                    </div>
                     <div className="text-gray-500 dark:text-gray-400">
-                      Casadas en 2024
+                      {t('home.testimonials.second.date')}
                     </div>
                   </div>
                 </div>
@@ -140,15 +143,15 @@ export default function HomePage() {
             </div>
             <nav className="flex flex-col items-center gap-4 md:flex-row">
               <Link className="hover:underline" href="#">
-                Contacto
+                {t('footer.contact')}
               </Link>
               <Link className="hover:underline" href="#">
-                Política de privacidad
+                {t('footer.policy')}
               </Link>
             </nav>
           </div>
           <div className="mt-4 text-center text-sm text-gray-400">
-            © 2024 Cristina de Vaux. Todos los derechos reservados.
+            {t('footer.disclaimer')}
           </div>
         </div>
       </footer>

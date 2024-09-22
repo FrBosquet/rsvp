@@ -19,15 +19,20 @@ export type TranslationValue = string | number | DateTranslationValue
 const DEFAULT_LANG = 'es'
 
 export const getTranslator = (lang?: LangKey) => {
-  return new Translator(lang || DEFAULT_LANG)
+  const translator = new Translator(lang)
+
+  return translator.t
 }
 
 export class Translator {
   langKey: LangKey
   lang: Lang
 
-  constructor(key: LangKey) {
+  constructor(key?: LangKey) {
     // Spanish is the lang by default
+    if (!key) {
+      key = DEFAULT_LANG
+    }
     // During dev time we cannot use a key which is not in the es.json
     // During test time, we check that the key is in the en.json as well
 
@@ -95,11 +100,11 @@ export class Translator {
   /**
    * Returns the translation for the given key
    *
-   * @deprecated Use `intl` instead
+   * @deprecated Use `intl`or `t` instead
    * @param key translation key
    * @returns the content
    */
   getTranslation = this.intl
 
-  t = this.intl
+  t = this.intl.bind(this)
 }
