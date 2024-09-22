@@ -39,6 +39,8 @@
   "errors.edit-guest.unknown": "'Error desconocido! Por favor, contacta con el administrador si el error persiste'",
   "errors.event.unique_slug": "El enlace único especificado ya existe para este evento. Por favor, utiliza un enlace diferente",
   "errors.event.unknown": "¡Error desconocido! Por favor, contacta con el administrador si el error persiste'",
+  "event.bus.guests": "{{pax}} invitados usaran el autobus",
+  "event.bus.title": "Autobus",
   "event.create_invitation.cta": "Crear invitación",
   "event.create_invitation.success": "Invitación creada correctamente",
   "event.guest_of": "Anfitrión:",

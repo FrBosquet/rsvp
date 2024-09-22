@@ -39,6 +39,8 @@
   "errors.edit-guest.unknown": "'Unknown error! Please contact the administrator if the error persists'",
   "errors.event.unique_slug": "The specified unique link already exists for this event. Please use a different link",
   "errors.event.unknown": "Unknown error! Please contact the administrator if the error persists.",
+  "event.bus.guests": "{{pax}} guests will use the bus",
+  "event.bus.title": "Bus",
   "event.create_invitation.cta": "Create invitation",
   "event.create_invitation.success": "Invitation successfully created",
   "event.guest_of": "Host:",
