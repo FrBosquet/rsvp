@@ -32,9 +32,7 @@ export const getUserData = async () => {
 export const getUserIntl = async () => {
   const user = await getUserData()
 
-  const translator = getTranslator(user.prefs.language)
+  const t = getTranslator(user.prefs.language)
 
-  const { t } = translator
-
-  return { user, t: t.bind(translator) }
+  return { user, t }
 }

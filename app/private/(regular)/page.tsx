@@ -39,14 +39,14 @@ export default async function PrivatePage() {
     where: getWhereQuery(isAdmin, user.email)
   })
 
-  const translator = getTranslator(user.prefs.language)
+  const t = getTranslator(user.prefs.language)
 
   const menu = (
     <menu>
       <Link className="contents" href="/private/new">
         <Button size="sm" variant="menu">
           <PlusCircle />
-          {translator.intl('dashboard.create')}
+          {t('dashboard.create')}
         </Button>
       </Link>
     </menu>
