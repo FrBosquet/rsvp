@@ -16,7 +16,7 @@ export const EventHeader = ({ serverEvent }: Props) => {
   const { event, isReady } = useEvent(serverEvent)
 
   return (
-    <header className="flex w-full items-center gap-4 rounded-2xl bg-slate-800 p-2 text-zinc-200 shadow-lg">
+    <header className="flex w-full items-center gap-4  border-b-2 py-4">
       <h1 className="flex-1 text-lg uppercase">
         {isReady ? (
           event?.name

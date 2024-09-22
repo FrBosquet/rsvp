@@ -1,10 +1,8 @@
-import { auth } from '@clerk/nextjs/server'
-import { redirect } from 'next/navigation'
 import React from 'react'
 
+import { EventHeader } from '@/components/dashboard/event-header'
 import { prisma } from '@/lib/prisma'
-
-import { EventHeader } from '../../../../components/dashboard/event-header'
+import { getUserData } from '@/lib/server/user'
 
 interface Route {
   params: {
@@ -14,18 +12,11 @@ interface Route {
 }
 
 export default async function EventDashboardPage({ params, children }: Route) {
-  const { userId } = auth()
+  const user = await getUserData()
   const { slug } = params
+  const { role } = user
 
-  if (!userId) return redirect('/')
-
-  const user = await prisma.user.findUnique({
-    where: {
-      id: userId
-    }
-  })
-
-  const isAdmin = user?.role === 'admin'
+  const isAdmin = role === 'admin'
 
   const event = await prisma.event.findUnique({
     where: {
@@ -52,13 +43,14 @@ export default async function EventDashboardPage({ params, children }: Route) {
   if (
     !event ||
     (!isAdmin &&
-      !event?.users.some((userOnEvent) => userOnEvent.userId === userId))
+      !event?.users.some((userOnEvent) => userOnEvent.userId === user.id))
   ) {
-    redirect('/private')
+    // TODO: How to handle this?
+    return null
   }
 
   return (
-    <section className="container m-auto flex h-s-screen flex-col gap-3 p-4 text-reset">
+    <section className="container flex h-s-screen flex-col gap-3 px-0 text-reset">
       <EventHeader serverEvent={event} />
       {children}
     </section>
