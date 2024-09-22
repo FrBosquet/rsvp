@@ -1,4 +1,3 @@
-/* eslint-disable tailwindcss/no-arbitrary-value */
 'use client'
 
 import { useEvent } from '@/components/hooks/use-event'
@@ -31,7 +30,7 @@ export const GuestManager = () => {
         guestInvited={guestInvited}
         invitationAmount={invitationAmount}
       />
-      <article className="flex w-full items-center gap-2 rounded-2xl bg-slate-700 p-2 text-zinc-200 shadow-md">
+      <article className="flex w-full items-center gap-2 bg-zinc-200 px-3 py-2 shadow-inner">
         <UserSelector users={[]} />
         <SearchInput />
         <InvitationResume
@@ -44,7 +43,7 @@ export const GuestManager = () => {
         <GuestStateFilter className="hidden md:flex" />
       </article>
 
-      <article className="flex w-full flex-1 flex-col gap-4 overflow-y-auto rounded-2xl bg-gradient-to-br from-olive-900 to-olive-950 p-4 text-slate-200">
+      <article className="flex w-full flex-1 flex-col gap-4 overflow-y-auto p-4 text-slate-200">
         {filteredGuests.map((guest) => {
           return (
             <GuestRow
