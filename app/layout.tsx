@@ -1,7 +1,5 @@
 import '@/styles/globals.css'
 
-import { esES } from '@clerk/localizations'
-import { ClerkProvider } from '@clerk/nextjs'
 import { type Viewport } from 'next'
 import {
   Dancing_Script,
@@ -12,6 +10,8 @@ import {
 } from 'next/font/google'
 import NextTopLoader from 'nextjs-toploader'
 
+import { CustomClerkProvider } from '@/components/providers/custom-clerk'
+import { QueryProvider } from '@/components/providers/query'
 import { Toaster } from '@/components/ui/sonner'
 
 export const metadata = {
@@ -69,17 +69,19 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <ClerkProvider localization={esES}>
-      <html lang="en">
-        <body
-          className={`min-h-s-screen antialiased ${noto.className} ${script.variable} ${serif.variable} ${dancingScript.variable} ${noto.variable} ${fira.variable}`}
-        >
-          <NextTopLoader />
-          <Toaster richColors />
+    <html lang="en">
+      <body
+        className={`min-h-s-screen antialiased ${noto.className} ${script.variable} ${serif.variable} ${dancingScript.variable} ${noto.variable} ${fira.variable}`}
+      >
+        <QueryProvider>
+          <CustomClerkProvider>
+            <NextTopLoader />
+            <Toaster richColors />
 
-          {children}
-        </body>
-      </html>
-    </ClerkProvider>
+            {children}
+          </CustomClerkProvider>
+        </QueryProvider>
+      </body>
+    </html>
   )
 }

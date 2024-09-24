@@ -10,7 +10,7 @@ import { useIntl } from '@/components/providers/translator'
 import { Button } from '@/components/ui/button'
 
 export const PreferencesContent = () => {
-  const { setLang, intl } = useIntl()
+  const { t } = useIntl()
   const queryClient = useQueryClient()
 
   const { data } = useQuery({
@@ -20,14 +20,9 @@ export const PreferencesContent = () => {
 
   const { isPending, mutate } = useMutation({
     mutationFn: (data: FormData) => setUserPrefs(data),
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['user-prefs'] })
-
-      if (data?.language) {
-        setLang(data.language)
-      }
-
-      toast.success('Preferencias guardadas')
+      toast.success(t('preferences.success'))
     }
   })
 
@@ -43,7 +38,7 @@ export const PreferencesContent = () => {
     <section className="flex flex-col gap-4">
       <form className="contents" onSubmit={handleSubmit}>
         <h2 className="flex items-center gap-2 border-b-2 font-sans text-xl uppercase">
-          <Languages /> {intl('preferences.language')}
+          <Languages /> {t('preferences.language')}
         </h2>
 
         <Select
@@ -53,18 +48,18 @@ export const PreferencesContent = () => {
           values={[
             {
               value: 'en',
-              label: intl('preferences.language.en')
+              label: t('preferences.language.en')
             },
             {
               value: 'es',
-              label: intl('preferences.language.es')
+              label: t('preferences.language.es')
             }
           ]}
         />
 
         <section>
           <Button disabled={isPending} type="submit" variant="default">
-            {intl('preferences.save')}
+            {t('preferences.save')}
           </Button>
         </section>
       </form>

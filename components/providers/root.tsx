@@ -1,7 +1,6 @@
 import { UserPrefs } from '@/types'
 
 import { TooltipProvider } from '../ui/tooltip'
-import { QueryProvider } from './query'
 import { TranslatorProvider } from './translator'
 
 type Props = {
@@ -13,9 +12,7 @@ type Props = {
 export const RootProvider = ({ children, prefs }: Props) => {
   return (
     <TranslatorProvider defaultLanguage={prefs.language}>
-      <QueryProvider>
-        <TooltipProvider>{children}</TooltipProvider>
-      </QueryProvider>
+      <TooltipProvider>{children}</TooltipProvider>
     </TranslatorProvider>
   )
 }

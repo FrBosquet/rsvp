@@ -1,7 +1,9 @@
 'use client'
 
-import { createContext, useContext, useMemo, useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import { createContext, useContext, useMemo } from 'react'
 
+import { getUserPrefs } from '@/actions/prefs'
 import {
   LangKey,
   TranslationKey,
@@ -21,12 +23,10 @@ type IntlFunction = (
 
 const TranslatorContext = createContext<{
   lang: LangKey
-  setLang: (lang: LangKey) => void
   intl: IntlFunction
   t: IntlFunction
 }>({
   lang: 'en',
-  setLang: () => null,
   intl: (key) => key,
   t: (key) => key
 })
@@ -45,12 +45,15 @@ export const TranslatorProvider = ({
   children,
   defaultLanguage = 'en'
 }: Props) => {
-  const [lang, setLang] = useState(defaultLanguage)
-  const translator = useMemo(() => new Translator(lang), [lang])
+  const { data: prefs } = useQuery({
+    queryKey: ['user-prefs'],
+    queryFn: () => getUserPrefs()
+  })
 
-  const handleSetLang = (lang: LangKey) => {
-    setLang(lang)
-  }
+  const translator = useMemo(
+    () => new Translator(prefs?.language || defaultLanguage),
+    [defaultLanguage, prefs?.language]
+  )
 
   const intl = (
     key: TranslationKey,
@@ -61,7 +64,11 @@ export const TranslatorProvider = ({
 
   return (
     <TranslatorContext.Provider
-      value={{ lang, setLang: handleSetLang, intl, t: intl }}
+      value={{
+        lang: prefs?.language || defaultLanguage,
+        intl,
+        t: intl
+      }}
     >
       {children}
     </TranslatorContext.Provider>
