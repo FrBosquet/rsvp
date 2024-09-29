@@ -12,8 +12,8 @@ export default async function PrivateLayout({
 
   return (
     <RootProvider prefs={userPrefs}>
-      <main className="container mx-auto flex min-h-screen flex-col p-4">
-        <header className="flex w-full items-center justify-between gap-2 rounded-2xl py-4">
+      <main className="container mx-auto flex min-h-screen flex-col p-4 max-lg:p-0">
+        <header className="flex w-full items-center justify-between gap-2 py-4 max-lg:border-b max-lg:p-4">
           <PageTitle />
           <UserButton />
         </header>

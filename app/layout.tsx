@@ -75,7 +75,7 @@ export default function RootLayout({
       >
         <QueryProvider>
           <CustomClerkProvider>
-            <NextTopLoader />
+            <NextTopLoader color="#e5e7eb33" height={65} showSpinner={false} />
             <Toaster richColors />
 
             {children}

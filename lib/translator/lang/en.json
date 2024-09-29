@@ -12,6 +12,7 @@
   "allergies.guests": "{{pax}} invitations have been noted with allergies",
   "allergies.title": "Allergies",
   "cancel": "Cancel",
+  "close": "Close",
   "create": "Create",
   "dashboard.create": "Create event",
   "dashboard.event.accept": "Accept invitation",

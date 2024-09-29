@@ -14,11 +14,13 @@ const buttonVariants = cva(
         menu: "bg-primary text-primary-foreground hover:bg-primary/90 flex",
         acceptance: "uppercase text-sm font-bold bg-orange-400 hover:bg-rose-400 text-zinc-800 p-2 rounded-2xl shadow-lg disabled:opacity-25 disabled:cursor-wait",
         destructive: "bg-red-500 text-white hover:bg-red-600",
+        sidebar: "bg-primary text-primary-foreground hover:bg-primary/90 rounded-none w-full text-base justify-start",
       },
       size: {
         default: "h-10 px-4 py-2 gap-4",
         sm: "h-9 rounded-md px-2 gap-2",
         lg: "h-11 rounded-md px-8 gap-8",
+        sidebar: "h-12 px-3 py-4 gap-2",
         icon: "size-8",
       },
     },
