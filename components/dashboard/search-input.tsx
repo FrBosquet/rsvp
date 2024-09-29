@@ -4,12 +4,12 @@
 import { UserSearch } from 'lucide-react'
 import { twMerge } from 'tailwind-merge'
 
-import { useEvent } from '@/components/hooks/use-event'
+import { useLegacyEvent } from '@/components/hooks/use-legacy-event'
 import { useIntl } from '@/components/providers/translator'
 
 export const SearchInput = ({ className }: { className?: string }) => {
   const { t } = useIntl()
-  const { updateNameFilter } = useEvent()
+  const { updateNameFilter } = useLegacyEvent()
 
   return (
     <p className={twMerge('relative flex items-center px-1', className)}>

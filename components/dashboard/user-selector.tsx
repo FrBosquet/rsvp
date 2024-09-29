@@ -3,7 +3,7 @@
 import { type User } from '@prisma/client'
 import { twMerge } from 'tailwind-merge'
 
-import { useEvent } from '@/components/hooks/use-event'
+import { useLegacyEvent } from '@/components/hooks/use-legacy-event'
 import { useIntl } from '@/components/providers/translator'
 import {
   Select,
@@ -19,7 +19,7 @@ export const UserSelector = ({
   className?: string
 }) => {
   const { t } = useIntl()
-  const { hosts, setFilter, filters } = useEvent()
+  const { hosts, setFilter, filters } = useLegacyEvent()
 
   const handleChange = (value: string) => {
     if (value === '-') {

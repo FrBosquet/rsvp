@@ -3,7 +3,7 @@
 
 import { twMerge } from 'tailwind-merge'
 
-import { useEvent } from '@/components/hooks/use-event'
+import { useLegacyEvent } from '@/components/hooks/use-legacy-event'
 import { STATE } from '@/types'
 
 export const GuestStateFilter = ({ className }: { className?: string }) => {
@@ -13,7 +13,7 @@ export const GuestStateFilter = ({ className }: { className?: string }) => {
     guestAccepted,
     guestRejected,
     filters
-  } = useEvent()
+  } = useLegacyEvent()
 
   return (
     <div className={twMerge('flex gap-1', className)}>

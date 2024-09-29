@@ -8,7 +8,7 @@ import { twMerge } from 'tailwind-merge'
 
 import { toggleContacted } from '@/app/actions'
 import { CopyText } from '@/components/copy'
-import { useEvent } from '@/components/hooks/use-event'
+import { useLegacyEvent } from '@/components/hooks/use-legacy-event'
 import { Spinner } from '@/components/spinner'
 import {
   Tooltip,
@@ -62,7 +62,7 @@ const StateWidget = ({ state }: { state: string }) => {
 const ContactedWidget = ({ guest }: { guest: GuestWithHost }) => {
   const [loading, setLoading] = useState(false)
   const params = useParams()
-  const { updateGuest } = useEvent()
+  const { updateGuest } = useLegacyEvent()
   const eventSlug = (params?.slug as string) ?? null
 
   const handleCheck = async (e: React.ChangeEvent<HTMLInputElement>) => {

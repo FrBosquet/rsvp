@@ -1,6 +1,6 @@
 'use client'
 
-import { useEvent } from '@/components/hooks/use-event'
+import { useLegacyEvent } from '@/components/hooks/use-legacy-event'
 import { Spinner } from '@/components/spinner'
 
 import { AddGuestModal } from './add-guest-modal'
@@ -19,7 +19,7 @@ export const GuestManager = () => {
     guestInvited,
     invitationAmount,
     filteredGuests
-  } = useEvent()
+  } = useLegacyEvent()
 
   if (!isReady) return <Spinner /> // TODO: Add an skeleton
 

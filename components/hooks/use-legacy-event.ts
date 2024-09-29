@@ -85,7 +85,14 @@ const useStore = create<Store>((set) => ({
   filters: {}
 }))
 
-export const useEvent = (serverEvent?: Event & { guests: GuestWithHost[] }) => {
+/**
+ * use store for the event
+ *
+ * @deprecated migrating to react query
+ */
+export const useLegacyEvent = (
+  serverEvent?: Event & { guests: GuestWithHost[] }
+) => {
   const isReady = useStore((state) => state.isReady)
   const setReady = useStore((state) => state.setIsReady)
   const guests = useStore((state) => state.guests)

@@ -2,7 +2,7 @@
 
 import { useMemo } from 'react'
 
-import { useEvent } from '@/components/hooks/use-event'
+import { useLegacyEvent } from '@/components/hooks/use-legacy-event'
 import { Spinner } from '@/components/spinner'
 import { NOTES } from '@/types'
 
@@ -11,7 +11,7 @@ import { GuestRow } from './guest-row'
 
 export const AllergiesManager = () => {
   const { t } = useIntl()
-  const { isReady, updateGuest, deleteGuest, guests } = useEvent()
+  const { isReady, updateGuest, deleteGuest, guests } = useLegacyEvent()
 
   const guestWithAllergies = useMemo(
     () =>
