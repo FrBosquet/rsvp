@@ -1,12 +1,15 @@
 'use client'
 
-import { Home } from 'lucide-react'
+import { AlertCircle, Home } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
+import { useEvent } from '../hooks/use-event'
 import { useIntl } from '../providers/translator'
+import { Skeleton } from '../ui/skeleton'
 
 const useTitle = () => {
+  const { event, hasEvent, isLoading } = useEvent()
   const { t } = useIntl()
 
   const pathname = usePathname()
@@ -15,14 +18,14 @@ const useTitle = () => {
   const chunks = pathname.slice(1).split('/')
   const chunkAmount = chunks.length
 
-  if (chunkAmount === 3 && chunks[2] === 'bus') return t('event.bus.title')
-  if (chunkAmount === 3 && chunks[2] === 'settings') return t('settings')
-  if (chunkAmount === 3 && chunks[2] === 'allergies')
-    return t('allergies.title')
   if (chunkAmount === 2 && chunks[1] === 'new') return t('new_event.title')
   if (chunkAmount === 2 && chunks[1] === 'preferences')
     return t('preferences.title')
-  if (chunkAmount === 2 && chunks[0] === 'private') return t('event.title')
+  if (chunkAmount > 2 && chunks[0] === 'private') {
+    if (isLoading) return <Skeleton>Name of the event</Skeleton>
+    if (!hasEvent) return <AlertCircle />
+    return event.name
+  }
   if (chunkAmount === 1 && chunks[0] === 'private') return t('dashboard.title')
 
   return pathname

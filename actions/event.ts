@@ -5,6 +5,27 @@ import { redirect } from 'next/navigation'
 
 import { prismaClient } from '@/lib/prisma'
 
+export const getEvent = async (formData: FormData) => {
+  const slug = formData.get('slug')
+
+  const event = await prismaClient.event.findFirst({
+    where: {
+      slug: slug as string
+    },
+    include: {
+      users: {
+        include: {
+          user: true
+        }
+      }
+    }
+  })
+
+  if (!event) throw new Error('Event not found')
+
+  return event
+}
+
 export const acceptHost = async (formData: FormData) => {
   const user = await currentUser()
   if (!user) throw new Error('User not found')
