@@ -4,6 +4,8 @@ import { create } from 'zustand'
 
 import { type GuestWithHost, type STATE } from '@/types'
 
+import { useEvent } from './use-event'
+
 interface Filter {
   name?: string
   state?: string
@@ -93,18 +95,31 @@ const useStore = create<Store>((set) => ({
 export const useLegacyEvent = (
   serverEvent?: Event & { guests: GuestWithHost[] }
 ) => {
-  const isReady = useStore((state) => state.isReady)
+  const { isLoading, event } = useEvent()
+
+  const isReady = !isLoading
+  /**
+   * @deprecated use a proper mutation
+   */
   const setReady = useStore((state) => state.setIsReady)
   const guests = useStore((state) => state.guests)
+  /**
+   * @deprecated use a proper mutation
+   */
   const setGuests = useStore((state) => state.setGuest)
+  /**
+   * @deprecated use a proper mutation
+   */
   const updateGuest = useStore((state) => state.updateGuest)
+  /**
+   * @deprecated use a proper mutation
+   */
   const deleteGuest = useStore((state) => state.deleteGuest)
   const invitationAmount = guests?.length ?? 0
   const filters = useStore((state) => state.filters)
   const setFilter = useStore((state) => state.setFilter)
   const toggleStateFilter = useStore((state) => state.toggleStateFilter)
   const setEvent = useStore((state) => state.setEvent)
-  const event = useStore((state) => state.event)
 
   const updateNameFilter = (event: FormEvent<HTMLInputElement>) => {
     setFilter('name', event.currentTarget.value)
@@ -140,6 +155,10 @@ export const useLegacyEvent = (
     [guests]
   )
 
+  /**
+   * @deprecated use a proper mutation
+   * @param guest the guest to add
+   */
   const addGuest = (guest: GuestWithHost) => {
     setGuests(
       [...(guests ?? []), guest].sort((a, b) => a.name.localeCompare(b.name))

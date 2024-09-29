@@ -12,6 +12,9 @@ interface Props {
   serverEvent: Event & { guests: GuestWithHost[] }
 }
 
+/**
+ * @deprecated removing this in favor of the event sidebar
+ */
 export const EventHeader = ({ serverEvent }: Props) => {
   const { event, isReady } = useLegacyEvent(serverEvent)
 

@@ -21,7 +21,7 @@ const useTitle = () => {
   if (chunkAmount === 2 && chunks[1] === 'new') return t('new_event.title')
   if (chunkAmount === 2 && chunks[1] === 'preferences')
     return t('preferences.title')
-  if (chunkAmount > 2 && chunks[0] === 'private') {
+  if (chunkAmount >= 2 && chunks[0] === 'private') {
     if (isLoading) return <Skeleton>Name of the event</Skeleton>
     if (!hasEvent) return <AlertCircle />
     return event.name
