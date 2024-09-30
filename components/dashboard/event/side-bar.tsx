@@ -56,10 +56,13 @@ export const EventSidebar = () => {
 
   const buildHref = (href: string) => `/private/${slug}${href}`
   const handleValueChange = (value: string) => {
-    np.start()
     const section = sections.find((section) => section.value === value)
-
     if (!section) return
+
+    const nextPath = buildHref(section.href)
+    if (nextPath === pathname) return
+
+    np.start()
     push(buildHref(section.href))
   }
 
@@ -73,9 +76,9 @@ export const EventSidebar = () => {
       <section
         className={cn(
           // base styles
-          'relative mr-4 w-56 border transition-all h-full bg-white z-50 overflow-hidden max-lg:shadow-xl',
+          'relative mr-4 w-56 border transition-all bg-white z-50 overflow-hidden max-lg:shadow-xl',
           // mobile styles
-          'max-lg:fixed max-lg:left-0 max-sm:w-screen',
+          'max-lg:fixed max-lg:left-0 max-sm:w-screen max-lg:h-full',
           // closed styles for mobile
           !open && 'max-lg:mr-0 max-lg:w-0 max-sm:w-0'
         )}
