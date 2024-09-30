@@ -48,6 +48,8 @@
   "event.guest_of": "Anfitrión:",
   "event.navigation.allergies": "Allergias",
   "event.navigation.guests": "Invitados",
+  "event.navigation.invitation": "Invitación",
+  "event.navigation.og": "Open Graph",
   "event.navigation.settings": "Configurar",
   "event.navigation.suttle": "Autobus",
   "event.resume": "{{amount}} invitaciones / {{guest}} invitados",
@@ -90,7 +92,6 @@
   "preferences.title": "Preferencias",
   "save": "Guardar",
   "search_dots": "Buscar...",
-  "setti": "",
   "settings": "Configuración",
   "slug": "Slug",
   "you": "Tú"

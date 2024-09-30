@@ -113,7 +113,7 @@ export const OgManager = async ({ slug }: Props) => {
   }
 
   return (
-    <article className="flex flex-col gap-1 rounded-2xl bg-slate-700 p-3 text-zinc-200 shadow-md">
+    <article className="flex flex-col gap-1 p-3">
       <h1 className="text-lg">Configuración Open Graph</h1>
       <p className="text-sm text-zinc-400">
         Open graph es el protocolo que permite mostrar previsualizaciones de una

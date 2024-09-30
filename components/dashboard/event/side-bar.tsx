@@ -3,11 +3,14 @@
 import {
   BusIcon,
   ChevronsRight,
+  ImageIcon,
   LucideIcon,
   NutOffIcon,
   Settings2Icon,
+  TabletIcon,
   UserIcon
 } from 'lucide-react'
+import Link from 'next/link'
 import { useParams, usePathname, useRouter } from 'next/navigation'
 import np from 'nprogress'
 import { useEffect, useState } from 'react'
@@ -28,6 +31,7 @@ type Section = {
   href: string
   key: TranslationKey
   Icon: LucideIcon
+  sections?: Array<Omit<Section, 'sections'>>
 }
 
 const sections: Section[] = [
@@ -43,7 +47,21 @@ const sections: Section[] = [
     value: 'settings',
     href: '/settings',
     key: 'event.navigation.settings',
-    Icon: Settings2Icon
+    Icon: Settings2Icon,
+    sections: [
+      {
+        value: 'settings',
+        href: '/settings',
+        key: 'event.navigation.invitation',
+        Icon: TabletIcon
+      },
+      {
+        value: 'settings/og',
+        href: '/settings/opengraph',
+        key: 'event.navigation.og',
+        Icon: ImageIcon
+      }
+    ]
   }
 ]
 
@@ -55,8 +73,17 @@ export const EventSidebar = () => {
   const slug = useParams<{ slug: string }>().slug
 
   const buildHref = (href: string) => `/private/${slug}${href}`
+  const pathMatch = (href: string): boolean => {
+    if (href === '') return pathname === `/private/${slug}`
+    return pathname.startsWith(buildHref(href))
+  }
   const handleValueChange = (value: string) => {
     const section = sections.find((section) => section.value === value)
+
+    if (!Boolean(section?.sections)) {
+      setOpen(false)
+    }
+
     if (!section) return
 
     const nextPath = buildHref(section.href)
@@ -89,20 +116,40 @@ export const EventSidebar = () => {
             type="single"
             onValueChange={handleValueChange}
           >
-            {sections.map(({ value, key, Icon, href }) => (
+            {sections.map(({ value, key, Icon, href, sections }) => (
               <AccordionItem
                 key={key}
-                className={cn(buildHref(href) === pathname && 'bg-gray-200')}
+                className={cn(pathMatch(href) && 'bg-gray-200')}
                 value={value}
               >
-                <AccordionTrigger className="px-3">
+                <AccordionTrigger
+                  className="px-3"
+                  openable={!!(sections && sections.length > 1)}
+                >
                   <div className="flex items-center gap-2">
                     <Icon size={16} /> {t(key)}
                   </div>
                 </AccordionTrigger>
-                <AccordionContent className="flex flex-col p-3">
-                  {t(key)}
-                </AccordionContent>
+                {sections && sections.length > 1 && (
+                  <AccordionContent className="flex flex-col">
+                    {sections.map((subsection) => {
+                      const selected = buildHref(subsection.href) === pathname
+                      return (
+                        <Link
+                          key={subsection.key}
+                          className={cn(
+                            'flex items-center gap-2 px-3 py-2 transition-all bg-transparent',
+                            selected && 'bg-gray-900 text-gray-200'
+                          )}
+                          href={buildHref(subsection.href)}
+                        >
+                          <subsection.Icon size={16} />
+                          {t(subsection.key)}
+                        </Link>
+                      )
+                    })}
+                  </AccordionContent>
+                )}
               </AccordionItem>
             ))}
           </Accordion>
