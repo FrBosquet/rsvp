@@ -53,6 +53,7 @@
   "event.navigation.settings": "Configurar",
   "event.navigation.suttle": "Autobus",
   "event.resume": "{{amount}} invitaciones / {{guest}} invitados",
+  "event.settings.invitation.title": "Tu invitación",
   "event.title": "Tu evento",
   "events.guest_names": "Nombres de los invitados",
   "events.guest_names.helptext": "Separados por comas. Pej. \"Lola,Ramón\"",

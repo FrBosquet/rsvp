@@ -53,6 +53,7 @@
   "event.navigation.settings": "Settings",
   "event.navigation.suttle": "Bus",
   "event.resume": "{{amount}} invitations / {{guest}} guests",
+  "event.settings.invitation.title": "Your invitation",
   "event.title": "Your event",
   "events.guest_names": "Names of guests",
   "events.guest_names.helptext": "Separated by commas. f.i. \"Meg,Simon\".",

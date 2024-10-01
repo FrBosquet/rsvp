@@ -3,6 +3,7 @@ import { revalidatePath, revalidateTag } from 'next/cache'
 import { prisma } from '@/lib/prisma'
 import { SETTING } from '@/types'
 
+import { FormTitle } from '../../form/title'
 import { ImageInput } from './image-input'
 import { SubmitButton } from './submit-button'
 
@@ -113,8 +114,8 @@ export const OgManager = async ({ slug }: Props) => {
   }
 
   return (
-    <article className="flex flex-col gap-1 p-3">
-      <h1 className="text-lg">Configuración Open Graph</h1>
+    <article className="flex flex-col gap-1">
+      <FormTitle>Configuración Open Graph</FormTitle>
       <p className="text-sm text-zinc-400">
         Open graph es el protocolo que permite mostrar previsualizaciones de una
         web al pegar el enlace en aplicaciones como WhatsApp, Twitter o Facebook

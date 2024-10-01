@@ -5,6 +5,7 @@ import { Languages } from 'lucide-react'
 import { toast } from 'sonner'
 
 import { getUserPrefs, setUserPrefs } from '@/actions/prefs'
+import { FormTitle } from '@/components/dashboard/form/title'
 import { Select } from '@/components/form/select'
 import { useIntl } from '@/components/providers/translator'
 import { Button } from '@/components/ui/button'
@@ -37,9 +38,9 @@ export const PreferencesContent = () => {
   return (
     <section className="flex flex-col gap-4">
       <form className="contents" onSubmit={handleSubmit}>
-        <h2 className="flex items-center gap-2 border-b-2 font-sans text-xl uppercase">
+        <FormTitle>
           <Languages /> {t('preferences.language')}
-        </h2>
+        </FormTitle>
 
         <Select
           defaultValue={data?.language}
