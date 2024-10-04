@@ -1,6 +1,7 @@
 'use client'
 
 import { FormTitle } from '@/components/dashboard/form/title'
+import { CardFlipper } from '@/components/event/flipper'
 import { useIntl } from '@/components/providers/translator'
 
 export const SettingsPageContent = () => {
@@ -13,7 +14,22 @@ export const SettingsPageContent = () => {
       </article>
 
       <article className="flex h-full flex-1 items-center justify-center bg-rose-200">
-        Aquí va la preview
+        <CardFlipper
+          guest={{
+            slug: 'example-slug',
+            eventSlug: 'example-event-slug',
+            name: 'John Doe',
+            amount: null,
+            maxAmount: 5,
+            state: 'confirmed',
+            hostId: 'host-id',
+            isFamily: false,
+            contacted: false,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+            notes: []
+          }}
+        />
       </article>
     </section>
   )

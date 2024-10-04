@@ -2,5 +2,8 @@
     "extends": [
         "frbosquet-tsnext",
         "plugin:@tanstack/eslint-plugin-query/recommended"
-    ]
+    ],
+    "rules": {
+        "tailwindcss/no-custom-classname": "error"
+    }
 }
