@@ -7,7 +7,7 @@ import { twMerge } from 'tailwind-merge'
 import click from '@/public/click.png'
 
 import { useGuest } from '../hooks/use-guest'
-import { Card } from './Card'
+import { Card } from './card'
 
 interface CoverProps {
   guest: Guest

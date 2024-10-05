@@ -3,7 +3,7 @@
 import { twMerge } from 'tailwind-merge'
 
 import { useGuest } from '../../hooks/use-guest'
-import { Card } from '../Card'
+import { Card } from '../card'
 import { BackfaceMenu } from './backface-menu'
 
 export const Backface = () => {

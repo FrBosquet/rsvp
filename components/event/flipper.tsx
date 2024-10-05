@@ -20,7 +20,7 @@ export const CardFlipper = ({ guest: serverGuest }: Props) => {
   return (
     <aside
       className={twMerge(
-        'flex items-center text-md justify-center overflow-hidden perspective size-screen opacity-0 transition',
+        'flex items-center text-md justify-center overflow-hidden perspective size-available opacity-0 transition bg-rose-200',
         guest != null && 'opacity-100'
       )}
     >

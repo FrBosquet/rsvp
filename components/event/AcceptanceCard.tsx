@@ -2,7 +2,7 @@
 
 import { MinusCircleIcon, PlusCircleIcon } from 'lucide-react'
 import { useParams } from 'next/navigation'
-import { type FormEvent, type MouseEvent, useEffect, useState } from 'react'
+import { useEffect, useState, type FormEvent, type MouseEvent } from 'react'
 import { twMerge } from 'tailwind-merge'
 
 import { replyToInvitation } from '@/app/actions'
@@ -11,7 +11,7 @@ import { STATE } from '@/types'
 import { useGuest } from '../hooks/use-guest'
 import { Spinner } from '../spinner'
 import { AnimatedButton } from './animated-button'
-import { Card } from './Card'
+import { Card } from './card'
 
 export const AcceptanceCard = () => {
   const {

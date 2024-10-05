@@ -204,13 +204,25 @@ module.exports = {
         }
       })
 
+      // Card stuff
+      addUtilities({
+        '.size-available': {
+          width: 'var(--available-width, 100svw)',
+          height: 'var(--available-height, 100svh)'
+        },
+        '.size-card': {
+          width: 'calc(var(--card-height) / 2)',
+          height: 'var(--card-height)'
+        }
+      })
+
       addComponents({
         '.card': {
           '--ratio': '1.8',
           '--available-height': ['100vh', '100dvh'],
-          '--card-width':
-            'min(calc(min(90vw, calc((var(--available-height) / var(--ratio)) - 2rem))), calc(1020px / var(--ratio)))',
-          '--card-height': 'calc(var(--card-width) * var(--ratio))',
+          // '--card-width':
+          //   'min(calc(min(90vw, calc((var(--available-height) / var(--ratio)) - 2rem))), calc(1020px / var(--ratio)))',
+          // '--card-height': 'calc(var(--card-width) * var(--ratio))',
           '--letter-size': 'calc(var(--card-height) / 40)',
           display: 'flex',
           padding: 'var(--letter-size)',

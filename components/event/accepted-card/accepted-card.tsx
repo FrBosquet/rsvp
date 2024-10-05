@@ -6,7 +6,7 @@ import { twMerge } from 'tailwind-merge'
 import { useGuest } from '@/components/hooks/use-guest'
 import { TABS } from '@/types'
 
-import { Card } from '../Card'
+import { Card } from '../card'
 import { Assistance } from './assistance'
 import { Commuting } from './commuting'
 import { Contact } from './contact'
