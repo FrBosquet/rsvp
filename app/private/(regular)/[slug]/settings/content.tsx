@@ -64,7 +64,9 @@ export const SettingsPageContent = () => {
       ['--max-width-horizontal']:
         'calc((var(--available-width) - var(--card-margin)) * 2)',
       ['--card-height']:
-        'min(var(--max-height-vertical), var(--max-width-horizontal))'
+        'min(var(--max-height-vertical), var(--max-width-horizontal))',
+      ['--card-bg']: 'pink',
+      ['--card-unit']: 'calc(var(--card-height) / 100)'
     }
   }, [dimensions])
 

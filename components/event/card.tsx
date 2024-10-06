@@ -1,4 +1,4 @@
-import { twMerge } from 'tailwind-merge'
+import { cn } from '@/lib/utils'
 
 interface Props {
   children: React.ReactNode
@@ -9,8 +9,9 @@ interface Props {
 export const Card = ({ children, onClick, className }: Props) => {
   return (
     <div
-      className={twMerge(
+      className={cn(
         'bg-cover bg-[url(/paper/paper.webp)] bg-center absolute card size-card flex flex-col items-center justify-center backface-hidden shadow-2xl text-inset',
+        'bg-card-debug',
         onClick ? 'cursor-pointer' : 'cursor-auto',
         className
       )}

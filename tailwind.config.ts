@@ -213,7 +213,19 @@ module.exports = {
         '.size-card': {
           width: 'calc(var(--card-height) / 2)',
           height: 'var(--card-height)'
-        }
+        },
+        '.bg-card-bg': {
+          background: 'var(--card-bg)'
+        },
+        '.bg-card-debug': {
+          backgroundImage: 'url(/paper/debug.png)',
+          backgroundSize: 'calc(var(--card-unit))'
+        },
+        '.text-card-hero': { fontSize: 'calc(var(--card-unit) * 16)' },
+        '.text-card-title': { fontSize: 'calc(var(--card-unit) * 8)' },
+        '.text-card-big': { fontSize: 'calc(var(--card-unit) * 6)' },
+        '.text-card-medium': { fontSize: 'calc(var(--card-unit) * 4)' },
+        '.text-card-little': { fontSize: 'calc(var(--card-unit) * 3)' }
       })
 
       addComponents({

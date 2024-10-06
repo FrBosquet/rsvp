@@ -2,7 +2,7 @@
 
 import { MinusCircleIcon, PlusCircleIcon } from 'lucide-react'
 import { useParams } from 'next/navigation'
-import { useEffect, useState, type FormEvent, type MouseEvent } from 'react'
+import { type FormEvent, type MouseEvent, useEffect, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 
 import { replyToInvitation } from '@/app/actions'
