@@ -1,11 +1,12 @@
 'use client'
 
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { FormTitle } from '@/components/dashboard/form/title'
-import { CardFlipper } from '@/components/event/flipper'
+import { Invitation } from '@/components/event/invitation'
 import { useIntl } from '@/components/providers/translator'
 import { cn } from '@/lib/utils'
+import { InvitationConfig } from '@/types'
 
 const mockGuest = {
   slug: 'example-slug',
@@ -54,21 +55,10 @@ export const SettingsPageContent = () => {
     }
   }, [])
 
-  const configStyles = useMemo(() => {
-    return {
-      ['--available-height']: dimensions.height,
-      ['--available-width']: dimensions.width,
-      ['--card-margin']: '2rem',
-      ['--max-height-vertical']:
-        'calc(var(--available-height) - var(--card-margin))',
-      ['--max-width-horizontal']:
-        'calc((var(--available-width) - var(--card-margin)) * 2)',
-      ['--card-height']:
-        'min(var(--max-height-vertical), var(--max-width-horizontal))',
-      ['--card-bg']: 'pink',
-      ['--card-unit']: 'calc(var(--card-height) / 100)'
-    }
-  }, [dimensions])
+  const config: InvitationConfig = {
+    containerWidth: dimensions.width,
+    containerHeight: dimensions.height
+  }
 
   return (
     <section
@@ -84,9 +74,8 @@ export const SettingsPageContent = () => {
       <article
         ref={ref}
         className="flex h-full flex-1 items-center justify-center overflow-hidden border"
-        style={configStyles as any}
       >
-        {dimensions.hasRef && <CardFlipper guest={mockGuest} />}
+        {dimensions.hasRef && <Invitation config={config} guest={mockGuest} />}
       </article>
     </section>
   )

@@ -87,3 +87,8 @@ export type UserPrefs = {
 export type UserWithPrefs = User & {
   prefs: UserPrefs
 }
+
+export type InvitationConfig = {
+  containerWidth?: string
+  containerHeight?: string
+}
