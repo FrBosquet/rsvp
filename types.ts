@@ -91,4 +91,5 @@ export type UserWithPrefs = User & {
 export type InvitationConfig = {
   containerWidth?: string
   containerHeight?: string
+  backgroundColor?: string
 }

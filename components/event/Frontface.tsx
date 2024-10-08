@@ -15,7 +15,7 @@ interface CoverProps {
 
 const SingleCover = ({ guest: { name } }: CoverProps) => {
   return (
-    <section className="flex w-full flex-col items-center border border-red-600 font-dancing leading-none text-card-big">
+    <section className="flex w-full flex-col items-center font-dancing leading-none text-card-big">
       <p>{name}</p>
     </section>
   )

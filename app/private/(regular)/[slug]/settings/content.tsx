@@ -1,7 +1,10 @@
 'use client'
 
+import { Paintbrush2 } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 
+import { CheckItem } from '@/components/dashboard/form/check-item'
+import { FormLabel } from '@/components/dashboard/form/label'
 import { FormTitle } from '@/components/dashboard/form/title'
 import { Invitation } from '@/components/event/invitation'
 import { useIntl } from '@/components/providers/translator'
@@ -23,7 +26,31 @@ const mockGuest = {
   notes: []
 }
 
+const bgColors = [
+  {
+    name: 'rose',
+    value: 'pink'
+  },
+  {
+    name: 'emerald',
+    value: '#6ee7b7'
+  },
+  {
+    name: 'citric',
+    value: '#fdba74'
+  },
+  {
+    name: 'ruby',
+    value: '#3f3f46'
+  }
+]
+
+type State = {
+  bg?: string
+}
+
 export const SettingsPageContent = () => {
+  const [formState, setFormState] = useState<State>({})
   const { t } = useIntl()
 
   const ref = useRef<HTMLDivElement>(null)
@@ -57,18 +84,53 @@ export const SettingsPageContent = () => {
 
   const config: InvitationConfig = {
     containerWidth: dimensions.width,
-    containerHeight: dimensions.height
+    containerHeight: dimensions.height,
+    backgroundColor: formState.bg
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLFieldSetElement>) => {
+    const target = e.target
+
+    switch (target.type) {
+      case 'radio': {
+        const { checked, value } = target as unknown as HTMLInputElement
+
+        const color = bgColors.find((color) => color.name === value)
+
+        setFormState((prev) => ({
+          ...prev,
+          [target.name]: checked ? color?.value : null
+        }))
+        break
+      }
+      default:
+        throw new Error('Invalid input type')
+    }
   }
 
   return (
     <section
       className={cn(
-        'flex h-full opacity-00 transition-all',
+        'flex h-full opacity-00 transition-all gap-2',
         dimensions.hasRef && 'opacity-100'
       )}
     >
-      <article className="flex-1 flex-col">
+      <article className="flex-1 flex-col ">
         <FormTitle>{t('event.settings.invitation.title')}</FormTitle>
+        <FormLabel htmlFor="bg-color">
+          <Paintbrush2 size={14} /> {t('event.settings.invitation.bg.title')}
+        </FormLabel>
+        <fieldset className="grid grid-cols-4 gap-2" onChange={handleChange}>
+          {bgColors.map(({ name, value }) => (
+            <CheckItem
+              key={name}
+              className="bg-card-bg"
+              name="bg"
+              style={{ '--card-bg': value }}
+              value={name}
+            />
+          ))}
+        </fieldset>
       </article>
 
       <article

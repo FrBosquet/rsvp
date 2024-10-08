@@ -36,7 +36,7 @@ export const Invitation = ({ guest: serverGuest, config }: Props) => {
         'calc((var(--available-width) - var(--card-margin)) * 2)',
       ['--card-height']:
         'min(var(--max-height-vertical), var(--max-width-horizontal))',
-      ['--card-bg']: 'pink',
+      ['--card-bg']: config.backgroundColor ?? 'pink',
       ['--card-unit']: 'calc(var(--card-height) / 100)'
     }
   }, [config])
