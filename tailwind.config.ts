@@ -225,7 +225,8 @@ module.exports = {
         '.text-card-title': { fontSize: 'calc(var(--card-unit) * 8)' },
         '.text-card-big': { fontSize: 'calc(var(--card-unit) * 6)' },
         '.text-card-medium': { fontSize: 'calc(var(--card-unit) * 4)' },
-        '.text-card-little': { fontSize: 'calc(var(--card-unit) * 3)' }
+        '.text-card-little': { fontSize: 'calc(var(--card-unit) * 3)' },
+        '.font-card-serif': { fontFamily: 'var(--card-font-serif)' }
       })
 
       addComponents({

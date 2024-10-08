@@ -1,7 +1,7 @@
 'use client'
 
 import { Paintbrush2 } from 'lucide-react'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 
 import { CheckItem } from '@/components/dashboard/form/check-item'
 import { FormLabel } from '@/components/dashboard/form/label'
@@ -45,8 +45,33 @@ const bgColors = [
   }
 ]
 
+const serifFonts = [
+  {
+    name: 'Crimson Text',
+    value: '"Crimson Text", serif',
+    import:
+      // eslint-disable-next-line quotes
+      "@import url('https://fonts.googleapis.com/css2?family=Crimson+Text&display=swap');"
+  },
+  {
+    name: 'DM Serif Display',
+    value: '"DM Serif Display", serif',
+    import:
+      // eslint-disable-next-line quotes
+      "@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap');"
+  },
+  {
+    name: 'Zilla Slab',
+    value: '"Zilla Slab", serif',
+    import:
+      // eslint-disable-next-line quotes
+      "@import url('https://fonts.googleapis.com/css2?family=Zilla+Slab&display=swap');"
+  }
+]
+
 type State = {
   bg?: string
+  fontSerif?: string
 }
 
 export const SettingsPageContent = () => {
@@ -91,8 +116,8 @@ export const SettingsPageContent = () => {
   const handleChange = (e: React.ChangeEvent<HTMLFieldSetElement>) => {
     const target = e.target
 
-    switch (target.type) {
-      case 'radio': {
+    switch (target.name) {
+      case 'bg': {
         const { checked, value } = target as unknown as HTMLInputElement
 
         const color = bgColors.find((color) => color.name === value)
@@ -103,10 +128,50 @@ export const SettingsPageContent = () => {
         }))
         break
       }
+
+      case 'fontSerif': {
+        const { checked, value } = target as unknown as HTMLInputElement
+
+        setFormState((prev) => ({
+          ...prev,
+          [target.name]: checked ? value : null
+        }))
+        break
+      }
+
       default:
-        throw new Error('Invalid input type')
+        throw new Error(`Invalid input name ${target.name}`)
     }
   }
+
+  useLayoutEffect(() => {
+    const oldStyle = document.getElementById('injected-style')
+
+    if (oldStyle) {
+      document.head.removeChild(oldStyle)
+    }
+
+    if (!formState.fontSerif) return
+
+    const font = serifFonts.find((font) => font.name === formState.fontSerif)
+
+    if (!font) return
+
+    const style = document.createElement('style')
+    style.id = 'injected-style'
+    style.innerHTML = `
+     ${font.import}
+
+      :root {
+        --card-font-serif: ${font.value};
+      }
+    `
+    document.head.appendChild(style)
+
+    return () => {
+      document.head.removeChild(style)
+    }
+  }, [formState.fontSerif])
 
   return (
     <section
@@ -115,7 +180,7 @@ export const SettingsPageContent = () => {
         dimensions.hasRef && 'opacity-100'
       )}
     >
-      <article className="flex-1 flex-col ">
+      <article className="flex-1 flex-col">
         <FormTitle>{t('event.settings.invitation.title')}</FormTitle>
         <FormLabel htmlFor="bg-color">
           <Paintbrush2 size={14} /> {t('event.settings.invitation.bg.title')}
@@ -129,6 +194,22 @@ export const SettingsPageContent = () => {
               style={{ '--card-bg': value }}
               value={name}
             />
+          ))}
+        </fieldset>
+        <FormLabel htmlFor="font-serif">
+          <Paintbrush2 size={14} />{' '}
+          {t('event.settings.invitation.font-serif.title')}
+        </FormLabel>
+        <fieldset className="grid grid-cols-3 gap-2" onChange={handleChange}>
+          {serifFonts.map(({ name }) => (
+            <CheckItem
+              key={name}
+              className="flex items-center justify-center bg-card-bg"
+              name="fontSerif"
+              value={name}
+            >
+              {name}
+            </CheckItem>
           ))}
         </fieldset>
       </article>
