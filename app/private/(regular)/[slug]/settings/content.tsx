@@ -1,13 +1,16 @@
 'use client'
 
 import { Paintbrush2 } from 'lucide-react'
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import Image from 'next/image'
+import { useEffect, useRef, useState } from 'react'
 
 import { CheckItem } from '@/components/dashboard/form/check-item'
 import { FormLabel } from '@/components/dashboard/form/label'
 import { FormTitle } from '@/components/dashboard/form/title'
 import { Invitation } from '@/components/event/invitation'
 import { useIntl } from '@/components/providers/translator'
+import { fonts } from '@/lib/fonts'
+import { useFontLoader } from '@/lib/fonts/use-font-loader'
 import { cn } from '@/lib/utils'
 import { InvitationConfig } from '@/types'
 
@@ -45,30 +48,6 @@ const bgColors = [
   }
 ]
 
-const serifFonts = [
-  {
-    name: 'Crimson Text',
-    value: '"Crimson Text", serif',
-    import:
-      // eslint-disable-next-line quotes
-      "@import url('https://fonts.googleapis.com/css2?family=Crimson+Text&display=swap');"
-  },
-  {
-    name: 'DM Serif Display',
-    value: '"DM Serif Display", serif',
-    import:
-      // eslint-disable-next-line quotes
-      "@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap');"
-  },
-  {
-    name: 'Zilla Slab',
-    value: '"Zilla Slab", serif',
-    import:
-      // eslint-disable-next-line quotes
-      "@import url('https://fonts.googleapis.com/css2?family=Zilla+Slab&display=swap');"
-  }
-]
-
 type State = {
   bg?: string
   fontSerif?: string
@@ -84,6 +63,8 @@ export const SettingsPageContent = () => {
     height: '100svw',
     hasRef: false
   })
+
+  useFontLoader(formState.fontSerif)
 
   useEffect(() => {
     const handleResize = () => {
@@ -144,35 +125,6 @@ export const SettingsPageContent = () => {
     }
   }
 
-  useLayoutEffect(() => {
-    const oldStyle = document.getElementById('injected-style')
-
-    if (oldStyle) {
-      document.head.removeChild(oldStyle)
-    }
-
-    if (!formState.fontSerif) return
-
-    const font = serifFonts.find((font) => font.name === formState.fontSerif)
-
-    if (!font) return
-
-    const style = document.createElement('style')
-    style.id = 'injected-style'
-    style.innerHTML = `
-     ${font.import}
-
-      :root {
-        --card-font-serif: ${font.value};
-      }
-    `
-    document.head.appendChild(style)
-
-    return () => {
-      document.head.removeChild(style)
-    }
-  }, [formState.fontSerif])
-
   return (
     <section
       className={cn(
@@ -200,15 +152,20 @@ export const SettingsPageContent = () => {
           <Paintbrush2 size={14} />{' '}
           {t('event.settings.invitation.font-serif.title')}
         </FormLabel>
-        <fieldset className="grid grid-cols-3 gap-2" onChange={handleChange}>
-          {serifFonts.map(({ name }) => (
+        <fieldset className="grid grid-cols-4 gap-2" onChange={handleChange}>
+          {fonts.map(({ name, short }) => (
             <CheckItem
               key={name}
               className="flex items-center justify-center bg-card-bg"
               name="fontSerif"
               value={name}
             >
-              {name}
+              <Image
+                alt={name}
+                height={512}
+                src={`/font-preview/${short}.webp`}
+                width={512}
+              />
             </CheckItem>
           ))}
         </fieldset>
