@@ -55,6 +55,7 @@
   "event.resume": "{{amount}} invitaciones / {{guest}} invitados",
   "event.settings.invitation.bg.title": "Color de fondo",
   "event.settings.invitation.font-serif.title": "Fuente con serifa",
+  "event.settings.invitation.save": "Guardar cambios",
   "event.settings.invitation.title": "Tu invitación",
   "event.title": "Tu evento",
   "events.guest_names": "Nombres de los invitados",

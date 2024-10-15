@@ -1,6 +1,6 @@
 'use client'
 
-import { Paintbrush2 } from 'lucide-react'
+import { Paintbrush2, Save } from 'lucide-react'
 import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
 
@@ -9,6 +9,7 @@ import { FormLabel } from '@/components/dashboard/form/label'
 import { FormTitle } from '@/components/dashboard/form/title'
 import { Invitation } from '@/components/event/invitation'
 import { useIntl } from '@/components/providers/translator'
+import { Button } from '@/components/ui/button'
 import { fonts } from '@/lib/fonts'
 import { useFontLoader } from '@/lib/fonts/use-font-loader'
 import { cn } from '@/lib/utils'
@@ -126,14 +127,33 @@ export const SettingsPageContent = () => {
   }
 
   return (
-    <section
+    <article
       className={cn(
         'flex h-full opacity-00 transition-all gap-2',
         dimensions.hasRef && 'opacity-100'
       )}
     >
-      <article className="flex-1 flex-col">
+      <form
+        className="flex-1 flex-col"
+        onSubmit={(e) => {
+          e.preventDefault()
+          const formData = new FormData(e.target as HTMLFormElement)
+          const obj: { [key: string]: any } = {}
+          formData.forEach((value, key) => {
+            obj[key] = value
+          })
+
+          // Save this to the server
+          // console.log('>> :', obj)
+        }}
+      >
         <FormTitle>{t('event.settings.invitation.title')}</FormTitle>
+        <menu>
+          <Button size="sm" type="submit" variant="menu">
+            <Save size={16} />
+            {t('event.settings.invitation.save')}
+          </Button>
+        </menu>
 
         {/* Bg color */}
         <FormLabel htmlFor="bg-color">
@@ -173,7 +193,7 @@ export const SettingsPageContent = () => {
             </CheckItem>
           ))}
         </fieldset>
-      </article>
+      </form>
 
       <article
         ref={ref}
@@ -181,6 +201,6 @@ export const SettingsPageContent = () => {
       >
         {dimensions.hasRef && <Invitation config={config} guest={mockGuest} />}
       </article>
-    </section>
+    </article>
   )
 }
