@@ -6,7 +6,7 @@ type Props = {
 export const FormLabel = ({ children, htmlFor }: Props) => {
   return (
     <label
-      className="mb-2 flex items-center gap-2 font-sans uppercase"
+      className="mb-2 mt-3 flex items-center gap-2 font-sans uppercase"
       htmlFor={htmlFor}
     >
       {children}

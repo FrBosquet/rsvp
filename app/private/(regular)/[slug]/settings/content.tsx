@@ -134,6 +134,8 @@ export const SettingsPageContent = () => {
     >
       <article className="flex-1 flex-col">
         <FormTitle>{t('event.settings.invitation.title')}</FormTitle>
+
+        {/* Bg color */}
         <FormLabel htmlFor="bg-color">
           <Paintbrush2 size={14} /> {t('event.settings.invitation.bg.title')}
         </FormLabel>
@@ -148,6 +150,8 @@ export const SettingsPageContent = () => {
             />
           ))}
         </fieldset>
+
+        {/* Font serif: */}
         <FormLabel htmlFor="font-serif">
           <Paintbrush2 size={14} />{' '}
           {t('event.settings.invitation.font-serif.title')}

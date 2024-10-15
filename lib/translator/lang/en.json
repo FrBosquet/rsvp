@@ -54,6 +54,7 @@
   "event.navigation.suttle": "Bus",
   "event.resume": "{{amount}} invitations / {{guest}} guests",
   "event.settings.invitation.bg.title": "Background color",
+  "event.settings.invitation.font-serif.title": "Serif font",
   "event.settings.invitation.title": "Your invitation",
   "event.title": "Your event",
   "events.guest_names": "Names of guests",
