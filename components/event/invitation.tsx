@@ -3,7 +3,7 @@
 import { useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 
-import { type GuestWithNotes, InvitationConfig } from '@/types'
+import { type GuestWithNotes, InvitationComponentConfig } from '@/types'
 
 import { useGuest } from '../hooks/use-guest'
 import { AcceptanceCard } from './AcceptanceCard'
@@ -13,7 +13,7 @@ import { Frontface } from './Frontface'
 
 interface Props {
   guest: GuestWithNotes
-  config: InvitationConfig
+  config: InvitationComponentConfig
 }
 
 /**

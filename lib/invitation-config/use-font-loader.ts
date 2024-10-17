@@ -1,6 +1,6 @@
 import { useLayoutEffect } from 'react'
 
-import { fonts } from '.'
+import { fonts } from './fonts'
 
 export const useFontLoader = (fontName?: string) => {
   useLayoutEffect(() => {
@@ -12,7 +12,7 @@ export const useFontLoader = (fontName?: string) => {
 
     if (!fontName) return
 
-    const font = fonts.find((font) => font.name === fontName)
+    const font = fonts.find((font) => font.short === fontName)
 
     if (!font) return
 

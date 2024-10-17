@@ -50,3 +50,11 @@ const serifFonts = [
 ]
 
 export const fonts = [...serifFonts]
+
+export type FontName =
+  | 'crimson'
+  | 'dm-serif'
+  | 'zilla-slab'
+  | 'playfair'
+  | 'abril'
+  | 'cinzel'

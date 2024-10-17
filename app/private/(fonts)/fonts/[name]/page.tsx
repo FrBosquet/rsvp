@@ -1,7 +1,7 @@
 'use client'
 
-import { fonts } from '@/lib/fonts'
-import { useFontLoader } from '@/lib/fonts/use-font-loader'
+import { fonts } from '@/lib/invitation-config/fonts'
+import { useFontLoader } from '@/lib/invitation-config/use-font-loader'
 
 interface Route {
   params: {

@@ -6,6 +6,7 @@ type Props = {
   name: string
   value: string
   style?: Record<`--${string}`, string>
+  defaultChecked?: boolean
 }
 
 export const CheckItem = ({
@@ -13,7 +14,8 @@ export const CheckItem = ({
   name,
   value,
   style,
-  className
+  className,
+  defaultChecked
 }: Props) => {
   const id = `${name}-${value}`
 
@@ -22,6 +24,7 @@ export const CheckItem = ({
       <input
         hidden
         className="peer"
+        defaultChecked={defaultChecked}
         id={id}
         name={name}
         type="radio"
@@ -29,7 +32,7 @@ export const CheckItem = ({
       />
       <label
         className={cn(
-          'aspect-square rounded-lg shadow-sm size-full cursor-pointer peer-checked:border-2 peer-checked:shadow-inner border-gray-800 overflow-hidden relative',
+          'aspect-square rounded-lg shadow-sm size-full cursor-pointer border-2 peer-checked:shadow-inner peer-checked:border-gray-800 overflow-hidden relative box-border',
           className
         )}
         htmlFor={id}

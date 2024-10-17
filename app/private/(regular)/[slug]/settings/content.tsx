@@ -10,10 +10,12 @@ import { FormTitle } from '@/components/dashboard/form/title'
 import { Invitation } from '@/components/event/invitation'
 import { useIntl } from '@/components/providers/translator'
 import { Button } from '@/components/ui/button'
-import { fonts } from '@/lib/fonts'
-import { useFontLoader } from '@/lib/fonts/use-font-loader'
+import { InvitationConfig } from '@/lib/invitation-config'
+import { bgColors } from '@/lib/invitation-config/colors'
+import { fonts } from '@/lib/invitation-config/fonts'
+import { useFontLoader } from '@/lib/invitation-config/use-font-loader'
 import { cn } from '@/lib/utils'
-import { InvitationConfig } from '@/types'
+import { InvitationComponentConfig } from '@/types'
 
 const mockGuest = {
   slug: 'example-slug',
@@ -30,32 +32,15 @@ const mockGuest = {
   notes: []
 }
 
-const bgColors = [
-  {
-    name: 'rose',
-    value: 'pink'
-  },
-  {
-    name: 'emerald',
-    value: '#6ee7b7'
-  },
-  {
-    name: 'citric',
-    value: '#fdba74'
-  },
-  {
-    name: 'ruby',
-    value: '#3f3f46'
-  }
-]
-
-type State = {
-  bg?: string
-  fontSerif?: string
+const defaultConfig: InvitationConfig = {
+  bg: '#6ee7b7',
+  fontSerif: 'dm-serif'
 }
 
+type State = Partial<InvitationConfig>
+
 export const SettingsPageContent = () => {
-  const [formState, setFormState] = useState<State>({})
+  const [formState, setFormState] = useState<State>(defaultConfig)
   const { t } = useIntl()
 
   const ref = useRef<HTMLDivElement>(null)
@@ -89,7 +74,7 @@ export const SettingsPageContent = () => {
     }
   }, [])
 
-  const config: InvitationConfig = {
+  const config: InvitationComponentConfig = {
     containerWidth: dimensions.width,
     containerHeight: dimensions.height,
     backgroundColor: formState.bg
@@ -100,23 +85,21 @@ export const SettingsPageContent = () => {
 
     switch (target.name) {
       case 'bg': {
-        const { checked, value } = target as unknown as HTMLInputElement
-
-        const color = bgColors.find((color) => color.name === value)
+        const { value } = target as unknown as HTMLInputElement
 
         setFormState((prev) => ({
           ...prev,
-          [target.name]: checked ? color?.value : null
+          [target.name]: value
         }))
         break
       }
 
       case 'fontSerif': {
-        const { checked, value } = target as unknown as HTMLInputElement
+        const { value } = target as unknown as HTMLInputElement
 
         setFormState((prev) => ({
           ...prev,
-          [target.name]: checked ? value : null
+          [target.name]: value
         }))
         break
       }
@@ -148,12 +131,12 @@ export const SettingsPageContent = () => {
         }}
       >
         <FormTitle>{t('event.settings.invitation.title')}</FormTitle>
-        <menu>
+        <fieldset role="menubar">
           <Button size="sm" type="submit" variant="menu">
             <Save size={16} />
             {t('event.settings.invitation.save')}
           </Button>
-        </menu>
+        </fieldset>
 
         {/* Bg color */}
         <FormLabel htmlFor="bg-color">
@@ -164,9 +147,10 @@ export const SettingsPageContent = () => {
             <CheckItem
               key={name}
               className="bg-card-bg"
+              defaultChecked={value === formState.bg}
               name="bg"
               style={{ '--card-bg': value }}
-              value={name}
+              value={value}
             />
           ))}
         </fieldset>
@@ -181,8 +165,9 @@ export const SettingsPageContent = () => {
             <CheckItem
               key={name}
               className="flex items-center justify-center bg-card-bg"
+              defaultChecked={short === formState.fontSerif}
               name="fontSerif"
-              value={name}
+              value={short}
             >
               <Image
                 alt={name}
